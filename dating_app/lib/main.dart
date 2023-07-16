@@ -1,0 +1,88 @@
+import 'package:dating_app/blocs/profile/profile_bloc.dart';
+import 'package:dating_app/screen/home/home_screen.dart';
+import 'package:dating_app/screen/splash/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '/config/app_router.dart';
+import '/blocs/blocs.dart';
+import 'cubits/cubits.dart';
+import 'repositories/repositories.dart';
+
+import 'models/user_model.dart';
+import 'screen/login/login_screen.dart';
+import 'screen/onboarding/onboarding_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => AuthRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => StorageRepository(),
+        ),
+        RepositoryProvider(
+          create: (context) => DatabaseRepository(),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => AuthBloc(
+              databaseRepository: context.read<DatabaseRepository>(),
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+          BlocProvider<SignupCubit>(
+            create: (context) =>
+                SignupCubit(authRepository: context.read<AuthRepository>()),
+          ),
+          BlocProvider<LoginCubit>(
+            create: (context) =>
+                LoginCubit(authRepository: context.read<AuthRepository>()),
+          ),
+          BlocProvider<OnboardingBloc>(
+            create: (context) => OnboardingBloc(
+              databaseRepository: context.read<DatabaseRepository>(),
+              storageRepository: context.read<StorageRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => SwipeBloc(
+              authBloc: BlocProvider.of<AuthBloc>(context),
+              databaseRepository: context.read<DatabaseRepository>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => ProfileBloc(
+              authBloc: BlocProvider.of<AuthBloc>(context),
+              databaseRepository: context.read<DatabaseRepository>(),
+            )..add(
+                LoadProfile(
+                  userId:
+                      BlocProvider.of<AuthBloc>(context).state.authUser!.uid,
+                ),
+              ),
+          )
+        ],
+        child: MaterialApp(
+          title: 'F-R-I-E-N-D-S',
+          debugShowCheckedModeBanner: false,
+          // theme: theme(),
+          onGenerateRoute: AppRouter.onGenerateRoute,
+          initialRoute: SplashScreen.routeName,
+        ),
+      ),
+    );
+  }
+}

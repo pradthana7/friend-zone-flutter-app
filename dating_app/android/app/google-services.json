@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "442244681649",
+    "project_id": "chat-62258",
+    "storage_bucket": "chat-62258.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442244681649:android:404972d591cc66ee563790",
+        "android_client_info": {
+          "package_name": "com.example.dating_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442244681649-iqrqj5v2b5kvljqphkcopnnmre6vpf9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNC_7ozKZteDc2J0CB3fGqLez3dnln-gg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442244681649-iqrqj5v2b5kvljqphkcopnnmre6vpf9c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
