@@ -3,8 +3,10 @@ import 'package:dating_app/blocs/auth/auth_bloc.dart';
 import 'package:dating_app/repositories/auth/auth_repository.dart';
 import 'package:dating_app/repositories/database/database_repository.dart';
 import 'package:dating_app/screen/login/login_screen.dart';
+import 'package:dating_app/screen/matches/matches_screen.dart';
 import 'package:dating_app/screen/onboarding/onboarding_screen.dart';
 import 'package:dating_app/screen/onboarding/widgets/custom_text_field.dart';
+import 'package:dating_app/screen/screens.dart';
 import 'package:dating_app/widgets/custom_appbar.dart';
 import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,14 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'PROFILE',
+        actioinsIcons: [
+          Icons.message,
+          Icons.settings,
+        ],
+        actionsRoutes: [
+          MatchesScreen.routeName,
+          SettingsScreen.routeName,
+        ],
       ),
       body: SingleChildScrollView(
         child:
