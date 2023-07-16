@@ -10,9 +10,7 @@ import '/blocs/blocs.dart';
 import 'cubits/cubits.dart';
 import 'repositories/repositories.dart';
 
-import 'models/user_model.dart';
-import 'screen/login/login_screen.dart';
-import 'screen/onboarding/onboarding_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
