@@ -9,7 +9,9 @@ import 'package:dating_app/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'onboarding_screens/screens.dart';
+import 'widgets/widgets.dart';
 
 class OnboardingScreen extends StatelessWidget {
   static const String routeName = '/onboarding';
@@ -60,16 +62,90 @@ class OnboardingScreen extends StatelessWidget {
             title: 'F-R-I-E-N-D-S',
             hasActions: false,
           ),
-          body: TabBarView(
-            children: [
-              Start(),
-              Email(),
-              // EmailVerification(),
-              Demo(),
-              Pictures(),
-              Bio(),
-              Location(),
-            ],
+          body: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30,
+              vertical: 50,
+            ),
+            child: BlocBuilder<OnboardingBloc, OnboardingState>(
+                builder: (context, state) {
+              if (state is OnboardingLoading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (state is OnboardingLoaded) {
+                return TabBarView(
+                  children: [
+                    Start(state: state),
+                    Email(state: state),
+                    // EmailVerification(),
+                    Demo(state: state),
+                    Pictures(state: state),
+                    Bio(state: state),
+                    Location(state: state),
+                  ],
+                );
+              } else {
+                return Text('Something went wrong');
+              }
+            }),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class OnboardingScreenLayout extends StatelessWidget {
+  const OnboardingScreenLayout(
+      {Key? key,
+      required this.currentStep,
+      required this.onPressed,
+      required this.children})
+      : super(key: key);
+
+  final int currentStep;
+  final Function()? onPressed;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: ((context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constraints.maxHeight,
+              minWidth: constraints.maxHeight,
+            ),
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ...children,
+                  Spacer(),
+                  SizedBox(
+                    height: 75,
+                    child: Column(
+                      children: [
+                        StepProgressIndicator(
+                          totalSteps: 6,
+                          currentStep: currentStep,
+                          selectedColor: Theme.of(context).primaryColor,
+                          unselectedColor: Theme.of(context).disabledColor,
+                        ),
+                        SizedBox(height: 10),
+                        CustomButton(
+                          text: 'NEXT',
+                          onPressed: onPressed,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       }),

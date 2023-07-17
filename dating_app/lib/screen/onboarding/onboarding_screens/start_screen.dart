@@ -5,64 +5,50 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Start extends StatelessWidget {
-  const Start({Key? key}) : super(key: key);
+  const Start({
+    Key? key,
+    required this.state,
+  }) : super(key: key);
+
+  final OnboardingLoaded state;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OnboardingBloc, OnboardingState>(
-      builder: (context, state) {
-        if (state is OnboardingLoading) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-        if (state is OnboardingLoaded) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30.0,
-              vertical: 50,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          height: 300,
+          width: 300,
+          child: SvgPicture.asset('assets/threefriends.svg'),
+        ),
+        Text(
+          'Welcome To \nF-R-I-E-N-D-S',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+        SizedBox(height: 10),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Text(
+              'The correct answer to any question must be based on something that was written in the text or heard in the audio recording.The correct answer to any question must be based on something that was written in the text or heard in the audio recording.',
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall!
+                  .copyWith(height: 1.5),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 300,
-                  width: 300,
-                  child: SvgPicture.asset('assets/threefriends.svg'),
-                ),
-                Text(
-                  'Welcome To \nF-R-I-E-N-D-S',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                SizedBox(height: 10),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Text(
-                      'The correct answer to any question must be based on something that was written in the text or heard in the audio recording.The correct answer to any question must be based on something that was written in the text or heard in the audio recording.',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(height: 1.5),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                CustomButton(
-                  text: 'START',
-                  onPressed: () {
-                    context
-                        .read<OnboardingBloc>()
-                        .add(ContinueOnboarding(user: state.user));
-                  },
-                ),
-              ],
-            ),
-          );
-        } else {
-          return Text('Something went wrong');
-        }
-      },
+          ),
+        ),
+        SizedBox(height: 10),
+        CustomButton(
+          text: 'START',
+          onPressed: () {
+            context
+                .read<OnboardingBloc>()
+                .add(ContinueOnboarding(user: state.user));
+          },
+        ),
+      ],
     );
   }
 }
