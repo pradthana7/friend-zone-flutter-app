@@ -1,3 +1,4 @@
+import 'package:dating_app/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '/blocs/blocs.dart';
@@ -5,12 +6,7 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import '/screen/onboarding/widgets/widgets.dart';
 
 class Location extends StatelessWidget {
-  final TabController tabController;
-
-  const Location({
-    Key? key,
-    required this.tabController,
-  }) : super(key: key);
+  const Location({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +49,12 @@ class Location extends StatelessWidget {
                       unselectedColor: Theme.of(context).backgroundColor,
                     ),
                     SizedBox(height: 10),
-                    CustomButtom(tabController: tabController, text: 'DONE')
+                    CustomButton(
+                      text: 'DONE',
+                      onPressed: () {
+                        Navigator.pushNamed(context, HomeScreen.routeName);
+                      },
+                    )
                   ],
                 ),
               ],

@@ -6,34 +6,29 @@ import '/screen/onboarding/widgets/widgets.dart';
 import '/blocs/blocs.dart';
 
 class Bio extends StatelessWidget {
-  final TabController tabController;
-
-  Bio({
-    Key? key,
-    required this.tabController,
-  }) : super(key: key);
+  Bio({Key? key}) : super(key: key);
 
   final List<String> interests = [
     'Music',
-  'Sports',
-  'Travel',
-  'Food',
-  'Photography',
-  'Art',
-  'Movies',
-  'Reading',
-  'Gaming',
-  'Fashion',
-  'Fitness',
-  'Cooking',
-  'Technology',
-  'Dancing',
-  'Nature',
-  'Writing',
-  'Yoga',
-  'History',
-  'Cars',
-  'Pets',
+    'Sports',
+    'Travel',
+    'Food',
+    'Photography',
+    'Art',
+    'Movies',
+    'Reading',
+    'Gaming',
+    'Fashion',
+    'Fitness',
+    'Cooking',
+    'Technology',
+    'Dancing',
+    'Nature',
+    'Writing',
+    'Yoga',
+    'History',
+    'Cars',
+    'Pets',
   ];
 
   @override
@@ -68,7 +63,19 @@ class Bio extends StatelessWidget {
                               );
                         },
                       ),
-                      SizedBox(height: 100),
+                      SizedBox(height: 50),
+                      CustomTextHeader(text: 'What do you do?'),
+                      CustomTextField(
+                        hint: 'ENTER YOUR JOB',
+                        onChanged: (value) {
+                          context.read<OnboardingBloc>().add(
+                                UpdateUser(
+                                  user: state.user.copyWith(jobTitle: value),
+                                ),
+                              );
+                        },
+                      ),
+                      SizedBox(height: 50),
                       CustomTextHeader(text: 'What Do You Like?'),
                       Container(
                         height:
@@ -79,7 +86,8 @@ class Bio extends StatelessWidget {
                             crossAxisCount: 3,
                             crossAxisSpacing: 5.0,
                             mainAxisSpacing: 0.3,
-                            childAspectRatio: 1.7, // Adjust this value to control item size
+                            childAspectRatio:
+                                1.7, // Adjust this value to control item size
                           ),
                           itemCount: interests.length,
                           itemBuilder: (context, index) {
@@ -101,9 +109,13 @@ class Bio extends StatelessWidget {
                           unselectedColor: Theme.of(context).backgroundColor,
                         ),
                         SizedBox(height: 10),
-                        CustomButtom(
-                          tabController: tabController,
+                        CustomButton(
                           text: 'NEXT',
+                          onPressed: () {
+                            context
+                                .read<OnboardingBloc>()
+                                .add(ContinueOnboarding(user: state.user));
+                          },
                         ),
                       ],
                     ),

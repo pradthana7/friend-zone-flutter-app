@@ -17,32 +17,33 @@ class OnboardingScreen extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute(
       settings: RouteSettings(name: routeName),
-      builder: (context) => OnboardingScreen(),
+      builder: (context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<OnboardingBloc>(
+            create: (context) => OnboardingBloc(
+              databaseRepository: context.read<DatabaseRepository>(),
+              storageRepository: context.read<StorageRepository>(),
+            ),
+          ),
+          BlocProvider<SignupCubit>(
+            create: (context) => SignupCubit(
+              authRepository: context.read<AuthRepository>(),
+            ),
+          ),
+        ],
+        child: OnboardingScreen(),
+      ),
     );
   }
 
   static const List<Tab> tabs = <Tab>[
-    Tab(
-      text: 'Start',
-    ),
-    Tab(
-      text: 'Email',
-    ),
-    Tab(
-      text: 'Email Verification',
-    ),
-    Tab(
-      text: 'Demographics',
-    ),
-    Tab(
-      text: 'Pictures',
-    ),
-    Tab(
-      text: 'Biography',
-    ),
-    Tab(
-      text: 'Location',
-    ),
+    Tab(text: 'Start'),
+    Tab(text: 'Email'),
+    // Tab(text: 'Email Verification'),
+    Tab(text: 'Demographics'),
+    Tab(text: 'Pictures'),
+    Tab(text: 'Biography'),
+    Tab(text: 'Location'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -50,8 +51,10 @@ class OnboardingScreen extends StatelessWidget {
       length: tabs.length,
       child: Builder(builder: (BuildContext context) {
         final TabController tabController = DefaultTabController.of(context)!;
-        
 
+        context
+            .read<OnboardingBloc>()
+            .add(StartOnboarding(tabController: tabController));
         return Scaffold(
           appBar: CustomAppBar(
             title: 'F-R-I-E-N-D-S',
@@ -59,27 +62,13 @@ class OnboardingScreen extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              Start(
-                tabController: tabController,
-              ),
-              Email(
-                tabController: tabController,
-              ),
-              EmailVerification(
-                tabController: tabController,
-              ),
-              Demo(
-                tabController: tabController,
-              ),
-              Pictures(
-                tabController: tabController,
-              ),
-              Bio(
-                tabController: tabController,
-              ),
-              Location(
-                tabController: tabController,
-              ),
+              Start(),
+              Email(),
+              // EmailVerification(),
+              Demo(),
+              Pictures(),
+              Bio(),
+              Location(),
             ],
           ),
         );

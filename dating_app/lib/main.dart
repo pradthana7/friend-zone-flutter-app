@@ -41,37 +41,18 @@ class MyApp extends StatelessWidget {
               authRepository: context.read<AuthRepository>(),
             ),
           ),
-          BlocProvider<SignupCubit>(
-            create: (context) =>
-                SignupCubit(authRepository: context.read<AuthRepository>()),
-          ),
+          
           BlocProvider<LoginCubit>(
             create: (context) =>
                 LoginCubit(authRepository: context.read<AuthRepository>()),
           ),
-          BlocProvider<OnboardingBloc>(
-            create: (context) => OnboardingBloc(
-              databaseRepository: context.read<DatabaseRepository>(),
-              storageRepository: context.read<StorageRepository>(),
-            ),
+          BlocProvider<SignupCubit>(
+            create: (context) =>
+                SignupCubit(authRepository: context.read<AuthRepository>()),
           ),
-          BlocProvider(
-            create: (context) => SwipeBloc(
-              authBloc: BlocProvider.of<AuthBloc>(context),
-              databaseRepository: context.read<DatabaseRepository>(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => ProfileBloc(
-              authBloc: BlocProvider.of<AuthBloc>(context),
-              databaseRepository: context.read<DatabaseRepository>(),
-            )..add(
-                LoadProfile(
-                  userId:
-                      BlocProvider.of<AuthBloc>(context).state.authUser!.uid,
-                ),
-              ),
-          )
+          
+          
+         
         ],
         child: MaterialApp(
           title: 'F-R-I-E-N-D-S',

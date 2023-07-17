@@ -6,12 +6,7 @@ import '/blocs/blocs.dart';
 import '/screen/onboarding/widgets/widgets.dart';
 
 class Demo extends StatelessWidget {
-  final TabController tabController;
-
-  const Demo({
-    Key? key,
-    required this.tabController,
-  }) : super(key: key);
+  const Demo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +20,8 @@ class Demo extends StatelessWidget {
         if (state is OnboardingLoaded) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
@@ -77,15 +73,14 @@ class Demo extends StatelessWidget {
                         onChanged: (value) {
                           context.read<OnboardingBloc>().add(
                                 UpdateUser(
-                                  user:
-                                      state.user.copyWith(age: int.parse(value)),
+                                  user: state.user
+                                      .copyWith(age: int.parse(value)),
                                 ),
                               );
                         },
                       ),
                       SizedBox(height: 100)
                     ],
-                    
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
@@ -98,7 +93,14 @@ class Demo extends StatelessWidget {
                           unselectedColor: Theme.of(context).backgroundColor,
                         ),
                         SizedBox(height: 10),
-                        CustomButtom(tabController: tabController, text: 'NEXT',)
+                        CustomButton(
+                          text: 'NEXT',
+                          onPressed: () {
+                            context
+                                .read<OnboardingBloc>()
+                                .add(ContinueOnboarding(user: state.user));
+                          },
+                        ),
                       ],
                     ),
                   ),

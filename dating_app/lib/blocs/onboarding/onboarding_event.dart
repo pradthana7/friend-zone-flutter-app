@@ -9,30 +9,35 @@ abstract class OnboardingEvent extends Equatable {
 
 class StartOnboarding extends OnboardingEvent {
   final User user;
+  final TabController tabController;
 
   const StartOnboarding({
-    this.user = const User(
-      id: '',
-      name: '',
-      age: 0,
-      gender: '',
-      imageUrls: [],
-      jobTitle: '',
-      interests: [],
-      bio: '',
-      location: '',
-    ),
+    required this.tabController,
+    this.user = User.empty,
   });
 
-   @override
-  List<Object?> get props => [user];
+  @override
+  List<Object?> get props => [tabController, user];
+}
+
+class ContinueOnboarding extends OnboardingEvent {
+  final User user;
+  final bool isSignup;
+
+  const ContinueOnboarding({
+    required this.user,
+    this.isSignup = false,
+  });
+
+  @override
+  List<Object?> get props => [user, isSignup];
 
 }
 
 class UpdateUser extends OnboardingEvent {
   final User user;
 
-  UpdateUser({required this.user});
+  const UpdateUser({required this.user});
 
   @override
   List<Object?> get props => [user];

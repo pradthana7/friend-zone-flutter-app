@@ -5,12 +5,7 @@ import '/blocs/blocs.dart';
 import '/screen/onboarding/widgets/widgets.dart';
 
 class Pictures extends StatelessWidget {
-  final TabController tabController;
-
-  const Pictures({
-    Key? key,
-    required this.tabController,
-  }) : super(key: key);
+  const Pictures({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +21,8 @@ class Pictures extends StatelessWidget {
           var imageCount = images.length;
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
@@ -66,7 +62,14 @@ class Pictures extends StatelessWidget {
                           unselectedColor: Theme.of(context).backgroundColor,
                         ),
                         SizedBox(height: 10),
-                        CustomButtom(tabController: tabController, text: 'NEXT')
+                        CustomButton(
+                          text: 'NEXT',
+                          onPressed: () {
+                            context
+                                .read<OnboardingBloc>()
+                                .add(ContinueOnboarding(user: state.user));
+                          },
+                        )
                       ],
                     ),
                   ),

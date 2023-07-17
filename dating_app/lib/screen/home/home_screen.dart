@@ -3,7 +3,9 @@ import 'package:dating_app/blocs/swipe/swipe_bloc.dart';
 import 'package:dating_app/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../repositories/repositories.dart';
 import '../../widgets/widgets.dart';
+import '../login/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/';
@@ -11,7 +13,19 @@ class HomeScreen extends StatelessWidget {
   static Route route() {
     return MaterialPageRoute(
       settings: RouteSettings(name: routeName),
-      builder: (context) => HomeScreen(),
+      builder: (context) {
+        print(BlocProvider.of<AuthBloc>(context).state.status);
+        return BlocProvider.of<AuthBloc>(context).state.status ==
+                AuthStatus.unauthenticated
+            ? LoginScreen()
+            : BlocProvider<SwipeBloc>(
+                create: (context) => SwipeBloc(
+                  authBloc: context.read<AuthBloc>(),
+                  databaseRepository: context.read<DatabaseRepository>(),
+                )..add(LoadUsers()),
+                child: HomeScreen(),
+              );
+      },
     );
   }
 
@@ -223,9 +237,7 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
               endColor: Color.fromARGB(255, 115, 211, 144),
               textColor: Colors.white,
               onPressed: () {
-                context.read<SwipeBloc>().add(
-                      LoadUsers(user: context.read<AuthBloc>().state.user!),
-                    );
+                context.read<SwipeBloc>().add(LoadUsers());
               },
             ),
           ],
