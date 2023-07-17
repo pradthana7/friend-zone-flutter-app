@@ -14,6 +14,8 @@ class User extends Equatable {
   final List<String>? swipeLeft;
   final List<String>? swipeRight;
   final List<String>? matches;
+  final List<String>? genderPreference;
+  final List<int>? ageRangePreference;
 
   const User({
     this.id,
@@ -28,6 +30,8 @@ class User extends Equatable {
     this.swipeLeft,
     this.swipeRight,
     this.matches,
+    this.genderPreference,
+    this.ageRangePreference,
   });
 
   @override
@@ -44,9 +48,30 @@ class User extends Equatable {
         swipeLeft,
         swipeRight,
         matches,
+        genderPreference,
+        ageRangePreference,
       ];
 
   static User fromSnapshot(DocumentSnapshot snap) {
+    var data = snap.data() as Map<String, dynamic>?;
+
+    List<String> userGenderPreference = [''];
+    List<int> userAgeRangePreference = [];
+
+    if (data != null) {
+      print(data);
+      userGenderPreference = (data['genderPreference'] == null)
+          ? ['Male']
+          : (data['genderPreference'] as List)
+              .map((gender) => gender as String)
+              .toList();
+      userAgeRangePreference = (data['ageRangePreference'] == null)
+          ? [19, 40]
+          : (data['ageRangePreference'] as List)
+              .map((age) => age as int)
+              .toList();
+    }
+
     User user = User(
       id: snap.id,
       name: snap['name'],
@@ -66,6 +91,8 @@ class User extends Equatable {
       matches: (snap['matches'] as List)
           .map((matches) => matches as String)
           .toList(),
+      genderPreference: userGenderPreference,
+      ageRangePreference: userAgeRangePreference,
     );
     return user;
   }
@@ -83,6 +110,8 @@ class User extends Equatable {
       'swipeLeft': swipeLeft,
       'swipeRight': swipeRight,
       'matches': matches,
+      'genderPreference': genderPreference,
+      'ageRangePreference': ageRangePreference,
     };
   }
 
@@ -99,6 +128,8 @@ class User extends Equatable {
     List<String>? swipeLeft,
     List<String>? swipeRight,
     List<String>? matches,
+    List<String>? genderPreference,
+    List<int>? ageRangePreference,
   }) {
     return User(
       id: id ?? this.id,
@@ -113,6 +144,8 @@ class User extends Equatable {
       swipeLeft: swipeLeft ?? this.swipeLeft,
       swipeRight: swipeRight ?? this.swipeRight,
       matches: matches ?? this.matches,
+      genderPreference: genderPreference ?? this.genderPreference,
+      ageRangePreference: ageRangePreference ?? this.ageRangePreference,
     );
   }
 
