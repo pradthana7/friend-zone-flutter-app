@@ -20,7 +20,7 @@
 //       padding: padding,
 //       child: Focus(
 //         child: TextField(
-          
+
 //           decoration: InputDecoration(
 //             filled: true,
 //             fillColor: Colors.white,
@@ -48,6 +48,7 @@ class CustomTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final Function(bool)? onFocusChanged;
   final EdgeInsets padding;
+  final String? errorText;
 
   CustomTextField({
     Key? key,
@@ -56,6 +57,7 @@ class CustomTextField extends StatelessWidget {
     this.onChanged,
     this.onFocusChanged,
     this.padding = const EdgeInsets.symmetric(horizontal: 20.0),
+    this.errorText,
   }) : super(key: key);
 
   @override
@@ -69,6 +71,7 @@ class CustomTextField extends StatelessWidget {
             filled: true,
             fillColor: Colors.white,
             hintText: hint,
+            errorText: errorText,
             contentPadding: const EdgeInsets.only(bottom: 5.0, top: 12.5),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),

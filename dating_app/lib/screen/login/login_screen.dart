@@ -2,11 +2,11 @@ import 'package:dating_app/blocs/auth/auth_bloc.dart';
 import 'package:dating_app/cubits/login/login_cubit.dart';
 import 'package:dating_app/screen/home/home_screen.dart';
 import 'package:dating_app/screen/onboarding/onboarding_screen.dart';
-import 'package:dating_app/widgets/custom_appbar.dart';
+import 'package:formz/formz.dart';
+
 import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:bloc/bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   static const String routeName = '/login';
@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
       builder: (context) {
         return BlocProvider.of<AuthBloc>(context).state.status ==
                 AuthStatus.authenticated
-            ?  HomeScreen()
+            ? HomeScreen()
             : LoginScreen();
       },
     );
@@ -35,18 +35,11 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            EmailInput(),
+            _EmailInput(),
             const SizedBox(height: 10),
-            PasswordInput(),
+            _PasswordInput(),
             const SizedBox(height: 10),
-            CustomElevatedButton(
-                text: 'Sign in',
-                beginColor: const Color.fromARGB(255, 225, 116, 152),
-                endColor: Theme.of(context).primaryColor,
-                textColor: Colors.white,
-                onPressed: () {
-                  context.read<LoginCubit>().logInWithCredentials();
-                }),
+            _LoginButton(),
             const SizedBox(height: 10),
             CustomElevatedButton(
               text: 'Sign up',
@@ -65,34 +58,67 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class EmailInput extends StatelessWidget {
+class _LoginButton extends StatelessWidget {
+  const _LoginButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoginCubit, LoginState>(buildWhen: ((previous, current) {
+      return previous.status != current.status;
+    }), builder: (context, state) {
+      return state.status == FormzStatus.submissionInProgress
+          ? CircularProgressIndicator()
+          : CustomElevatedButton(
+              text: 'Sign in',
+              beginColor: const Color.fromARGB(255, 225, 116, 152),
+              endColor: Theme.of(context).primaryColor,
+              textColor: Colors.white,
+              onPressed: () {
+                state.status == FormzStatus.valid
+                    ? context.read<LoginCubit>().logInWithCredentials()
+                    : ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                            'Check your emai and password: ${state.status}')));
+              });
+    });
+  }
+}
+
+class _EmailInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
         buildWhen: ((previous, current) => previous.email != current.email),
-        builder: (context, State) {
+        builder: (context, state) {
           return TextField(
             onChanged: (email) {
               context.read<LoginCubit>().emailChanged(email);
             },
-            decoration: const InputDecoration(labelText: 'Email'),
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+                labelText: 'Email',
+                errorText: state.email.invalid ? 'The email is invalid' : null),
           );
         });
   }
 }
 
-class PasswordInput extends StatelessWidget {
+class _PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginCubit, LoginState>(
         buildWhen: ((previous, current) =>
             previous.password != current.password),
-        builder: (context, State) {
+        builder: (context, state) {
           return TextField(
             onChanged: (password) {
               context.read<LoginCubit>().passwordChanged(password);
             },
-            decoration: const InputDecoration(labelText: 'Password'),
+            decoration: InputDecoration(
+                labelText: 'Password',
+                errorText: state.password.invalid
+                    ? 'The password must contain at least 8 characters'
+                    : null),
             obscureText: true,
           );
         });
