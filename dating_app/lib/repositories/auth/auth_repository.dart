@@ -8,6 +8,24 @@ class AuthRepository extends BaseAuthRepository {
       : _firebaseAuth = firebaseAuth ?? auth.FirebaseAuth.instance;
 
   @override
+  Future<void> logInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on auth.FirebaseAuthException catch (error) {
+      throw Exception(error.message);
+    } catch (_) {}
+  }
+
+  @override
+  Stream<auth.User?> get user => _firebaseAuth.userChanges();
+
+  @override
   Future<auth.User?> signUp({
     required String email,
     required String password,
@@ -24,23 +42,7 @@ class AuthRepository extends BaseAuthRepository {
   }
 
   @override
-  Stream<auth.User?> get user => _firebaseAuth.userChanges();
-
-  @override
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
-  }
-
-  @override
-  Future<void> logInWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } catch (_) {}
   }
 }
