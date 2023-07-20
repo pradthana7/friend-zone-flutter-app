@@ -1,6 +1,7 @@
 import 'package:dating_app/blocs/auth/auth_bloc.dart';
 import 'package:dating_app/blocs/swipe/swipe_bloc.dart';
 import 'package:dating_app/models/models.dart';
+import 'package:dating_app/screen/matches/matches_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../repositories/repositories.dart';
@@ -33,6 +34,7 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<SwipeBloc, SwipeState>(
       builder: (context, state) {
         if (state is SwipeLoading) {
+          print('state is SwipeLoading');
           return Scaffold(
             appBar: CustomAppBar(title: 'F-R-I-E-N-D-S'),
             body: Center(
@@ -228,7 +230,9 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
               beginColor: Colors.white,
               endColor: Colors.white,
               textColor: Theme.of(context).primaryColor,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, MatchesScreen.routeName);
+              },
             ),
             const SizedBox(height: 10),
             CustomElevatedButton(

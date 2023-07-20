@@ -30,11 +30,13 @@ class MatchesScreen extends StatelessWidget {
       body: BlocBuilder<MatchBloc, MatchState>(
         builder: (context, state) {
           if (state is MatchLoading) {
+            print('state is MatchLoading');
             return Center(
               child: CircularProgressIndicator(),
             );
           }
           if (state is MatchLoaded) {
+            print('state is MatchLoaded');
             final inactiveMatches =
                 state.matches.where((match) => match.chat == null).toList();
             final activeMatches =
@@ -46,7 +48,7 @@ class MatchesScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Liked',
+                      'Matched',
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     MatchesList(inactiveMatches: inactiveMatches),
