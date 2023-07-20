@@ -1,8 +1,10 @@
-import 'package:dating_app/blocs/auth/auth_bloc.dart';
+import 'package:dating_app/blocs/chat/chat_bloc.dart';
+import 'package:dating_app/repositories/database/database_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '/blocs/blocs.dart';
 import '/models/models.dart';
-import 'package:bloc/bloc.dart';
 
 class ChatScreen extends StatelessWidget {
   static const String routeName = '/chat';
@@ -10,7 +12,14 @@ class ChatScreen extends StatelessWidget {
   static Route route({required Match match}) {
     return MaterialPageRoute(
       settings: RouteSettings(name: routeName),
-      builder: (context) => ChatScreen(match: match),
+      builder: (context) => BlocProvider<ChatBloc>(
+        create: (context) => ChatBloc(
+          databaseRepository: context.read<DatabaseRepository>(),
+        )..add(
+            LoadChat(match.chat.id),
+          ),
+        child: ChatScreen(match: match),
+      ),
     );
   }
 
@@ -23,29 +32,41 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var messageCount = (match.chat == null) ? 0 : match.chat.messages.length;
-
     return Scaffold(
       appBar: _CustomAppBar(match: match),
-      body: Column(
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: match.chat.messages.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: _Message(
-                  message: match.chat.messages[index].message,
-                  isFromCurrentUser: match.chat.messages[index].senderId ==
-                      context.read<AuthBloc>().state.authUser!.uid,
-                ),
-              );
-            },
-          ),
-          Spacer(),
-          _MessageInput(match: match),
-        ],
-      ),
+      body: BlocBuilder<ChatBloc, ChatState>(builder: (context, state) {
+        if (state is ChatLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is ChatLoaded) {
+          return Column(
+            children: [
+              ListView.builder(
+                reverse: true,
+                shrinkWrap: true,
+                itemCount: state.chat.messages.length,
+                itemBuilder: (context, index) {
+                  List<Message> messages = state.chat.messages;
+
+                  return ListTile(
+                    title: _Message(
+                      message: messages[index].message,
+                      isFromCurrentUser: messages[index].senderId ==
+                          context.read<AuthBloc>().state.authUser!.uid,
+                    ),
+                  );
+                },
+              ),
+              Spacer(),
+              _MessageInput(match: match),
+            ],
+          );
+        } else {
+          return Text('Something went wrong');
+        }
+      }),
     );
   }
 }
@@ -60,6 +81,8 @@ class _MessageInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController();
+
     return Container(
       padding: const EdgeInsets.all(20),
       child: Row(
@@ -71,11 +94,22 @@ class _MessageInput extends StatelessWidget {
               ),
               child: IconButton(
                 icon: Icon(Icons.send_outlined),
-                onPressed: () {},
+                onPressed: () {
+                  context.read<ChatBloc>()
+                    .add(
+                      AddMessage(
+                        userId: match.userId,
+                        matchUserId: match.matchUser.id!,
+                        message: controller.text,
+                      ),
+                    );
+                  controller.clear();
+                },
                 color: Colors.white,
               )),
-          const Expanded(
+          Expanded(
             child: TextField(
+              controller: controller,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.white,

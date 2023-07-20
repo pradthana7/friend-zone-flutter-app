@@ -1,5 +1,6 @@
 import 'package:dating_app/blocs/blocs.dart';
 import 'package:dating_app/repositories/repositories.dart';
+import 'package:dating_app/screen/chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,10 +38,12 @@ class MatchesScreen extends StatelessWidget {
           }
           if (state is MatchLoaded) {
             print('state is MatchLoaded');
-            final inactiveMatches =
-                state.matches.where((match) => match.chat == null).toList();
-            final activeMatches =
-                state.matches.where((match) => match.chat != null).toList();
+            final inactiveMatches = state.matches
+                .where((match) => match.chat.messages.length == 0)
+                .toList();
+            final activeMatches = state.matches
+                .where((match) => match.chat.messages.length > 0)
+                .toList();
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -51,7 +54,12 @@ class MatchesScreen extends StatelessWidget {
                       'Matched',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    MatchesList(inactiveMatches: inactiveMatches),
+                    inactiveMatches.length == 0
+                        ? Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text('Go back to swiping'),
+                          )
+                        : MatchesList(inactiveMatches: inactiveMatches),
                     SizedBox(height: 20),
                     Text(
                       'Messages',
@@ -109,8 +117,11 @@ class ChatsList extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/chat',
-                  arguments: activeMatches[index]);
+              Navigator.pushNamed(
+                context,
+                ChatScreen.routeName,
+                arguments: activeMatches[index],
+              );
             },
             child: Row(
               children: [
@@ -163,19 +174,30 @@ class MatchesList extends StatelessWidget {
           shrinkWrap: true,
           itemCount: inactiveMatches.length,
           itemBuilder: (context, index) {
-            return Column(
-              children: [
-                UserImage.small(
-                  margin: const EdgeInsets.only(top: 10, right: 10),
-                  height: 70,
-                  width: 70,
-                  url: inactiveMatches[index].matchUser.imageUrls[0],
+            return InkWell(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  ChatScreen.routeName,
+                  arguments: inactiveMatches[index],
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, right: 10),
+                child: Column(
+                  children: [
+                    UserImage.small(
+                      height: 70,
+                      width: 70,
+                      url: inactiveMatches[index].matchUser.imageUrls[0],
+                    ),
+                    Text(
+                      inactiveMatches[index].matchUser.name,
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ],
                 ),
-                Text(
-                  inactiveMatches[index].matchUser.name,
-                  style: Theme.of(context).textTheme.labelMedium,
-                ),
-              ],
+              ),
             );
           }),
     );
