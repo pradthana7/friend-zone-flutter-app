@@ -127,12 +127,12 @@ class ChatsList extends StatelessWidget {
                       activeMatches[index].matchUser.name,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
                       activeMatches[index].chat.messages[0].message,
                       style: Theme.of(context).textTheme.labelMedium,
                     ),
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     Text(
                       activeMatches[index].chat.messages[0].timeString,
                       style: Theme.of(context).textTheme.labelMedium,
