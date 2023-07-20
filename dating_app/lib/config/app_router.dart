@@ -1,11 +1,7 @@
-import '/models/models.dart';
-
-import 'package:dating_app/screen/screens.dart';
-import 'package:dating_app/screen/splash/splash_screen.dart';
-
 import 'package:flutter/material.dart';
 
-import '../screen/login/login_screen.dart';
+import '/models/models.dart';
+import '/screen/screens.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -30,8 +26,8 @@ class AppRouter {
         return ProfileScreen.route();
       case SettingsScreen.routeName:
         return SettingsScreen.route();
-      // case ChatScreen.routeName:
-      //   return ChatScreen.route(userMatch: settings.arguments as UserMatch);
+      case ChatScreen.routeName:
+        return ChatScreen.route(match: settings.arguments as Match);
       default:
         return _errorRoute();
     }

@@ -49,13 +49,13 @@ class MatchesScreen extends StatelessWidget {
                   children: [
                     Text(
                       'Matched',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     MatchesList(inactiveMatches: inactiveMatches),
                     SizedBox(height: 20),
                     Text(
                       'Messages',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     ChatsList(activeMatches: activeMatches)
                   ],
@@ -68,7 +68,7 @@ class MatchesScreen extends StatelessWidget {
               children: [
                 Text(
                   'No Matches Yet',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
                 const SizedBox(height: 20),
                 CustomElevatedButton(
@@ -118,24 +118,24 @@ class ChatsList extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 10, right: 10),
                   height: 70,
                   width: 70,
-                  url: activeMatches[index].matchedUser.imageUrls[0],
+                  url: activeMatches[index].matchUser.imageUrls[0],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      activeMatches[index].matchedUser.name,
-                      style: Theme.of(context).textTheme.headline5,
+                      activeMatches[index].matchUser.name,
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
                     SizedBox(height: 5),
                     Text(
-                      activeMatches[index].chat![0].messages[0].message,
-                      style: Theme.of(context).textTheme.headline6,
+                      activeMatches[index].chat.messages[0].message,
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
                     SizedBox(height: 5),
                     Text(
-                      activeMatches[index].chat![0].messages[0].timeString,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      activeMatches[index].chat.messages[0].timeString,
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
                   ],
                 )
@@ -169,11 +169,11 @@ class MatchesList extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 10, right: 10),
                   height: 70,
                   width: 70,
-                  url: inactiveMatches[index].matchedUser.imageUrls[0],
+                  url: inactiveMatches[index].matchUser.imageUrls[0],
                 ),
                 Text(
-                  inactiveMatches[index].matchedUser.name,
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  inactiveMatches[index].matchUser.name,
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
               ],
             );

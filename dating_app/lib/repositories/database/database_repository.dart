@@ -1,20 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:intl/intl.dart';
 
 import '/models/models.dart';
-import '/repositories/database/base_database_repository.dart';
-import '/repositories/storage/storage_repository.dart';
+import '/repositories/repositories.dart';
 
 class DatabaseRepository extends BaseDatabaseRepository {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
   Stream<User> getUser(String userId) {
+    print('getting uer images from DB');
     return _firebaseFirestore
         .collection('users')
         .doc(userId)
         .snapshots()
         .map((snap) => User.fromSnapshot(snap));
+  }
+
+   @override
+  Stream<List<User>> getUsers(User user) {
+    return _firebaseFirestore
+        .collection('users')
+        .where('gender', whereIn: _selectGender(user))
+        .snapshots()
+        .map((snap) {
+      return snap.docs.map((doc) => User.fromSnapshot(doc)).toList();
+    });
   }
 
   @override
@@ -41,16 +53,7 @@ class DatabaseRepository extends BaseDatabaseRepository {
         .then((value) => print('User document update'));
   }
 
-  @override
-  Stream<List<User>> getUsers(User user) {
-    return _firebaseFirestore
-        .collection('users')
-        .where('gender', whereIn: _selectGender(user))
-        .snapshots()
-        .map((snap) {
-      return snap.docs.map((doc) => User.fromSnapshot(doc)).toList();
-    });
-  }
+ 
 
   @override
   Stream<List<User>> getUsersToSwipe(User user) {
@@ -85,23 +88,6 @@ class DatabaseRepository extends BaseDatabaseRepository {
   }
 
   @override
-  Future<void> updateUserSwipe(
-    String userId,
-    String matchId,
-    bool isSwipeRight,
-  ) async {
-    if (isSwipeRight) {
-      await _firebaseFirestore.collection('users').doc(userId).update({
-        'swipeRight': FieldValue.arrayUnion([matchId])
-      });
-    } else {
-      await _firebaseFirestore.collection('users').doc(userId).update({
-        'swipeLeft': FieldValue.arrayUnion([matchId])
-      });
-    }
-  }
-
-  @override
   Future<void> updateUserMatch(String userId, String matchId) async {
     // update the current user document
     await _firebaseFirestore.collection('users').doc(userId).update({
@@ -125,10 +111,46 @@ class DatabaseRepository extends BaseDatabaseRepository {
       ) {
         return users
             .where((user) => currentUser.matches!.contains(user.id))
-            .map((user) => Match(userId: user.id!, matchedUser: user))
+            .map(
+              (user) => Match(
+                userId: user.id!,
+                matchUser: user,
+                chat: Chat(id: '1', userIds: [
+                  '1',
+                  '2'
+                ], messages: [
+                  Message(
+                    senderId: '1',
+                    receiverId: '2',
+                    message: 'hey, how do you do?',
+                    dateTime: DateTime.now(),
+                    timeString: DateFormat('jm').format(
+                      DateTime.now(),
+                    ),
+                  )
+                ]),
+              ),
+            )
             .toList();
       },
     );
+  }
+
+  @override
+  Future<void> updateUserSwipe(
+    String userId,
+    String matchId,
+    bool isSwipeRight,
+  ) async {
+    if (isSwipeRight) {
+      await _firebaseFirestore.collection('users').doc(userId).update({
+        'swipeRight': FieldValue.arrayUnion([matchId])
+      });
+    } else {
+      await _firebaseFirestore.collection('users').doc(userId).update({
+        'swipeLeft': FieldValue.arrayUnion([matchId])
+      });
+    }
   }
 
   _selectGender(User user) {
