@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 import 'package:intl/intl.dart';
 
 class Message extends Equatable {
@@ -19,13 +18,11 @@ class Message extends Equatable {
 
   factory Message.fromJson(Map<String, dynamic> json, {String? id}) {
     return Message(
-      senderId: json['senderId'],
+      senderId: id ?? json['senderId'],
       receiverId: json['receiverId'],
       message: json['message'],
-      dateTime: json['dateTime'].toDate(), // Convert Timestamp to DateTime
-      timeString: DateFormat('HH:mm').format(
-        json['dateTime'].toDate(),
-      ),
+      dateTime: json['dateTime'].toDate(),
+      timeString: DateFormat("HH:mm").format(json['dateTime'].toDate()),
     );
   }
 
@@ -46,5 +43,4 @@ class Message extends Equatable {
         dateTime,
         timeString,
       ];
-
 }

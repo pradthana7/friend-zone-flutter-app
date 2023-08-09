@@ -173,7 +173,6 @@ class _Message extends StatelessWidget {
   }
 }
 
-
 class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const _CustomAppBar({
     Key? key,

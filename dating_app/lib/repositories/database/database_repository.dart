@@ -1,4 +1,5 @@
 import 'package:rxdart/rxdart.dart';
+import 'package:intl/intl.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -10,6 +11,7 @@ class DatabaseRepository extends BaseDatabaseRepository {
 
   @override
   Stream<User> getUser(String userId) {
+    print('getting uer images from DB');
     return _firebaseFirestore
         .collection('users')
         .doc(userId)
@@ -208,13 +210,7 @@ class DatabaseRepository extends BaseDatabaseRepository {
     return _firebaseFirestore.collection('chats').doc(chatId).update({
       'messages': FieldValue.arrayUnion(
         [
-          // Message(
-          //   senderId: message.senderId,
-          //   receiverId: message.receiverId,
-          //   message: message.message,
-          //   dateTime: message.dateTime,
-          //   timeString: message.timeString,
-          // ).toJson()
+          
           message.toJson(),
         ],
       )

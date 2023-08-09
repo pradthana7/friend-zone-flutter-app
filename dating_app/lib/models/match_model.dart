@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-import 'models.dart';
+import 'chat_model.dart';
+import 'user_model.dart';
 
 class Match extends Equatable {
   final String userId;

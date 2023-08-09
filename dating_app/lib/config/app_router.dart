@@ -1,11 +1,7 @@
-import '/models/models.dart';
-
-import 'package:dating_app/screen/screens.dart';
-import 'package:dating_app/screen/splash/splash_screen.dart';
-
 import 'package:flutter/material.dart';
 
-import '../screen/login/login_screen.dart';
+import '/models/models.dart';
+import '/screen/screens.dart';
 
 class AppRouter {
   static Route onGenerateRoute(RouteSettings settings) {
