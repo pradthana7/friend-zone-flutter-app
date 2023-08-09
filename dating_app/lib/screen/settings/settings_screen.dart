@@ -75,7 +75,7 @@ class SettingsScreen extends StatelessWidget {
                           'Set Up your Preferences',
                           style: Theme.of(context)
                               .textTheme
-                              .headline3!
+                              .titleLarge!
                               .copyWith(color: Colors.white),
                         ),
                       ),
@@ -175,7 +175,7 @@ class _AgeRangePreference extends StatelessWidget {
           children: [
             Text(
               'Age Range',
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             Row(
               children: [
@@ -220,7 +220,7 @@ class _AgeRangePreference extends StatelessWidget {
                   width: 50,
                   child: Text(
                     '${state.user.ageRangePreference![0]} - ${state.user.ageRangePreference![1]}',
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
               ],
@@ -248,7 +248,7 @@ class _GenderPreference extends StatelessWidget {
           children: [
             Text(
               'Show me: ',
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             Row(
               children: [
@@ -287,7 +287,7 @@ class _GenderPreference extends StatelessWidget {
                 ),
                 Text(
                   'Man',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -328,7 +328,7 @@ class _GenderPreference extends StatelessWidget {
                 ),
                 Text(
                   'Woman',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),

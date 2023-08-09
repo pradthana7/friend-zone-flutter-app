@@ -16,7 +16,7 @@ class CustomTextHeader extends StatelessWidget {
       text,
       style: Theme.of(context)
           .textTheme
-          .headlineLarge!
+          .titleLarge!
           .copyWith(fontWeight: FontWeight.normal),
     );
   }

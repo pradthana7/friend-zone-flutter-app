@@ -23,20 +23,18 @@ class Start extends StatelessWidget {
           child: SvgPicture.asset('assets/threefriends.svg'),
         ),
         Text(
-          'Welcome To \nF-R-I-E-N-D-S',
-          style: Theme.of(context).textTheme.headlineMedium,
+          'Welcome To F-R-I-E-N-D-S',
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         SizedBox(height: 10),
         Expanded(
-          child: SingleChildScrollView(
-            child: Text(
-              'The correct answer to any question must be based on something that was written in the text or heard in the audio recording.The correct answer to any question must be based on something that was written in the text or heard in the audio recording.',
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall!
-                  .copyWith(height: 1.5),
-            ),
+          child: Text(
+            'The correct answer to any question must be based on something that was written in the text or heard in the audio recording.The correct answer to any question must be based on something that was written in the text or heard in the audio recording.',
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(height: 1.5),
           ),
         ),
         SizedBox(height: 10),

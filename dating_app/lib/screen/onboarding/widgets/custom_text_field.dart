@@ -50,7 +50,7 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsets padding;
   final String? errorText;
 
-  CustomTextField({
+  const CustomTextField({
     Key? key,
     this.hint = '',
     this.initialValue = '',

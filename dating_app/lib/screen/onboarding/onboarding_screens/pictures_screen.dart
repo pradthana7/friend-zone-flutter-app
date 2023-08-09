@@ -70,40 +70,6 @@ class Pictures extends StatelessWidget {
         ),
       ],
     );
-    //  Padding(
-    //   padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //     mainAxisSize: MainAxisSize.max,
-    //     children: [
-    //       Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-
-    //           SizedBox(height: 100)
-    //         ],
-    //       ),
-    //       Align(
-    //         alignment: Alignment.bottomCenter,
-    //         child: Column(
-    //           children: [
-    //             StepProgressIndicator(
-    //               totalSteps: 6,
-    //               currentStep: 4,
-    //               selectedColor: Theme.of(context).primaryColor,
-    //               unselectedColor: Theme.of(context).backgroundColor,
-    //             ),
-    //             SizedBox(height: 10),
-    //             CustomButton(
-    //               text: 'NEXT',
-    //               onPressed:
-
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
+    
   }
 }

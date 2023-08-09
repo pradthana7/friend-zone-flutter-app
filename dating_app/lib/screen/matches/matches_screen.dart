@@ -1,5 +1,6 @@
 import 'package:dating_app/blocs/blocs.dart';
 import 'package:dating_app/repositories/repositories.dart';
+import 'package:dating_app/screen/chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,15 +31,19 @@ class MatchesScreen extends StatelessWidget {
       body: BlocBuilder<MatchBloc, MatchState>(
         builder: (context, state) {
           if (state is MatchLoading) {
+            print('state is MatchLoading');
             return Center(
               child: CircularProgressIndicator(),
             );
           }
           if (state is MatchLoaded) {
-            final inactiveMatches =
-                state.matches.where((match) => match.chat == null).toList();
-            final activeMatches =
-                state.matches.where((match) => match.chat != null).toList();
+            print('state is MatchLoaded');
+            final inactiveMatches = state.matches
+                .where((match) => match.chat.messages.isEmpty)
+                .toList();
+            final activeMatches = state.matches
+                .where((match) => match.chat.messages.isNotEmpty)
+                .toList();
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -46,14 +51,24 @@ class MatchesScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Liked',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      'LIKED',
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    MatchesList(inactiveMatches: inactiveMatches),
-                    SizedBox(height: 20),
+                    inactiveMatches.isEmpty
+                        ? const Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: Text(
+                              'Go back to swiping',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ))
+                        : MatchesList(inactiveMatches: inactiveMatches),
                     Text(
-                      'Messages',
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      'MESSAGES',
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     ChatsList(activeMatches: activeMatches)
                   ],
@@ -62,23 +77,27 @@ class MatchesScreen extends StatelessWidget {
             );
           }
           if (state is MatchUnavailable) {
-            return Column(
-              children: [
-                Text(
-                  'No Matches Yet',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                const SizedBox(height: 20),
-                CustomElevatedButton(
-                  text: 'Back To Swiping',
-                  beginColor: Color.fromARGB(255, 115, 211, 144),
-                  endColor: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'No Matches Yet',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 20),
+                  CustomElevatedButton(
+                    text: 'Back To Swiping',
+                    beginColor: Color.fromARGB(255, 115, 211, 144),
+                    endColor: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
             );
           } else {
             return Center(
@@ -107,8 +126,11 @@ class ChatsList extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/chat',
-                  arguments: activeMatches[index]);
+              Navigator.pushNamed(
+                context,
+                ChatScreen.routeName,
+                arguments: activeMatches[index],
+              );
             },
             child: Row(
               children: [
@@ -116,24 +138,24 @@ class ChatsList extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 10, right: 10),
                   height: 70,
                   width: 70,
-                  url: activeMatches[index].matchedUser.imageUrls[0],
+                  url: activeMatches[index].matchUser.imageUrls[0],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      activeMatches[index].matchedUser.name,
-                      style: Theme.of(context).textTheme.headline5,
+                      activeMatches[index].matchUser.name,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     SizedBox(height: 5),
                     Text(
-                      activeMatches[index].chat![0].messages[0].message,
-                      style: Theme.of(context).textTheme.headline6,
+                      activeMatches[index].chat.messages[0].message,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     SizedBox(height: 5),
                     Text(
-                      activeMatches[index].chat![0].messages[0].timeString,
-                      style: Theme.of(context).textTheme.bodyText1,
+                      activeMatches[index].chat.messages[0].timeString,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
                 )
@@ -161,19 +183,30 @@ class MatchesList extends StatelessWidget {
           shrinkWrap: true,
           itemCount: inactiveMatches.length,
           itemBuilder: (context, index) {
-            return Column(
-              children: [
-                UserImage.small(
-                  margin: const EdgeInsets.only(top: 10, right: 10),
-                  height: 70,
-                  width: 70,
-                  url: inactiveMatches[index].matchedUser.imageUrls[0],
+            return InkWell(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  ChatScreen.routeName,
+                  arguments: inactiveMatches[index],
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, right: 10),
+                child: Column(
+                  children: [
+                    UserImage.small(
+                      height: 70,
+                      width: 70,
+                      url: inactiveMatches[index].matchUser.imageUrls[0],
+                    ),
+                    Text(
+                      inactiveMatches[index].matchUser.name,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ],
                 ),
-                Text(
-                  inactiveMatches[index].matchedUser.name,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-              ],
+              ),
             );
           }),
     );

@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '/models/models.dart';
-import '/repositories/database/base_database_repository.dart';
-import '/repositories/storage/storage_repository.dart';
+import '/repositories/repositories.dart';
 
 class DatabaseRepository extends BaseDatabaseRepository {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -18,27 +18,15 @@ class DatabaseRepository extends BaseDatabaseRepository {
   }
 
   @override
-  Future<void> updateUserPictures(User user, String imageName) async {
-    String downloadUrl =
-        await StorageRepository().getDownloadURL(user, imageName);
-
-    return _firebaseFirestore.collection('users').doc(user.id).update({
-      'imageUrls': FieldValue.arrayUnion([downloadUrl])
-    });
-  }
-
-  @override
-  Future<void> createUser(User user) async {
-    await _firebaseFirestore.collection('users').doc(user.id).set(user.toMap());
-  }
-
-  @override
-  Future<void> updateUser(User user) {
+  Stream<Chat> getChat(String chatId) {
     return _firebaseFirestore
-        .collection('users')
-        .doc(user.id)
-        .update(user.toMap())
-        .then((value) => print('User document update'));
+        .collection('chats')
+        .doc(chatId)
+        .snapshots()
+        .map((doc) => Chat.fromJson(
+              doc.data() as Map<String, dynamic>,
+              id: doc.id,
+            ));
   }
 
   @override
@@ -48,7 +36,24 @@ class DatabaseRepository extends BaseDatabaseRepository {
         .where('gender', whereIn: _selectGender(user))
         .snapshots()
         .map((snap) {
+      print(snap);
       return snap.docs.map((doc) => User.fromSnapshot(doc)).toList();
+    });
+  }
+
+  @override
+  Stream<List<Chat>> getChats(String userId) {
+    return _firebaseFirestore
+        .collection('chats')
+        .where('userIds', arrayContains: userId)
+        .snapshots()
+        .map((snap) {
+      return snap.docs
+          .map((doc) => Chat.fromJson(
+                doc.data(),
+                id: doc.id,
+              ))
+          .toList();
     });
   }
 
@@ -67,6 +72,7 @@ class DatabaseRepository extends BaseDatabaseRepository {
             bool wasSwipedLeft = currentUser.swipeLeft!.contains(user.id);
             bool wasSwipedRight = currentUser.swipeRight!.contains(user.id);
             bool isMatch = currentUser.matches!.contains(user.id);
+
             bool isWithinAgeRange =
                 user.age >= currentUser.ageRangePreference![0] &&
                     user.age <= currentUser.ageRangePreference![1];
@@ -82,6 +88,71 @@ class DatabaseRepository extends BaseDatabaseRepository {
         ).toList();
       },
     );
+  }
+
+  @override
+  Stream<List<Match>> getMatches(User user) {
+    
+    return Rx.combineLatest3(
+      getUser(user.id!),
+      getChats(user.id!),
+      getUsers(user),
+      (
+        User user,
+        List<Chat> userChats,
+        List<User> otherUsers,
+      ) {
+        return otherUsers.where(
+          (otherUser) {
+            List<String> matches = user.matches!
+                .map((match) => match['matchId'] as String)
+                .toList();
+            return matches.contains(otherUser.id);
+          },
+        ).map(
+          (matchUser) {
+            Chat chat = userChats.where(
+              (chat) {
+                return chat.userIds.contains(matchUser.id) &
+                    chat.userIds.contains(user.id);
+              },
+            ).first;
+
+            return Match(
+              userId: user.id!,
+              matchUser: matchUser,
+              chat: chat,
+            );
+          },
+        ).toList();
+      },
+    );
+  }
+
+  @override
+  Future<void> createUser(User user) async {
+    await _firebaseFirestore.collection('users').doc(user.id).set(user.toMap());
+  }
+
+  @override
+  Future<void> updateUser(User user) async {
+    return _firebaseFirestore
+        .collection('users')
+        .doc(user.id)
+        .update(user.toMap())
+        .then(
+          (value) => print('User document updated.'),
+        );
+  }
+
+  @override
+  Future<void> updateUserPictures(User user, String imageName) async {
+    String downloadUrl =
+        await StorageRepository().getDownloadURL(user, imageName);
+
+    return _firebaseFirestore.collection('users').doc(user.id).update({
+      'imageUrls': FieldValue.arrayUnion([downloadUrl])
+    });
   }
 
   @override
@@ -102,33 +173,52 @@ class DatabaseRepository extends BaseDatabaseRepository {
   }
 
   @override
-  Future<void> updateUserMatch(String userId, String matchId) async {
-    // update the current user document
-    await _firebaseFirestore.collection('users').doc(userId).update({
-      'matches': FieldValue.arrayUnion([matchId])
-    });
+  Future<void> updateUserMatch(
+    String userId,
+    String matchId,
+  ) async {
+    // Create a document in the chat collection to store the messages.
+    String chatId = await _firebaseFirestore.collection('chats').add({
+      'userIds': [userId, matchId],
+      'messages': [],
+    }).then((value) => value.id);
 
-    // add the match in the other user docment
+    // Add the match into the current user document.
+    await _firebaseFirestore.collection('users').doc(userId).update({
+      'matches': FieldValue.arrayUnion([
+        {
+          'matchId': matchId,
+          'chatId': chatId,
+        }
+      ])
+    });
+    // Add the match into the other user document.
     await _firebaseFirestore.collection('users').doc(matchId).update({
-      'matches': FieldValue.arrayUnion([userId])
+      'matches': FieldValue.arrayUnion([
+        {
+          'matchId': userId,
+          'chatId': chatId,
+        }
+      ])
     });
   }
 
   @override
-  Stream<List<Match>> getMatches(User user) {
-    return Rx.combineLatest2(
-      getUser(user.id!),
-      getUsers(user),
-      (
-        User currentUser,
-        List<User> users,
-      ) {
-        return users
-            .where((user) => currentUser.matches!.contains(user.id))
-            .map((user) => Match(userId: user.id!, matchedUser: user))
-            .toList();
-      },
-    );
+  Future<void> addMessage(String chatId, Message message) {
+    return _firebaseFirestore.collection('chats').doc(chatId).update({
+      'messages': FieldValue.arrayUnion(
+        [
+          // Message(
+          //   senderId: message.senderId,
+          //   receiverId: message.receiverId,
+          //   message: message.message,
+          //   dateTime: message.dateTime,
+          //   timeString: message.timeString,
+          // ).toJson()
+          message.toJson(),
+        ],
+      )
+    });
   }
 
   _selectGender(User user) {

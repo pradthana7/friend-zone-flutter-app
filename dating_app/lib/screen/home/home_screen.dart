@@ -1,6 +1,8 @@
 import 'package:dating_app/blocs/auth/auth_bloc.dart';
 import 'package:dating_app/blocs/swipe/swipe_bloc.dart';
 import 'package:dating_app/models/models.dart';
+import 'package:dating_app/screen/chat/chat_screen.dart';
+import 'package:dating_app/screen/matches/matches_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../repositories/repositories.dart';
@@ -33,6 +35,7 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<SwipeBloc, SwipeState>(
       builder: (context, state) {
         if (state is SwipeLoading) {
+          print('state is SwipeLoading');
           return Scaffold(
             appBar: CustomAppBar(title: 'F-R-I-E-N-D-S'),
             body: Center(
@@ -41,9 +44,11 @@ class HomeScreen extends StatelessWidget {
           );
         }
         if (state is SwipeLoaded) {
+          print('state is SwipeLoaded');
           return SwipeLoadedHomeScreen(state: state);
         }
         if (state is SwipeMatched) {
+          print('state is SwipeMatched');
           return SwipeMatchedHomeScreen(state: state);
         }
         if (state is SwipeError) {
@@ -170,11 +175,11 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Congrats, it\'s a match!',
-                style: Theme.of(context).textTheme.headlineMedium),
+                style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 20),
             Text(
               'You and ${state.user.name} have liked each other!',
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontWeight: FontWeight.normal,
                   ),
             ),
@@ -228,7 +233,9 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
               beginColor: Colors.white,
               endColor: Colors.white,
               textColor: Theme.of(context).primaryColor,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, MatchesScreen.routeName);
+              },
             ),
             const SizedBox(height: 10),
             CustomElevatedButton(

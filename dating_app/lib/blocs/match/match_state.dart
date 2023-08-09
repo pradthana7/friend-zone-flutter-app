@@ -18,4 +18,6 @@ class MatchLoaded extends MatchState {
   List<Object> get props => [matches];
 }
 
-class MatchUnavailable extends MatchState {}
+class MatchUnavailable extends MatchState {
+  
+}

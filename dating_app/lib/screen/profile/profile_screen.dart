@@ -105,10 +105,12 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       CustomElevatedButton(
                         text: 'View',
-                        beginColor:
-                            state.isEditingOn ? Colors.white : Colors.blue,
-                        endColor:
-                            state.isEditingOn ? Colors.white : Colors.pink,
+                        beginColor: state.isEditingOn
+                            ? Colors.white
+                            : Colors.lightBlueAccent,
+                        endColor: state.isEditingOn
+                            ? Colors.white
+                            : Colors.pinkAccent,
                         textColor:
                             state.isEditingOn ? Colors.blue : Colors.white,
                         width: MediaQuery.of(context).size.width * 0.45,
@@ -123,12 +125,14 @@ class ProfileScreen extends StatelessWidget {
                       SizedBox(width: 10),
                       CustomElevatedButton(
                         text: 'Edit',
-                        beginColor:
-                            state.isEditingOn ? Colors.white : Colors.blue,
-                        endColor:
-                            state.isEditingOn ? Colors.white : Colors.pink,
+                        beginColor: state.isEditingOn
+                            ? Colors.lightBlueAccent
+                            : Colors.white,
+                        endColor: state.isEditingOn
+                            ? Colors.pinkAccent
+                            : Colors.white,
                         textColor:
-                            state.isEditingOn ? Colors.blue : Colors.white,
+                            state.isEditingOn ? Colors.white : Colors.blue,
                         width: MediaQuery.of(context).size.width * 0.45,
                         onPressed: () {
                           context.read<ProfileBloc>().add(
@@ -226,9 +230,9 @@ class _TextField extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 8),
           state.isEditingOn
               ? CustomTextField(
                   initialValue: value,
@@ -236,8 +240,8 @@ class _TextField extends StatelessWidget {
                 )
               : Text(
                   value,
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        height: 1.5,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        height: 1,
                       ),
                 ),
           SizedBox(height: 10),
@@ -262,7 +266,7 @@ class _Pictures extends StatelessWidget {
           children: [
             Text(
               'Pictures',
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
@@ -307,7 +311,7 @@ class _Interests extends StatelessWidget {
           children: [
             Text(
               'Interest',
-              style: Theme.of(context).textTheme.headline3,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             Row(
               children: [

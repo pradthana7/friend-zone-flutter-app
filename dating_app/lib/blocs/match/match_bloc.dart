@@ -13,8 +13,9 @@ class MatchBloc extends Bloc<MatchEvent, MatchState> {
   final DatabaseRepository _databaseRepository;
   StreamSubscription? _databaseSubscription;
 
-  MatchBloc({required DatabaseRepository databaseRepository})
-      : _databaseRepository = databaseRepository,
+  MatchBloc({
+    required DatabaseRepository databaseRepository,
+  })  : _databaseRepository = databaseRepository,
         super(MatchLoading()) {
     on<LoadMatches>(_onLoadMatches);
     on<UpdateMatches>(_onUpdateMatches);
@@ -34,9 +35,10 @@ class MatchBloc extends Bloc<MatchEvent, MatchState> {
     UpdateMatches event,
     Emitter<MatchState> emit,
   ) {
-    if (event.matchedUsers.length == 0) {
+    if (event.matchedUsers.isEmpty) {
       emit(MatchUnavailable());
     } else {
+      print('inOnUpdateUser do MatchLoaded');
       emit(MatchLoaded(matches: event.matchedUsers));
     }
   }
