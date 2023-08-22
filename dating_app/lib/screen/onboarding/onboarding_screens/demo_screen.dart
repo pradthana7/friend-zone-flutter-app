@@ -6,7 +6,7 @@ import '../../screens.dart';
 import '/blocs/blocs.dart';
 import '/screen/onboarding/widgets/widgets.dart';
 
-class Demo extends StatelessWidget {
+class Demo extends StatefulWidget {
   const Demo({
     Key? key,
     required this.state,
@@ -15,100 +15,96 @@ class Demo extends StatelessWidget {
   final OnboardingLoaded state;
 
   @override
+  _DemoState createState() => _DemoState();
+}
+
+class _DemoState extends State<Demo> {
+  bool isCheckboxSelected = false; // Keep track of checkbox selection
+  bool isAgeValid = false; // Keep track of age validation
+
+  @override
   Widget build(BuildContext context) {
     return OnboardingScreenLayout(
       currentStep: 3,
-      onPressed: () {
-        context
-            .read<OnboardingBloc>()
-            .add(ContinueOnboarding(user: state.user));
-      },
+      onPressed: isCheckboxSelected && isAgeValid // Disable button if checkbox or age is not valid
+          ? () {
+              context
+                  .read<OnboardingBloc>()
+                  .add(ContinueOnboarding(user: widget.state.user));
+            }
+          : null, // Set to null to disable the button
       children: [
         CustomTextHeader(text: 'What\'s Your Name?'),
-        SizedBox(height: 20),
+         SizedBox(height: 20),
         CustomTextField(
           hint: 'ENTER YOUR NAME',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
-                    user: state.user.copyWith(name: value),
+                    user: widget.state.user.copyWith(name: value),
                   ),
                 );
           },
         ),
         SizedBox(height: 50),
-        CustomTextHeader(text: 'What\'s Your Gender?'),
-        SizedBox(height: 20),
         CustomCheckbox(
-          text: 'MALE',
-          value: state.user.gender == 'Male',
+          text: 'Male',
+          value: widget.state.user.gender == 'Male',
           onChanged: (bool? newValue) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
-                    user: state.user.copyWith(gender: 'Male'),
+                    user: widget.state.user.copyWith(gender: 'Male'),
                   ),
                 );
+            setState(() {
+              isCheckboxSelected = true; // Update the checkbox selection status
+            });
           },
         ),
         CustomCheckbox(
-          text: 'FEMALE',
-          value: state.user.gender == 'Female',
+          text: 'Female',
+          value: widget.state.user.gender == 'Female',
           onChanged: (bool? newValue) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
-                    user: state.user.copyWith(gender: 'Female'),
+                    user: widget.state.user.copyWith(gender: 'Female'),
                   ),
                 );
+            setState(() {
+              isCheckboxSelected = true; // Update the checkbox selection status
+            });
+          },
+        ),
+        CustomCheckbox(
+          text: 'Rather not say',
+          value: widget.state.user.gender == 'Other',
+          onChanged: (bool? newValue) {
+            context.read<OnboardingBloc>().add(
+                  UpdateUser(
+                    user: widget.state.user.copyWith(gender: 'Other'),
+                  ),
+                );
+            setState(() {
+              isCheckboxSelected = true; // Update the checkbox selection status
+            });
           },
         ),
         SizedBox(height: 50),
         CustomTextHeader(text: 'What\'s Your Age?'),
         CustomTextField(
-          hint: 'ENTER YOUR AGE',
+          hint: 'At least 18 years old',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
-                    user: state.user.copyWith(age: int.parse(value)),
+                    user: widget.state.user.copyWith(age: int.parse(value)),
                   ),
                 );
+            setState(() {
+              isAgeValid = int.tryParse(value) != null && int.parse(value) >= 18; // Update the age validation status with a null check
+            });
           },
         ),
       ],
     );
-    // Padding(
-    //   padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //     mainAxisSize: MainAxisSize.max,
-    //     children: [
-    //       Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-
-    //           SizedBox(height: 100)
-    //         ],
-    //       ),
-    //       Align(
-    //         alignment: Alignment.bottomCenter,
-    //         child: Column(
-    //           children: [
-    //             StepProgressIndicator(
-    //               totalSteps: 6,
-    //               currentStep: 3,
-    //               selectedColor: Theme.of(context).primaryColor,
-    //               unselectedColor: Theme.of(context).backgroundColor,
-    //             ),
-    //             SizedBox(height: 10),
-    //             CustomButton(
-    //               text: 'NEXT',
-    //               onPressed:
-
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }

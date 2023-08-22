@@ -51,8 +51,10 @@ dependencies:
   firebase_database: ^10.2.3
   rxdart: ^0.27.7
   geolocator: ^9.0.2
+  chips_choice: ^3.0.0
   form_inputs:
     path: packages/form_inputs
+  flutter_chips_input: ^2.0.0
  
 
 dev_dependencies:

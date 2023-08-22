@@ -219,7 +219,7 @@ class DatabaseRepository extends BaseDatabaseRepository {
 
   _selectGender(User user) {
     if (user.genderPreference!.isEmpty) {
-      return ['Male', 'Female'];
+      return ['Male', 'Female','Other'];
     }
     return user.genderPreference;
   }

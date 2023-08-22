@@ -80,8 +80,9 @@ class SettingsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     _GenderPreference(),
+                    SizedBox(height: 10),
                     _AgeRangePreference(),
                   ],
                 ),
@@ -328,6 +329,47 @@ class _GenderPreference extends StatelessWidget {
                 ),
                 Text(
                   'Woman',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Checkbox(
+                  value: state.user.genderPreference!.contains('Other'),
+                  onChanged: (value) {
+                    if (state.user.genderPreference!.contains('Other')) {
+                      context.read<ProfileBloc>().add(
+                            UpdateUserProfile(
+                              user: state.user.copyWith(
+                                genderPreference:
+                                    List.from(state.user.genderPreference!)
+                                      ..remove('Other'),
+                              ),
+                            ),
+                          );
+                      context.read<ProfileBloc>().add(
+                            SaveProfile(user: state.user),
+                          );
+                    } else {
+                      context.read<ProfileBloc>().add(
+                            UpdateUserProfile(
+                              user: state.user.copyWith(
+                                genderPreference:
+                                    List.from(state.user.genderPreference!)
+                                      ..add('Other'),
+                              ),
+                            ),
+                          );
+                      context.read<ProfileBloc>().add(
+                            SaveProfile(user: state.user),
+                          );
+                    }
+                  },
+                  visualDensity: VisualDensity.compact,
+                ),
+                Text(
+                  'Rather not say',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],

@@ -47,8 +47,8 @@ class User extends Equatable {
     swipeLeft: [],
     swipeRight: [],
     matches: [],
-    ageRangePreference: [18, 50],
-    genderPreference: ['Male', 'Female'],
+    ageRangePreference: [18, 100],
+    genderPreference: ['Male', 'Female','Other'],
   );
 
   

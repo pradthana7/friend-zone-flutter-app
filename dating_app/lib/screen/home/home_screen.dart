@@ -120,7 +120,7 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 60),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
                   onTap: () {
@@ -138,17 +138,10 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
                       ..add(SwipeRight(user: state.users[0]));
                   },
                   child: ChoiceButton(
-                    width: 70,
-                    height: 70,
-                    size: 30,
                     hasGradient: true,
                     color: Color.fromARGB(255, 255, 255, 255),
                     icon: Icons.favorite_outlined,
                   ),
-                ),
-                ChoiceButton(
-                  color: Colors.grey.shade700,
-                  icon: Icons.watch_later,
                 ),
               ],
             ),

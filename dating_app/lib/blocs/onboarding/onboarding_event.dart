@@ -55,3 +55,5 @@ class UpdateUserImages extends OnboardingEvent {
   @override
   List<Object?> get props => [user, image];
 }
+
+

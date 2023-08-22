@@ -3,7 +3,9 @@ import 'package:dating_app/blocs/swipe/swipe_bloc.dart';
 import 'package:dating_app/widgets/user_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../blocs/blocs.dart';
 import '../../models/user_model.dart';
+import '../../repositories/repositories.dart';
 import '../../widgets/widgets.dart';
 
 class UsersScreen extends StatelessWidget {
@@ -12,7 +14,16 @@ class UsersScreen extends StatelessWidget {
   static Route route({required User user}) {
     return MaterialPageRoute(
       settings: RouteSettings(name: routeName),
-      builder: (context) => UsersScreen(user: user),
+      builder: (context) {
+        print(BlocProvider.of<AuthBloc>(context).state.status);
+        return BlocProvider<SwipeBloc>(
+          create: (context) => SwipeBloc(
+            authBloc: context.read<AuthBloc>(),
+            databaseRepository: context.read<DatabaseRepository>(),
+          )..add(LoadUsers()),
+          child: UsersScreen(user: user),
+        );
+      },
     );
   }
 
@@ -69,42 +80,23 @@ class UsersScreen extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   context.read<SwipeBloc>()
-                                    ..add(SwipeRight(user: state.users[0]));
-                                  Navigator.pop(context);
-                                  print('Swiped Right');
+                                    ..add(SwipeLeft(user: state.users[0]));
                                 },
                                 child: ChoiceButton(
-                                  width: 60,
-                                  height: 60,
-                                  size: 25,
-                                  hasGradient: false,
-                                  color: Colors.blueAccent,
-                                  icon: Icons.clear_rounded,
+                                  color: Colors.red.shade300,
+                                  icon: Icons.clear,
                                 ),
                               ),
                               InkWell(
                                 onTap: () {
                                   context.read<SwipeBloc>()
                                     ..add(SwipeRight(user: state.users[0]));
-                                  Navigator.pop(context);
-                                  print('Swiped Left');
                                 },
                                 child: ChoiceButton(
-                                  width: 80,
-                                  height: 80,
-                                  size: 30,
-                                  color: Colors.white,
                                   hasGradient: true,
-                                  icon: Icons.favorite,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  icon: Icons.favorite_outlined,
                                 ),
-                              ),
-                              ChoiceButton(
-                                width: 60,
-                                height: 60,
-                                size: 25,
-                                hasGradient: false,
-                                color: Theme.of(context).primaryColor,
-                                icon: Icons.watch_later,
                               ),
                             ],
                           );
@@ -125,46 +117,42 @@ class UsersScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('${user.name}, ${user.age}',
-                    style: Theme.of(context).textTheme.headline2),
+                    style: Theme.of(context).textTheme.titleLarge),
                 Text(
                   user.jobTitle,
                   style: Theme.of(context)
                       .textTheme
-                      .headline3!
+                      .bodyLarge!
                       .copyWith(fontWeight: FontWeight.normal),
                 ),
                 SizedBox(height: 15),
-                Text('About', style: Theme.of(context).textTheme.headline3),
+                Text('About', style: Theme.of(context).textTheme.titleLarge),
                 Text(user.bio,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .copyWith(height: 2)),
                 SizedBox(height: 15),
-                Text('Interests', style: Theme.of(context).textTheme.headline3),
-                Row(
-                  children: user.interests
-                      .map((interest) => Container(
-                            padding: const EdgeInsets.all(8.0),
-                            margin: const EdgeInsets.only(top: 5.0, right: 5.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              gradient: LinearGradient(
-                                colors: [
-                                  Theme.of(context).primaryColor,
-                                  Colors.blueAccent,
-                                ],
-                              ),
-                            ),
-                            child: Text(
-                              interest,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ))
-                      .toList(),
+                SizedBox(height: 15),
+                Text('Interests',
+                    style: Theme.of(context).textTheme.titleLarge),
+                SizedBox(height: 10),
+                Container(
+                  height: 40, // Adjust the height as needed
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: user.interests.length,
+                    itemBuilder: (context, index) {
+                      final interest = user.interests[index];
+                      return Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        child: Chip(
+                          label: Text(interest),
+                          // You can also customize the chip's appearance here
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

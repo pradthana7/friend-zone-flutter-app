@@ -1,19 +1,16 @@
-import 'package:dating_app/blocs/auth/auth_bloc.dart';
+import 'package:chips_choice/chips_choice.dart';
 
 import 'package:dating_app/repositories/auth/auth_repository.dart';
 import 'package:dating_app/repositories/database/database_repository.dart';
-import 'package:dating_app/screen/login/login_screen.dart';
-import 'package:dating_app/screen/matches/matches_screen.dart';
-import 'package:dating_app/screen/onboarding/onboarding_screen.dart';
+
 import 'package:dating_app/screen/onboarding/widgets/custom_text_field.dart';
 import 'package:dating_app/screen/screens.dart';
-import 'package:dating_app/widgets/custom_appbar.dart';
+
 import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
-import '../../models/user_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const String routeName = '/profile';
@@ -306,21 +303,81 @@ class _Interests extends StatelessWidget {
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         state as ProfileLoaded;
+
+        List<String> interests = [
+          'Music',
+          'Sports',
+          'Travel',
+          'Food',
+          'Photography',
+          'Art',
+          'Movies',
+          'Reading',
+          'Gaming',
+          'Fashion',
+          'Fitness',
+          'Cooking',
+          'Technology',
+          'Dancing',
+          'Nature',
+          'Writing',
+          'Yoga',
+          'History',
+          'Cars',
+          'Pets',
+          'Computer Engineering'
+        ];
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Interest',
+              'Interests',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            Row(
-              children: [
-                CustomTextContainer(text: 'MUSIC'),
-                CustomTextContainer(text: 'ECONOMICS'),
-                CustomTextContainer(text: 'FOOTBALL'),
-              ],
-            ),
             SizedBox(height: 10),
+            Container(
+              
+              width: double.infinity, // Set a maximum width for ChipsChoice
+              child: Wrap(
+                spacing: 8.0,
+                runSpacing: 8.0,
+                children: [
+                  state.isEditingOn
+                      ? ChipsChoice<dynamic>.multiple(
+                          value: state.user.interests,
+                          onChanged: (val) {
+                            context.read<ProfileBloc>().add(
+                                  UpdateUserProfile(
+                                    user: state.user.copyWith(interests: val),
+                                  ),
+                                );
+                          },
+                          choiceItems: C2Choice.listFrom<String, String>(
+                            source: interests,
+                            value: (i, v) => v,
+                            label: (i, v) => v,
+                            tooltip: (i, v) => v,
+                          ),
+                          choiceCheckmark: true,
+                          choiceStyle: C2ChipStyle.outlined(),
+                        )
+                      : Container(
+                          // Wrap Wrap in a Container to ensure it's a Widget
+                          
+                          child: Wrap(
+                            spacing: 6.0,
+                            runSpacing: 0.0,
+                            children: state.user.interests.map((interest) {
+                              return Chip(
+                                label: Text(interest),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                ],
+              ),
+            ),
           ],
         );
       },
@@ -350,7 +407,7 @@ class _SignOut extends StatelessWidget {
                   'Sign Out',
                   style: Theme.of(context)
                       .textTheme
-                      .headline5!
+                      .headlineMedium!
                       .copyWith(color: Theme.of(context).primaryColor),
                 ),
               ),

@@ -1,18 +1,26 @@
+
+import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../screens.dart';
-import '/screen/onboarding/widgets/widgets.dart';
 import '/blocs/blocs.dart';
+import '/screen/onboarding/widgets/widgets.dart';
 
-class Bio extends StatelessWidget {
+class Bio extends StatefulWidget {
   Bio({
     Key? key,
     required this.state,
   }) : super(key: key);
 
   final OnboardingLoaded state;
+
+  @override
+  _BioState createState() => _BioState();
+}
+
+class _BioState extends State<Bio> {
+  List<String> selectedInterests = []; // Store selected interests here
 
   final List<String> interests = [
     'Music',
@@ -35,16 +43,19 @@ class Bio extends StatelessWidget {
     'History',
     'Cars',
     'Pets',
+    'Computer Engineering'
   ];
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return OnboardingScreenLayout(
       currentStep: 5,
       onPressed: () {
         context
             .read<OnboardingBloc>()
-            .add(ContinueOnboarding(user: state.user));
+            .add(ContinueOnboarding(user: widget.state.user));
       },
       children: [
         CustomTextHeader(text: 'Describe Yourself'),
@@ -53,7 +64,7 @@ class Bio extends StatelessWidget {
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
-                    user: state.user.copyWith(bio: value),
+                    user: widget.state.user.copyWith(bio: value),
                   ),
                 );
           },
@@ -65,66 +76,35 @@ class Bio extends StatelessWidget {
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
-                    user: state.user.copyWith(jobTitle: value),
+                    user: widget.state.user.copyWith(jobTitle: value),
                   ),
                 );
           },
         ),
         SizedBox(height: 50),
         CustomTextHeader(text: 'What Do You Like?'),
-        Container(
-          height: 500, // Set a fixed height to limit scrollable area
-          child: GridView.builder(
-            // Disable scrolling
-          physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 5.0,
-              mainAxisSpacing: 0.3,
-              childAspectRatio: 1.7, // Adjust this value to control item size
-            ),
-            itemCount: interests.length,
-            itemBuilder: (context, index) {
-              return CustomTextContainer(text: interests[index]);
-            },
+        ChipsChoice<String>.multiple(
+          value: selectedInterests,
+          onChanged: (val) {
+            setState(() {
+              selectedInterests = val;
+            });
+            context.read<OnboardingBloc>().add(
+                  UpdateUser(
+                    user: widget.state.user.copyWith(interests: val),
+                  ),
+                );
+          },
+          choiceItems: C2Choice.listFrom<String, String>(
+            source: interests,
+            value: (i, v) => v,
+            label: (i, v) => v,
+            tooltip: (i, v) => v,
           ),
+          choiceCheckmark: true,
+          choiceStyle: C2ChipStyle.outlined(),
         ),
       ],
     );
-    //  Padding(
-    //   padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50),
-    //   child: Column(
-    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //     mainAxisSize: MainAxisSize.max,
-    //     children: [
-    //       Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-
-    //           SizedBox(height: 20),
-    //         ],
-    //       ),
-    //       Align(
-    //         alignment: Alignment.bottomCenter,
-    //         child: Column(
-    //           children: [
-    //             StepProgressIndicator(
-    //               totalSteps: 6,
-    //               currentStep: 5,
-    //               selectedColor: Theme.of(context).primaryColor,
-    //               unselectedColor: Theme.of(context).backgroundColor,
-    //             ),
-    //             SizedBox(height: 10),
-    //             CustomButton(
-    //               text: 'NEXT',
-    //               onPressed:
-
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }
