@@ -43,22 +43,24 @@ class ChatScreen extends StatelessWidget {
           if (state is ChatLoaded) {
             return Column(
               children: [
-                ListView.builder(
-                  reverse: true,
-                  shrinkWrap: true,
-                  itemCount: state.chat.messages.length,
-                  itemBuilder: (context, index) {
-                    List<Message> messages = state.chat.messages;
-                    return ListTile(
-                      title: _Message(
-                        message: messages[index].message,
-                        isFromCurrentUser: messages[index].senderId ==
-                            context.read<AuthBloc>().state.authUser!.uid,
-                      ),
-                    );
-                  },
+                Expanded(
+                  child: ListView.builder(
+                    reverse: true,
+                    shrinkWrap: true,
+                    itemCount: state.chat.messages.length,
+                    itemBuilder: (context, index) {
+                      List<Message> messages = state.chat.messages;
+                      return ListTile(
+                        title: _Message(
+                          message: messages[index].message,
+                          isFromCurrentUser: messages[index].senderId ==
+                              context.read<AuthBloc>().state.authUser!.uid,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-                Spacer(),
+                // const Spacer(flex: 1),
                 _MessageInput(match: match)
               ],
             );
@@ -83,6 +85,20 @@ class _MessageInput extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
 
+    void sendMessage() {
+      if (controller.text.isNotEmpty) {
+        context.read<ChatBloc>()
+          ..add(
+            AddMessage(
+              userId: match.userId,
+              matchUserId: match.matchUser.id!,
+              message: controller.text,
+            ),
+          );
+        controller.clear();
+      }
+    }
+
     return Container(
       padding: const EdgeInsets.all(20.0),
       height: 100,
@@ -94,30 +110,22 @@ class _MessageInput extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
             child: IconButton(
-              icon: Icon(Icons.send_outlined),
-              onPressed: () {
-                print(match);
-                context.read<ChatBloc>()
-                  ..add(
-                    AddMessage(
-                      userId: match.userId,
-                      matchUserId: match.matchUser.id!,
-                      message: controller.text,
-                    ),
-                  );
-                controller.clear();
-              },
+              icon: Icon(Icons.send_rounded),
+              onPressed: sendMessage,
               color: Colors.white,
             ),
           ),
           Expanded(
             child: TextField(
               controller: controller,
+              onSubmitted: (_) {
+                sendMessage();
+              },
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                hintText: 'Type here...',
-                contentPadding: EdgeInsets.only(left: 20, bottom: 5, top: 5),
+                hintText: 'Message',
+                contentPadding: EdgeInsets.only(left: 16, bottom: 5, top: 5),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                 ),
@@ -148,7 +156,7 @@ class _Message extends StatelessWidget {
     AlignmentGeometry alignment =
         isFromCurrentUser ? Alignment.topRight : Alignment.topLeft;
     Color color = isFromCurrentUser
-        ? Theme.of(context).backgroundColor
+        ? Theme.of(context).colorScheme.background
         : Theme.of(context).primaryColor;
     TextStyle? textStyle = isFromCurrentUser
         ? Theme.of(context).textTheme.bodyMedium
@@ -184,15 +192,16 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       elevation: 0,
       iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-      title: Column(
+      title: Row(
         children: [
           CircleAvatar(
             radius: 15,
             backgroundImage: NetworkImage(match.matchUser.imageUrls[0]),
           ),
+          SizedBox(width: 10),
           Text(
             match.matchUser.name,
             style: Theme.of(context).textTheme.bodyLarge,

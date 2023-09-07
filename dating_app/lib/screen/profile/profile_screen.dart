@@ -335,7 +335,7 @@ class _Interests extends StatelessWidget {
               'Interests',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
             Container(
               
               width: double.infinity, // Set a maximum width for ChipsChoice

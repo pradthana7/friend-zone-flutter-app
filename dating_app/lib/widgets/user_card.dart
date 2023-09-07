@@ -52,8 +52,12 @@ class UserCard extends StatelessWidget {
                     ),
                     Text(
                       user.jobTitle,
-                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: Colors.white, fontWeight: FontWeight.normal),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal),
                     ),
                     SizedBox(
                       height: 70,
@@ -68,19 +72,7 @@ class UserCard extends StatelessWidget {
                                     margin:
                                         const EdgeInsets.only(top: 8, right: 8),
                                   )
-                                : Container(
-                                    width: 35,
-                                    height: 35,
-                                    child: Icon(
-                                      Icons.info_outline_rounded,
-                                      size: 25,
-                                      color: Colors.grey.shade700,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                    ),
-                                  );
+                                : Container();
                           }),
                     ),
                   ],

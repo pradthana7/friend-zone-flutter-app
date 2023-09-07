@@ -1,4 +1,3 @@
-
 import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,8 +47,6 @@ class _BioState extends State<Bio> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return OnboardingScreenLayout(
       currentStep: 5,
       onPressed: () {
