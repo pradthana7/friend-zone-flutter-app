@@ -45,7 +45,7 @@ class OnboardingScreen extends StatelessWidget {
     Tab(text: 'Demographics'),
     Tab(text: 'Pictures'),
     Tab(text: 'Biography'),
-    Tab(text: 'Location'),
+    // Tab(text: 'Location'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class OnboardingScreen extends StatelessWidget {
             .add(StartOnboarding(tabController: tabController));
         return Scaffold(
           appBar: CustomAppBar(
-            title: 'F-R-I-E-N-D-S',
+            title: 'Friend Zone',
             hasActions: false,
           ),
           body: Padding(
@@ -83,7 +83,7 @@ class OnboardingScreen extends StatelessWidget {
                     Demo(state: state),
                     Pictures(state: state),
                     Bio(state: state),
-                    Location(state: state),
+                    // Location(state: state),
                   ],
                 );
               } else {
@@ -97,13 +97,69 @@ class OnboardingScreen extends StatelessWidget {
   }
 }
 
+// class OnboardingScreenLayout extends StatelessWidget {
+//   const OnboardingScreenLayout(
+//       {Key? key,
+//       required this.currentStep,
+//       required this.onPressed,
+//       required this.children})
+//       : super(key: key);
+
+//   final int currentStep;
+//   final Function()? onPressed;
+//   final List<Widget> children;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return LayoutBuilder(
+//       builder: ((context, constraints) {
+//         return SingleChildScrollView(
+//           child: ConstrainedBox(
+//             constraints: BoxConstraints(
+//               minHeight: constraints.maxHeight,
+//               minWidth: constraints.maxHeight,
+//             ),
+//             child: IntrinsicHeight(
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   ...children,
+//                   Spacer(),
+//                   SizedBox(
+//                     height: 75,
+//                     child: Column(
+//                       children: [
+//                         StepProgressIndicator(
+//                           totalSteps: 5,
+//                           currentStep: currentStep,
+//                           selectedColor: Colors.blue,
+//                           unselectedColor: Colors.grey,
+//                         ),
+//                         SizedBox(height: 10),
+//                         CustomButton(
+//                           text: 'NEXT',
+//                           onPressed: onPressed,
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         );
+//       }),
+//     );
+//   }
+// }
+
 class OnboardingScreenLayout extends StatelessWidget {
-  const OnboardingScreenLayout(
-      {Key? key,
-      required this.currentStep,
-      required this.onPressed,
-      required this.children})
-      : super(key: key);
+  const OnboardingScreenLayout({
+    Key? key,
+    required this.currentStep,
+    required this.onPressed,
+    required this.children,
+  }) : super(key: key);
 
   final int currentStep;
   final Function()? onPressed;
@@ -111,45 +167,35 @@ class OnboardingScreenLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: ((context, constraints) {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight,
-              minWidth: constraints.maxHeight,
-            ),
-            child: IntrinsicHeight(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ...children,
-                  Spacer(),
-                  SizedBox(
-                    height: 75,
-                    child: Column(
-                      children: [
-                        StepProgressIndicator(
-                          totalSteps: 6,
-                          currentStep: currentStep,
-                          selectedColor: Theme.of(context).primaryColor,
-                          unselectedColor: Theme.of(context).disabledColor,
-                        ),
-                        SizedBox(height: 10),
-                        CustomButton(
-                          text: 'NEXT',
-                          onPressed: onPressed,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: children,
             ),
           ),
-        );
-      }),
+        ),
+        StepProgressIndicator(
+          totalSteps: 5,
+          currentStep: currentStep,
+          selectedColor: Colors.blue,
+          unselectedColor: Colors.grey,
+        ),
+        SizedBox(height: 10),
+        CustomButton(
+          text: 'NEXT',
+          onPressed: onPressed,
+        ),
+      ],
     );
   }
 }
+
+
+
+
+
+
 

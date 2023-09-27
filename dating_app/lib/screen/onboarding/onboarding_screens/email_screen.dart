@@ -21,12 +21,13 @@ class Email extends StatelessWidget {
     return OnboardingScreenLayout(
       currentStep: 2,
       children: [
-        CustomTextHeader(text: 'What\'s Your Email?'),
+        const CustomTextHeader(text: 'Email'),
+        const SizedBox(height: 20.0),
         BlocBuilder<SignupCubit, SignupState>(
           buildWhen: (previous, current) => previous.email != current.email,
           builder: (context, state) {
             return CustomTextField(
-              hint: 'ENTER YOUR EMAIL',
+              hint: 'enter your email',
               errorText: state.email.invalid ? 'The email is invalid.' : null,
               onChanged: (value) {
                 context.read<SignupCubit>().emailChanged(value);
@@ -34,14 +35,15 @@ class Email extends StatelessWidget {
             );
           },
         ),
-        SizedBox(height: 50),
-        CustomTextHeader(text: 'Choose a Password'),
+        const SizedBox(height: 50.0),
+        const CustomTextHeader(text: 'Set your password'),
+        const SizedBox(height: 20.0),
         BlocBuilder<SignupCubit, SignupState>(
           buildWhen: (previous, current) =>
               previous.password != current.password,
           builder: (context, state) {
             return CustomTextField(
-              hint: 'ENTER YOUR PASSWORD',
+              hint: 'password',
               errorText: state.password.invalid
                   ? 'The password must contain at least 8 characters.'
                   : null,
@@ -67,7 +69,7 @@ class Email extends StatelessWidget {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Check your email and password'),
+              content: Text('Check your email or password'),
             ),
           );
         }

@@ -2,6 +2,7 @@ import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../widgets/widgets.dart';
 import '../../screens.dart';
 import '/blocs/blocs.dart';
 import '/screen/onboarding/widgets/widgets.dart';
@@ -50,14 +51,13 @@ class _BioState extends State<Bio> {
     return OnboardingScreenLayout(
       currentStep: 5,
       onPressed: () {
-        context
-            .read<OnboardingBloc>()
-            .add(ContinueOnboarding(user: widget.state.user));
+        Navigator.pushNamed(context, HomeScreen.routeName);
       },
       children: [
-        CustomTextHeader(text: 'Describe Yourself'),
+        const CustomTextHeader(text: 'About Me'),
+        const SizedBox(height: 20.0),
         CustomTextField(
-          hint: 'ENTER YOUR BIO',
+          hint: 'I am beatiful...',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
@@ -68,8 +68,9 @@ class _BioState extends State<Bio> {
         ),
         SizedBox(height: 50),
         CustomTextHeader(text: 'What do you do?'),
+        const SizedBox(height: 20.0),
         CustomTextField(
-          hint: 'ENTER YOUR JOB',
+          hint: 'Software Engineer',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
@@ -78,28 +79,34 @@ class _BioState extends State<Bio> {
                 );
           },
         ),
-        SizedBox(height: 50),
-        CustomTextHeader(text: 'What Do You Like?'),
-        ChipsChoice<String>.multiple(
-          value: selectedInterests,
-          onChanged: (val) {
-            setState(() {
-              selectedInterests = val;
-            });
-            context.read<OnboardingBloc>().add(
-                  UpdateUser(
-                    user: widget.state.user.copyWith(interests: val),
-                  ),
-                );
-          },
-          choiceItems: C2Choice.listFrom<String, String>(
-            source: interests,
-            value: (i, v) => v,
-            label: (i, v) => v,
-            tooltip: (i, v) => v,
-          ),
-          choiceCheckmark: true,
-          choiceStyle: C2ChipStyle.outlined(),
+        const SizedBox(height: 50),
+        const CustomTextHeader(text: 'Interests'),
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 8.0,
+          children: [
+            ChipsChoice<String>.multiple(
+              value: selectedInterests,
+              onChanged: (val) {
+                setState(() {
+                  selectedInterests = val;
+                });
+                context.read<OnboardingBloc>().add(
+                      UpdateUser(
+                        user: widget.state.user.copyWith(interests: val),
+                      ),
+                    );
+              },
+              choiceItems: C2Choice.listFrom<String, String>(
+                source: interests,
+                value: (i, v) => v,
+                label: (i, v) => v,
+                tooltip: (i, v) => v,
+              ),
+              choiceCheckmark: true,
+              choiceStyle: C2ChipStyle.outlined(),
+            ),
+          ],
         ),
       ],
     );

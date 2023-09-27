@@ -59,6 +59,11 @@ class UsersScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                InkWell(
+                  onDoubleTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
@@ -74,39 +79,14 @@ class UsersScreen extends StatelessWidget {
                           );
                         }
                         if (state is SwipeLoaded) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  context.read<SwipeBloc>()
-                                    ..add(SwipeLeft(user: state.users[0]));
-                                },
-                                child: ChoiceButton(
-                                  color: Colors.red.shade300,
-                                  icon: Icons.clear,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  context.read<SwipeBloc>()
-                                    ..add(SwipeRight(user: state.users[0]));
-                                },
-                                child: ChoiceButton(
-                                  hasGradient: true,
-                                  color: Color.fromARGB(255, 255, 255, 255),
-                                  icon: Icons.favorite_outlined,
-                                ),
-                              ),
-                            ],
-                          );
+                          return Text('🐳🌛🌛🌛🤌🏽🤌🏽🤌🏽🤌🏽🤌🏽🤌🏽🤌🏽🌜🌜🌜🐳');
                         } else {
                           return Text('Something went wrong.');
                         }
                       },
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -132,7 +112,6 @@ class UsersScreen extends StatelessWidget {
                         .textTheme
                         .bodyLarge!
                         .copyWith(height: 2)),
-                SizedBox(height: 15),
                 SizedBox(height: 15),
                 Text('Interests',
                     style: Theme.of(context).textTheme.titleLarge),

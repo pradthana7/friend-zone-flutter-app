@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../repositories/repositories.dart';
 import '../../widgets/widgets.dart';
 import '../login/login_screen.dart';
+import '../screens.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String routeName = '/';
@@ -37,7 +38,7 @@ class HomeScreen extends StatelessWidget {
         if (state is SwipeLoading) {
           print('state is SwipeLoading');
           return Scaffold(
-            appBar: CustomAppBar(title: 'F-R-I-E-N-D-S'),
+            appBar: CustomAppBar(title: 'Friend Zone'),
             body: Center(
               child: CircularProgressIndicator(),
             ),
@@ -53,12 +54,12 @@ class HomeScreen extends StatelessWidget {
         }
         if (state is SwipeError) {
           return Scaffold(
-            appBar: CustomAppBar(title: 'F-R-I-E-N-D-S'),
+            appBar: CustomAppBar(title: 'Friend Zone'),
             body: Center(
               child: Align(
                 child: Center(
                   child: Text(
-                    'There aren\'t any more users.',
+                    'No new profiles matching your filters🔎.',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ),
@@ -67,7 +68,7 @@ class HomeScreen extends StatelessWidget {
           );
         } else {
           return Scaffold(
-            appBar: CustomAppBar(title: 'F-R-I-E-N-D-S'),
+            appBar: CustomAppBar(title: 'Friend Zone'),
             body: Center(
               child: Text('Something went wrong.'),
             ),
@@ -89,13 +90,25 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userCount = state.users.length;
+    List<dynamic> dynamicImageUrls = state.users[0].imageUrls;
+    List<String> ImageUrls = dynamicImageUrls.map((item) => item.toString()).toList();
     return Scaffold(
-      appBar: CustomAppBar(title: 'F-R-I-E-N-D-S'),
+      appBar: CustomAppBar(title: 'Friend Zone'),
       body: Column(
         children: [
           InkWell(
             onDoubleTap: () {
               Navigator.pushNamed(context, '/users', arguments: state.users[0]);
+            },
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LargeImage(
+                    imageUrls: ImageUrls,
+                  ),
+                ),
+              );
             },
             child: Draggable<User>(
               data: state.users[0],

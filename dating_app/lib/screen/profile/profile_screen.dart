@@ -41,10 +41,10 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'PROFILE',
+        title: 'Profile',
         actioinsIcons: [
           Icons.message,
-          Icons.settings,
+          Icons.filter_alt_rounded,
         ],
         actionsRoutes: [
           MatchesScreen.routeName,
@@ -61,44 +61,45 @@ class ProfileScreen extends StatelessWidget {
           }
 
           if (state is ProfileLoaded) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 10),
-                UserImage.medium(
-                  url: state.user
-                      .imageUrls[0], //it'll be error when it has no a pic(s)
-                  child: Container(
-                    height: MediaQuery.of(context).size.height / 4,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      gradient: LinearGradient(
-                        colors: [
-                          Theme.of(context).primaryColor.withOpacity(0.1),
-                          Theme.of(context).primaryColor.withOpacity(0.9),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 10),
+                  UserImage.medium(
+                    url: state.user
+                        .imageUrls[0], //it'll be error when it has no a pic(s)
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 4,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.grey.shade700.withOpacity(0.3),
+                            Colors.black.withOpacity(0.3),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
                       ),
-                    ),
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 40),
-                        child: Text(
-                          state.user.name,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineMedium!
-                              .copyWith(color: Colors.white),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 40),
+                          child: Text(
+                            state.user.name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .copyWith(color: Colors.white),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
+                  SizedBox(height: 20),
+                  Row(
                     children: [
                       CustomElevatedButton(
                         text: 'View',
@@ -141,61 +142,61 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _TextField(
-                        title: 'Biography',
-                        value: state.user.bio,
-                        onchanged: (value) {
-                          context.read<ProfileBloc>().add(
-                                UpdateUserProfile(
-                                  user: state.user.copyWith(bio: value),
-                                ),
-                              );
-                        },
-                      ),
-                      _TextField(
-                        title: 'Age',
-                        value: '${state.user.age}',
-                        onchanged: (value) {
-                          if (value == null) {
-                            return;
-                          }
-                          if (value == '') {
-                            return;
-                          }
-
-                          context.read<ProfileBloc>().add(
-                                UpdateUserProfile(
-                                  user: state.user.copyWith(
-                                    age: int.parse(value),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _TextField(
+                          title: 'Biography',
+                          value: state.user.bio,
+                          onchanged: (value) {
+                            context.read<ProfileBloc>().add(
+                                  UpdateUserProfile(
+                                    user: state.user.copyWith(bio: value),
                                   ),
-                                ),
-                              );
-                        },
-                      ),
-                      _TextField(
-                        title: 'Job Title',
-                        value: state.user.jobTitle,
-                        onchanged: (value) {
-                          context.read<ProfileBloc>().add(
-                                UpdateUserProfile(
-                                  user: state.user.copyWith(jobTitle: value),
-                                ),
-                              );
-                        },
-                      ),
-                      _Pictures(),
-                      _Interests(),
-                      _SignOut(),
-                    ],
+                                );
+                          },
+                        ),
+                        _TextField(
+                          title: 'Age',
+                          value: '${state.user.age}',
+                          onchanged: (value) {
+                            if (value == null) {
+                              return;
+                            }
+                            if (value == '') {
+                              return;
+                            }
+            
+                            context.read<ProfileBloc>().add(
+                                  UpdateUserProfile(
+                                    user: state.user.copyWith(
+                                      age: int.parse(value),
+                                    ),
+                                  ),
+                                );
+                          },
+                        ),
+                        _TextField(
+                          title: 'Job Title',
+                          value: state.user.jobTitle,
+                          onchanged: (value) {
+                            context.read<ProfileBloc>().add(
+                                  UpdateUserProfile(
+                                    user: state.user.copyWith(jobTitle: value),
+                                  ),
+                                );
+                          },
+                        ),
+                        _Pictures(),
+                        _Interests(),
+                        _SignOut(),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           } else {
             return Text('Something went wrong');
@@ -390,6 +391,7 @@ class _SignOut extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileBloc, ProfileState>(
@@ -403,12 +405,7 @@ class _SignOut extends StatelessWidget {
                 RepositoryProvider.of<AuthRepository>(context).signOut();
               },
               child: Center(
-                child: Text(
-                  'Sign Out',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium!
-                      .copyWith(color: Theme.of(context).primaryColor),
+                child: Icon(logout, size: 24, color: Colors.red[300],
                 ),
               ),
             ),

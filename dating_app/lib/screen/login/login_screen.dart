@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'F-R-I-E-N-D-S',
+        title: 'Friend Zone',
         hasActions: false,
       ),
       body: BlocListener<LoginCubit, LoginState>(

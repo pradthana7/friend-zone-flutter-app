@@ -23,7 +23,7 @@ class Start extends StatelessWidget {
           child: SvgPicture.asset('assets/threefriends.svg'),
         ),
         Text(
-          'Welcome To F-R-I-E-N-D-S',
+          'Welcome To Friend Zone',
           style: Theme.of(context).textTheme.titleLarge,
         ),
         SizedBox(height: 10),
