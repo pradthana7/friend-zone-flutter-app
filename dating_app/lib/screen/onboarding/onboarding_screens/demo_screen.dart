@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../screens.dart';
 import '/blocs/blocs.dart';
@@ -33,11 +32,12 @@ class _DemoState extends State<Demo> {
                   .add(ContinueOnboarding(user: widget.state.user));
             }
           : null, // Set to null to disable the button
+      
       children: [
-        CustomTextHeader(text: 'What\'s Your Name?'),
-         SizedBox(height: 20),
+        const CustomTextHeader(text: 'What\'s Your Name?'),
+         const SizedBox(height: 20),
         CustomTextField(
-          hint: 'ENTER YOUR NAME',
+          hint: 'enter your name',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
@@ -46,7 +46,7 @@ class _DemoState extends State<Demo> {
                 );
           },
         ),
-        SizedBox(height: 50),
+        const SizedBox(height: 50),
         CustomCheckbox(
           text: 'Male',
           value: widget.state.user.gender == 'Male',
@@ -89,8 +89,9 @@ class _DemoState extends State<Demo> {
             });
           },
         ),
-        SizedBox(height: 50),
-        CustomTextHeader(text: 'What\'s Your Age?'),
+        const SizedBox(height: 50),
+        const CustomTextHeader(text: 'How old are you?'),
+        const SizedBox(height: 20.0),
         CustomTextField(
           hint: 'At least 18 years old',
           onChanged: (value) {

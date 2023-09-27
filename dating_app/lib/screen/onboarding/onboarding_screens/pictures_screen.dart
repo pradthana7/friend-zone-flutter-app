@@ -103,6 +103,7 @@ class _PicturesState extends State<Pictures> {
                   .add(ContinueOnboarding(user: widget.state.user));
             }
           : null, // Set to null to disable the button
+      
       children: [
         CustomTextHeader(text: 'Add  Picture(s)'),
         SizedBox(height: 20),

@@ -36,7 +36,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'SETTINGS'),
+      appBar: CustomAppBar(title: 'Filter'),
       body: SingleChildScrollView(
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
@@ -49,37 +49,6 @@ class SettingsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      padding: const EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).primaryColor.withAlpha(50),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: Offset(2, 2),
-                          ),
-                        ],
-                        gradient: LinearGradient(
-                          colors: [
-                            Theme.of(context).primaryColor,
-                            Colors.green,
-                          ],
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Set Up your Preferences',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ),
                     SizedBox(height: 20),
                     _GenderPreference(),
                     SizedBox(height: 10),
@@ -97,70 +66,6 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-// class _DistancePreference extends StatelessWidget {
-//   const _DistancePreference({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<ProfileBloc, ProfileState>(
-//       builder: (context, state) {
-//         state as ProfileLoaded;
-//         return Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               'Maximum Distance',
-//               style: Theme.of(context).textTheme.headline3,
-//             ),
-//             Row(
-//               children: [
-//                 Expanded(
-//                   child: Slider(
-//                     value: state.user.distancePreference!.toDouble(),
-//                     min: 0,
-//                     max: 100,
-//                     activeColor: Theme.of(context).primaryColor,
-//                     inactiveColor: Theme.of(context).primaryColor,
-//                     onChanged: (value) {
-//                       context.read<ProfileBloc>().add(
-//                             UpdateUserProfile(
-//                               user: state.user.copyWith(
-//                                 distancePreference: value.toInt(),
-//                               ),
-//                             ),
-//                           );
-//                     },
-//                     onChangeEnd: (double newValue) {
-//                       print('Ended change on $newValue');
-//                       context.read<ProfileBloc>().add(
-//                             SaveProfile(
-//                               user: state.user.copyWith(
-//                                 distancePreference: newValue.toInt(),
-//                               ),
-//                             ),
-//                           );
-//                     },
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   width: 50,
-//                   child: Text(
-//                     '${state.user.distancePreference!} km',
-//                     style: Theme.of(context).textTheme.headline6,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: 10),
-//           ],
-//         );
-//       },
-//     );
-//   }
-// }
-
 class _AgeRangePreference extends StatelessWidget {
   const _AgeRangePreference({
     Key? key,
@@ -175,7 +80,7 @@ class _AgeRangePreference extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Age Range',
+              'Age',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Row(
@@ -188,8 +93,8 @@ class _AgeRangePreference extends StatelessWidget {
                     ),
                     min: 18,
                     max: 100,
-                    activeColor: Theme.of(context).primaryColor,
-                    inactiveColor: Theme.of(context).primaryColor,
+                    activeColor: Colors.blue[400],
+                    inactiveColor: Colors.blue[200],
                     onChanged: (rangeValues) {
                       context.read<ProfileBloc>().add(
                             UpdateUserProfile(
@@ -218,7 +123,7 @@ class _AgeRangePreference extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 50,
+                  width: 60,
                   child: Text(
                     '${state.user.ageRangePreference![0]} - ${state.user.ageRangePreference![1]}',
                     style: Theme.of(context).textTheme.titleMedium,
@@ -255,6 +160,7 @@ class _GenderPreference extends StatelessWidget {
               children: [
                 Checkbox(
                   value: state.user.genderPreference!.contains('Male'),
+                  activeColor: Colors.blue[400],
                   onChanged: (value) {
                     if (state.user.genderPreference!.contains('Male')) {
                       context.read<ProfileBloc>().add(
@@ -295,6 +201,7 @@ class _GenderPreference extends StatelessWidget {
             Row(
               children: [
                 Checkbox(
+                  activeColor: Colors.blue[400],
                   value: state.user.genderPreference!.contains('Female'),
                   onChanged: (value) {
                     if (state.user.genderPreference!.contains('Female')) {
@@ -337,6 +244,7 @@ class _GenderPreference extends StatelessWidget {
               children: [
                 Checkbox(
                   value: state.user.genderPreference!.contains('Other'),
+                  activeColor: Colors.blue[400],
                   onChanged: (value) {
                     if (state.user.genderPreference!.contains('Other')) {
                       context.read<ProfileBloc>().add(

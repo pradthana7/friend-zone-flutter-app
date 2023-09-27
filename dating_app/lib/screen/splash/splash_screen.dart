@@ -55,7 +55,7 @@ class SplashScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'F-R-I-E-N-D-S',
+                    'Friend Zone',
                     style: Theme.of(context).textTheme.headlineLarge,
                   )
                 ],

@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
          
         ],
         child: MaterialApp(
-          title: 'F-R-I-E-N-D-S',
+          title: 'Friend Zone',
           debugShowCheckedModeBanner: false,
           // theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,

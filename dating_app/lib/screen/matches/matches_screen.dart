@@ -27,7 +27,7 @@ class MatchesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'MATCHES'),
+      appBar: CustomAppBar(title: 'Matches'),
       body: BlocBuilder<MatchBloc, MatchState>(
         builder: (context, state) {
           if (state is MatchLoading) {
@@ -51,7 +51,7 @@ class MatchesScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'NEW MATCHES',
+                      'New Matches',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     inactiveMatches.isEmpty
@@ -67,7 +67,7 @@ class MatchesScreen extends StatelessWidget {
                             ))
                         : MatchesList(inactiveMatches: inactiveMatches),
                     Text(
-                      'MESSAGES',
+                      'Messages',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     ChatsList(activeMatches: activeMatches)
