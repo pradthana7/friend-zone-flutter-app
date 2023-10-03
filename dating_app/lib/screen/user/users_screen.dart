@@ -36,6 +36,7 @@ class UsersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).primaryColorDark,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -79,7 +80,7 @@ class UsersScreen extends StatelessWidget {
                           );
                         }
                         if (state is SwipeLoaded) {
-                          return Text('🐳🌛🌛🌛🤌🏽🤌🏽🤌🏽🤌🏽🤌🏽🤌🏽🤌🏽🌜🌜🌜🐳');
+                          return Text('𖤓☀️⋆⁺₊⋆ ☀︎ ⋆⁺₊⋆☾☼☾⋆｡𖦹 °✩⛅');
                         } else {
                           return Text('Something went wrong.');
                         }
@@ -116,23 +117,34 @@ class UsersScreen extends StatelessWidget {
                 Text('Interests',
                     style: Theme.of(context).textTheme.titleLarge),
                 SizedBox(height: 10),
+                // Container(
+                //   height: 40, // Adjust the height as needed
+                //   child: ListView.builder(
+                //     scrollDirection: Axis.horizontal,
+                //     itemCount: user.interests.length,
+                //     itemBuilder: (context, index) {
+                //       final interest = user.interests[index];
+                //       return Padding(
+                //         padding: EdgeInsets.only(right: 6),
+                //         child: Chip(
+                //           label: Text(interest),
+                //           // You can also customize the chip's appearance here
+                //         ),
+                //       );
+                //     },
+                //   ),
+                // ),
                 Container(
-                  height: 40, // Adjust the height as needed
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: user.interests.length,
-                    itemBuilder: (context, index) {
-                      final interest = user.interests[index];
-                      return Padding(
-                        padding: EdgeInsets.only(right: 10),
-                        child: Chip(
-                          label: Text(interest),
-                          // You can also customize the chip's appearance here
+                          child: Wrap(
+                            spacing: 2.0,
+                            runSpacing: 2.0,
+                            children: user.interests.map((interest) {
+                              return Chip(
+                                label: Text(interest),
+                              );
+                            }).toList(),
+                          ),
                         ),
-                      );
-                    },
-                  ),
-                ),
               ],
             ),
           ),

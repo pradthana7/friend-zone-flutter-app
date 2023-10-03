@@ -3,25 +3,21 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final void Function()? onPressed;
+  
 
   CustomButton({
     Key? key,
-    required this.text,
-    this.onPressed,
+    required this.text, this.onPressed,
+    
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        gradient: LinearGradient(
-          colors: [
-            Colors.green,
-            Theme.of(context).primaryColor,
-          ],
-        ),
-      ),
+          borderRadius: BorderRadius.circular(16),
+          
+          color: Theme.of(context).primaryColor),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -29,13 +25,13 @@ class CustomButton extends StatelessWidget {
           elevation: 0,
         ),
         child: Container(
-          width: double.infinity,
+          width: 150,
           child: Center(
             child: Text(
               text,
               style: Theme.of(context)
                   .textTheme
-                  .titleLarge!
+                  .titleMedium!
                   .copyWith(color: Colors.white),
             ),
           ),

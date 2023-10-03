@@ -103,12 +103,13 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       CustomElevatedButton(
                         text: 'View',
-                        beginColor: state.isEditingOn
-                            ? Colors.white
-                            : Colors.lightBlueAccent,
-                        endColor: state.isEditingOn
-                            ? Colors.white
-                            : Colors.pinkAccent,
+                        color: Theme.of(context).primaryColor,
+                        // beginColor: state.isEditingOn
+                        //     ? Colors.white
+                        //     : Colors.lightBlueAccent,
+                        // endColor: state.isEditingOn
+                        //     ? Colors.white
+                        //     : Colors.pinkAccent,
                         textColor:
                             state.isEditingOn ? Colors.blue : Colors.white,
                         width: MediaQuery.of(context).size.width * 0.45,
@@ -123,12 +124,13 @@ class ProfileScreen extends StatelessWidget {
                       SizedBox(width: 10),
                       CustomElevatedButton(
                         text: 'Edit',
-                        beginColor: state.isEditingOn
-                            ? Colors.lightBlueAccent
-                            : Colors.white,
-                        endColor: state.isEditingOn
-                            ? Colors.pinkAccent
-                            : Colors.white,
+                        color: Theme.of(context).primaryColor,
+                        // beginColor: state.isEditingOn
+                        //     ? Colors.lightBlueAccent
+                        //     : Colors.white,
+                        // endColor: state.isEditingOn
+                        //     ? Colors.pinkAccent
+                        //     : Colors.white,
                         textColor:
                             state.isEditingOn ? Colors.white : Colors.blue,
                         width: MediaQuery.of(context).size.width * 0.45,
@@ -168,7 +170,7 @@ class ProfileScreen extends StatelessWidget {
                             if (value == '') {
                               return;
                             }
-            
+
                             context.read<ProfileBloc>().add(
                                   UpdateUserProfile(
                                     user: state.user.copyWith(
@@ -338,7 +340,6 @@ class _Interests extends StatelessWidget {
             ),
             SizedBox(height: 5),
             Container(
-              
               width: double.infinity, // Set a maximum width for ChipsChoice
               child: Wrap(
                 spacing: 8.0,
@@ -346,6 +347,7 @@ class _Interests extends StatelessWidget {
                 children: [
                   state.isEditingOn
                       ? ChipsChoice<dynamic>.multiple(
+                          wrapped: true,
                           value: state.user.interests,
                           onChanged: (val) {
                             context.read<ProfileBloc>().add(
@@ -361,14 +363,16 @@ class _Interests extends StatelessWidget {
                             tooltip: (i, v) => v,
                           ),
                           choiceCheckmark: true,
-                          choiceStyle: C2ChipStyle.outlined(),
+                          choiceStyle: C2ChipStyle(
+                            checkmarkColor: Colors.red.shade400,
+                            backgroundColor: Colors.red,
+                            checkmarkWeight: 1.5,
+                          ),
                         )
                       : Container(
-                          // Wrap Wrap in a Container to ensure it's a Widget
-                          
                           child: Wrap(
-                            spacing: 6.0,
-                            runSpacing: 0.0,
+                            spacing: 2.0,
+                            runSpacing: 2.0,
                             children: state.user.interests.map((interest) {
                               return Chip(
                                 label: Text(interest),
@@ -405,7 +409,10 @@ class _SignOut extends StatelessWidget {
                 RepositoryProvider.of<AuthRepository>(context).signOut();
               },
               child: Center(
-                child: Icon(logout, size: 24, color: Colors.red[300],
+                child: Icon(
+                  logout,
+                  size: 24,
+                  color: Colors.red[300],
                 ),
               ),
             ),

@@ -1,7 +1,5 @@
-// import 'dart:js';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/blocs/blocs.dart';
+import 'package:dating_app/config/theme.dart';
 import 'package:dating_app/cubits/signup/signup_cubit.dart';
 import 'package:dating_app/repositories/auth/auth_repository.dart';
 import 'package:dating_app/repositories/database/database_repository.dart';
@@ -9,9 +7,9 @@ import 'package:dating_app/repositories/storage/storage_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
+
 import 'onboarding_screens/screens.dart';
-import 'widgets/widgets.dart';
+import 'widgets/dot_step_indicator.dart';
 
 class OnboardingScreen extends StatelessWidget {
   static const String routeName = '/onboarding';
@@ -41,11 +39,9 @@ class OnboardingScreen extends StatelessWidget {
   static const List<Tab> tabs = <Tab>[
     Tab(text: 'Start'),
     Tab(text: 'Email'),
-    // Tab(text: 'Email Verification'),
     Tab(text: 'Demographics'),
     Tab(text: 'Pictures'),
     Tab(text: 'Biography'),
-    // Tab(text: 'Location'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -59,7 +55,7 @@ class OnboardingScreen extends StatelessWidget {
             .add(StartOnboarding(tabController: tabController));
         return Scaffold(
           appBar: CustomAppBar(
-            title: 'Friend Zone',
+            title: '',
             hasActions: false,
           ),
           body: Padding(
@@ -79,11 +75,9 @@ class OnboardingScreen extends StatelessWidget {
                   children: [
                     Start(state: state),
                     Email(state: state),
-                    // EmailVerification(),
                     Demo(state: state),
                     Pictures(state: state),
                     Bio(state: state),
-                    // Location(state: state),
                   ],
                 );
               } else {
@@ -98,12 +92,12 @@ class OnboardingScreen extends StatelessWidget {
 }
 
 // class OnboardingScreenLayout extends StatelessWidget {
-//   const OnboardingScreenLayout(
-//       {Key? key,
-//       required this.currentStep,
-//       required this.onPressed,
-//       required this.children})
-//       : super(key: key);
+//   const OnboardingScreenLayout({
+//     Key? key,
+//     required this.currentStep,
+//     required this.onPressed,
+//     required this.children,
+//   }) : super(key: key);
 
 //   final int currentStep;
 //   final Function()? onPressed;
@@ -111,44 +105,29 @@ class OnboardingScreen extends StatelessWidget {
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return LayoutBuilder(
-//       builder: ((context, constraints) {
-//         return SingleChildScrollView(
-//           child: ConstrainedBox(
-//             constraints: BoxConstraints(
-//               minHeight: constraints.maxHeight,
-//               minWidth: constraints.maxHeight,
-//             ),
-//             child: IntrinsicHeight(
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   ...children,
-//                   Spacer(),
-//                   SizedBox(
-//                     height: 75,
-//                     child: Column(
-//                       children: [
-//                         StepProgressIndicator(
-//                           totalSteps: 5,
-//                           currentStep: currentStep,
-//                           selectedColor: Colors.blue,
-//                           unselectedColor: Colors.grey,
-//                         ),
-//                         SizedBox(height: 10),
-//                         CustomButton(
-//                           text: 'NEXT',
-//                           onPressed: onPressed,
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
+//     return Column(
+//       children: [
+//         Expanded(
+//           child: SingleChildScrollView(
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: children,
 //             ),
 //           ),
-//         );
-//       }),
+//         ),
+//         StepProgressIndicator(
+//           roundedEdges: Radius.circular(20),
+//           totalSteps: 5,
+//           currentStep: currentStep,
+//           selectedColor: Theme.of(context).primaryColorDark,
+//           unselectedColor: Theme.of(context).primaryColorLight,
+//         ),
+//         SizedBox(height: 10),
+//         CustomButton(
+//           text: 'next',
+//           onPressed: onPressed, alignment: Alignment.bottomCenter,
+//         ),
+//       ],
 //     );
 //   }
 // }
@@ -177,25 +156,31 @@ class OnboardingScreenLayout extends StatelessWidget {
             ),
           ),
         ),
-        StepProgressIndicator(
-          totalSteps: 5,
-          currentStep: currentStep,
-          selectedColor: Colors.blue,
-          unselectedColor: Colors.grey,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            DotStepIndicator(
+              totalSteps: 5,
+              currentStep: currentStep,
+            ),
+            if (currentStep > 1)
+              // IconButton(
+              //   onPressed: onPressed,
+              //   icon: Icon(Icons.arrow_right_alt_rounded),
+              //   color: Color.fromARGB(255, 155, 113, 54),
+              //   iconSize: 40,
+              // )
+              TextButton(
+                onPressed: onPressed,
+                child: Text(
+                  'Next',
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 25),
+                ),
+              )
+          ],
         ),
         SizedBox(height: 10),
-        CustomButton(
-          text: 'NEXT',
-          onPressed: onPressed,
-        ),
       ],
     );
   }
 }
-
-
-
-
-
-
-

@@ -93,8 +93,8 @@ class _AgeRangePreference extends StatelessWidget {
                     ),
                     min: 18,
                     max: 100,
-                    activeColor: Colors.blue[400],
-                    inactiveColor: Colors.blue[200],
+                    activeColor: Theme.of(context).primaryColor,
+                    inactiveColor: Theme.of(context).primaryColorLight,
                     onChanged: (rangeValues) {
                       context.read<ProfileBloc>().add(
                             UpdateUserProfile(
@@ -160,7 +160,7 @@ class _GenderPreference extends StatelessWidget {
               children: [
                 Checkbox(
                   value: state.user.genderPreference!.contains('Male'),
-                  activeColor: Colors.blue[400],
+                  activeColor: Theme.of(context).primaryColor,
                   onChanged: (value) {
                     if (state.user.genderPreference!.contains('Male')) {
                       context.read<ProfileBloc>().add(
@@ -201,7 +201,7 @@ class _GenderPreference extends StatelessWidget {
             Row(
               children: [
                 Checkbox(
-                  activeColor: Colors.blue[400],
+                  activeColor: Theme.of(context).primaryColor,
                   value: state.user.genderPreference!.contains('Female'),
                   onChanged: (value) {
                     if (state.user.genderPreference!.contains('Female')) {
@@ -244,7 +244,7 @@ class _GenderPreference extends StatelessWidget {
               children: [
                 Checkbox(
                   value: state.user.genderPreference!.contains('Other'),
-                  activeColor: Colors.blue[400],
+                  activeColor: Theme.of(context).primaryColor,
                   onChanged: (value) {
                     if (state.user.genderPreference!.contains('Other')) {
                       context.read<ProfileBloc>().add(

@@ -19,13 +19,11 @@ class CustomCheckbox extends StatelessWidget {
         Checkbox(
           value: value,
           onChanged: onChanged,
+          activeColor: Theme.of(context).primaryColor,
         ),
         Text(
           text,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(fontWeight: FontWeight.normal),
+          style: Theme.of(context).textTheme.titleMedium,
         )
       ],
     );

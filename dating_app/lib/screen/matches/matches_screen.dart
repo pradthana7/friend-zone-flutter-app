@@ -89,8 +89,9 @@ class MatchesScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   CustomElevatedButton(
                     text: 'Back To Swiping',
-                    beginColor: Color.fromARGB(255, 115, 211, 144),
-                    endColor: Theme.of(context).primaryColor,
+                    // beginColor: Color.fromARGB(255, 115, 211, 144),
+                    // endColor: Theme.of(context).primaryColor,
+                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
                     onPressed: () {
                       Navigator.pop(context);
