@@ -33,11 +33,12 @@ class _DemoState extends State<Demo> {
             }
           : null, // Set to null to disable the button
       
+      
       children: [
         const CustomTextHeader(text: 'What\'s Your Name?'),
          const SizedBox(height: 20),
         CustomTextField(
-          hint: 'enter your name',
+          hintText: 'enter your name',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
@@ -93,7 +94,7 @@ class _DemoState extends State<Demo> {
         const CustomTextHeader(text: 'How old are you?'),
         const SizedBox(height: 20.0),
         CustomTextField(
-          hint: 'At least 18 years old',
+          hintText: 'At least 18 years old',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(

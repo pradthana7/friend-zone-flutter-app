@@ -2,7 +2,6 @@ import 'package:dating_app/blocs/onboarding/onboarding_bloc.dart';
 import 'package:dating_app/screen/onboarding/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
 class Start extends StatelessWidget {
   const Start({
@@ -15,31 +14,30 @@ class Start extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          height: 300,
+          alignment: Alignment.topCenter,
+          height: 250,
           width: 300,
-          child: SvgPicture.asset('assets/threefriends.svg'),
+          child: Image.asset('assets/4friends.png'),
         ),
-        Text(
-          'Welcome To Friend Zone',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        SizedBox(height: 10),
-        Expanded(
-          child: Text(
-            'The correct answer to any question must be based on something that was written in the text or heard in the audio recording.The correct answer to any question must be based on something that was written in the text or heard in the audio recording.',
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(height: 1.5),
+        Padding(
+          padding:
+              const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 30),
+          child: Expanded(
+            child: Text(
+              'Hey there, welcome to FZ App! It\'s the perfect platform for students and young professionals like yourself to meet new people. You can easily show your interest by swiping left or right, and once you match with someone, go ahead and start a friendly chat. Feel free to personalize your profile and set your preferences for gender and age to meet like-minded individuals. So, why wait? Join us today!',
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(height: 1.4),
+            ),
           ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 14),
         CustomButton(
-          text: 'START',
+          text: 'Get Started',
           onPressed: () {
             context
                 .read<OnboardingBloc>()

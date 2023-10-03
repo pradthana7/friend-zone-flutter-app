@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final String text;
-  final Color beginColor;
-  final Color endColor;
+  final Color color;
   final Color textColor;
   final Function()? onPressed;
   final double width;
@@ -11,36 +10,35 @@ class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton(
       {Key? key,
       required this.text,
-      required this.beginColor,
-      required this.endColor,
       required this.textColor,
       required this.onPressed,
-      this.width = 200})
+      this.width = 150,
+      required this.color})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        boxShadow: [
-          BoxShadow(
-            color: Theme.of(context).primaryColor.withAlpha(50),
-            spreadRadius: 2,
-            blurRadius: 2,
-            offset: Offset(2, 2),
-          ),
-        ],
-        gradient: LinearGradient(
-          colors: [beginColor, endColor],
-        ),
-      ),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).primaryColor.withAlpha(50),
+              spreadRadius: 2,
+              blurRadius: 2,
+              offset: Offset(2, 2),
+            ),
+          ],
+          color: color),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-            primary: Colors.transparent,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            backgroundColor: Theme.of(context).primaryColor.withAlpha(50),
             elevation: 0,
-            fixedSize:  Size(width, 40)),
+            fixedSize: Size(width, 40)),
         child: Container(
           width: double.infinity,
           child: Center(
@@ -49,7 +47,7 @@ class CustomElevatedButton extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
-                  .copyWith(color: textColor),
+                  .copyWith(color: textColor, fontSize: 18),
             ),
           ),
         ),

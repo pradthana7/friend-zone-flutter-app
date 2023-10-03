@@ -38,7 +38,7 @@ class HomeScreen extends StatelessWidget {
         if (state is SwipeLoading) {
           print('state is SwipeLoading');
           return Scaffold(
-            appBar: CustomAppBar(title: 'Friend Zone'),
+            appBar: CustomAppBar(title: 'Hey Guys!'),
             body: Center(
               child: CircularProgressIndicator(),
             ),
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
         }
         if (state is SwipeError) {
           return Scaffold(
-            appBar: CustomAppBar(title: 'Friend Zone'),
+            appBar: CustomAppBar(title: 'Hey Guys!'),
             body: Center(
               child: Align(
                 child: Center(
@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
           );
         } else {
           return Scaffold(
-            appBar: CustomAppBar(title: 'Friend Zone'),
+            appBar: CustomAppBar(title: 'Hey Guys!'),
             body: Center(
               child: Text('Something went wrong.'),
             ),
@@ -91,9 +91,10 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var userCount = state.users.length;
     List<dynamic> dynamicImageUrls = state.users[0].imageUrls;
-    List<String> ImageUrls = dynamicImageUrls.map((item) => item.toString()).toList();
+    List<String> ImageUrls =
+        dynamicImageUrls.map((item) => item.toString()).toList();
     return Scaffold(
-      appBar: CustomAppBar(title: 'Friend Zone'),
+      appBar: CustomAppBar(title: 'Hey Guys!'),
       body: Column(
         children: [
           InkWell(
@@ -236,8 +237,9 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             CustomElevatedButton(
               text: 'Send a Message',
-              beginColor: Colors.white,
-              endColor: Colors.white,
+              // beginColor: Colors.white,
+              // endColor: Colors.white,
+              color: Theme.of(context).primaryColor,
               textColor: Theme.of(context).primaryColor,
               onPressed: () {
                 Navigator.pushNamed(context, MatchesScreen.routeName);
@@ -246,8 +248,9 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
             const SizedBox(height: 10),
             CustomElevatedButton(
               text: 'Back To Swiping',
-              beginColor: Theme.of(context).primaryColor,
-              endColor: Color.fromARGB(255, 115, 211, 144),
+              // beginColor: Theme.of(context).primaryColor,
+              // endColor: Color.fromARGB(255, 115, 211, 144),
+              color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () {
                 context.read<SwipeBloc>().add(LoadUsers());

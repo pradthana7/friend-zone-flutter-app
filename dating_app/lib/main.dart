@@ -1,17 +1,15 @@
-import 'package:dating_app/blocs/profile/profile_bloc.dart';
-import 'package:dating_app/screen/home/home_screen.dart';
 import 'package:dating_app/screen/splash/splash_screen.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
 import '/config/app_router.dart';
 import '/blocs/blocs.dart';
+import 'config/theme.dart';
 import 'cubits/cubits.dart';
 import 'repositories/repositories.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +40,6 @@ class MyApp extends StatelessWidget {
               authRepository: context.read<AuthRepository>(),
             ),
           ),
-          
           BlocProvider<LoginCubit>(
             create: (context) =>
                 LoginCubit(authRepository: context.read<AuthRepository>()),
@@ -51,14 +48,10 @@ class MyApp extends StatelessWidget {
             create: (context) =>
                 SignupCubit(authRepository: context.read<AuthRepository>()),
           ),
-          
-          
-         
         ],
         child: MaterialApp(
-          title: 'Friend Zone',
           debugShowCheckedModeBanner: false,
-          // theme: theme(),
+          theme: theme(),
           onGenerateRoute: AppRouter.onGenerateRoute,
           initialRoute: SplashScreen.routeName,
         ),

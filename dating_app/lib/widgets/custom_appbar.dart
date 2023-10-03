@@ -1,13 +1,13 @@
 import 'package:dating_app/screen/matches/matches_screen.dart';
 import 'package:dating_app/screen/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool hasActions;
   final List<IconData> actioinsIcons;
   final List<String> actionsRoutes;
+  final PreferredSizeWidget? bottom;
 
   const CustomAppBar({
     Key? key,
@@ -18,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       MatchesScreen.routeName,
       ProfileScreen.routeName,
     ],
+    this.bottom,
   }) : super(key: key);
 
   @override
@@ -36,9 +37,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Navigator.popAndPushNamed(context, '/');
               },
               child: Container(
-                child: SvgPicture.asset(
-                  'assets/newlogo.svg',
-                  height: 50,
+                child: Image.asset(
+                  'assets/logo.png',
+                  alignment: Alignment.topCenter,
+                  height: 30,
                 ),
               ),
             ),
@@ -77,6 +79,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ]
           : null,
+      bottom: bottom,
     );
   }
 

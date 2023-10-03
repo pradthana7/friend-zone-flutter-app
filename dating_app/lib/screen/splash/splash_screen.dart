@@ -49,8 +49,8 @@ class SplashScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    'assets/newlogo.svg',
+                  Image.asset(
+                    'assets/logo.png',
                     height: 100,
                   ),
                   SizedBox(height: 20),

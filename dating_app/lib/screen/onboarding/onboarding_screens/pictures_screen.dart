@@ -7,74 +7,6 @@ import '../../screens.dart';
 import '/blocs/blocs.dart';
 import '/screen/onboarding/widgets/widgets.dart';
 
-// class Pictures extends StatelessWidget {
-//   const Pictures({
-//     Key? key,
-//     required this.state,
-//   }) : super(key: key);
-
-//   final OnboardingLoaded state;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     var images = state.user.imageUrls;
-//     var imageCount = images.length;
-//     return OnboardingScreenLayout(
-//       currentStep: 4,
-//       onPressed: () {
-//         context
-//             .read<OnboardingBloc>()
-//             .add(ContinueOnboarding(user: state.user));
-//       },
-//       children: [
-//         CustomTextHeader(text: 'Add 2 or More Pictures'),
-//         SizedBox(height: 20),
-//         SizedBox(
-//           height: 400,
-//           child: GridView.builder(
-//             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//               crossAxisCount: 3,
-//               childAspectRatio: 0.66,
-//             ),
-//             itemCount: 6,
-//             itemBuilder: (BuildContext context, int index) {
-//               return (imageCount > index)
-//                   ? UserImage.medium(
-//                       url: images[index],
-//                       border: Border.all(
-//                         width: 1,
-//                         color: Theme.of(context).primaryColor,
-//                       ),
-//                     )
-//                   : AddUserImage(onPressed: () async {
-//                       final XFile? image = await ImagePicker().pickImage(
-//                         source: ImageSource.gallery,
-//                         imageQuality: 50,
-//                       );
-
-//                       if (image == null) {
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                           SnackBar(
-//                             content: Text('No image was selected'),
-//                           ),
-//                         );
-//                       }
-//                       else {
-//                         print('Uploading ...');
-//                         BlocProvider.of<OnboardingBloc>(context).add(
-//                           UpdateUserImages(image: image),
-//                         );
-//                       }
-                      
-//                     });
-//             },
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 class Pictures extends StatefulWidget {
   const Pictures({
     Key? key,
@@ -103,18 +35,18 @@ class _PicturesState extends State<Pictures> {
                   .add(ContinueOnboarding(user: widget.state.user));
             }
           : null, // Set to null to disable the button
-      
+
       children: [
         CustomTextHeader(text: 'Add  Picture(s)'),
         SizedBox(height: 20),
         SizedBox(
-          height: 400,
+          height: 500,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               childAspectRatio: 0.66,
             ),
-            itemCount: 6,
+            itemCount: 9,
             itemBuilder: (BuildContext context, int index) {
               return (imageCount > index)
                   ? UserImage.medium(
@@ -142,7 +74,8 @@ class _PicturesState extends State<Pictures> {
                           UpdateUserImages(image: image),
                         );
                         setState(() {
-                          isImageSelected = true; // Update the image selection status
+                          isImageSelected =
+                              true; // Update the image selection status
                         });
                       }
                     });
@@ -153,4 +86,3 @@ class _PicturesState extends State<Pictures> {
     );
   }
 }
-

@@ -22,15 +22,15 @@ class AddUserImage extends StatelessWidget {
           borderRadius: BorderRadius.circular(5.0),
           border: Border.all(
             width: 1,
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).primaryColorDark,
           ),
         ),
         child: Align(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.topRight,
           child: IconButton(
             icon: Icon(
-              Icons.add_circle,
-              color: Colors.green,
+              Icons.add_a_photo_rounded,
+              color: Theme.of(context).primaryColorDark,
             ),
             onPressed: onPressed,
           ),

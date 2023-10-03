@@ -57,7 +57,7 @@ class _BioState extends State<Bio> {
         const CustomTextHeader(text: 'About Me'),
         const SizedBox(height: 20.0),
         CustomTextField(
-          hint: 'I am beatiful...',
+          hintText: 'I am beatiful...',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
@@ -70,7 +70,7 @@ class _BioState extends State<Bio> {
         CustomTextHeader(text: 'What do you do?'),
         const SizedBox(height: 20.0),
         CustomTextField(
-          hint: 'Software Engineer',
+          hintText: 'Software Engineer',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
@@ -82,10 +82,11 @@ class _BioState extends State<Bio> {
         const SizedBox(height: 50),
         const CustomTextHeader(text: 'Interests'),
         Wrap(
-          spacing: 8.0,
-          runSpacing: 8.0,
+          spacing: 2.0,
+          runSpacing: 2.0,
           children: [
             ChipsChoice<String>.multiple(
+              wrapped: true,
               value: selectedInterests,
               onChanged: (val) {
                 setState(() {
@@ -104,7 +105,11 @@ class _BioState extends State<Bio> {
                 tooltip: (i, v) => v,
               ),
               choiceCheckmark: true,
-              choiceStyle: C2ChipStyle.outlined(),
+              choiceStyle: C2ChipStyle(
+                checkmarkColor: Colors.red.shade400,
+                backgroundColor: Colors.red,
+                checkmarkWeight: 1.5,
+              ),
             ),
           ],
         ),
