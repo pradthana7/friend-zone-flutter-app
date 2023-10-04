@@ -8,6 +8,7 @@ ThemeData theme() {
     primaryColorLight: Color(0xFFDDBEA9),
     focusColor: Color(0xFFC09984),
     scaffoldBackgroundColor: Color(0xFFFDE8D7),
+    canvasColor: Colors.pink.shade100, // color of disable choice chips
     textTheme: GoogleFonts.playTextTheme().copyWith(),
      inputDecorationTheme: const InputDecorationTheme(
       prefixIconColor: Color(0xFF6C6F5C),

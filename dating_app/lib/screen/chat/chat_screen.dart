@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -99,45 +100,46 @@ class _MessageInput extends StatelessWidget {
       }
     }
 
-    return Container(
-      padding: const EdgeInsets.all(20.0),
-      height: 100,
-      child: Row(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Theme.of(context).primaryColor,
+     return Container(
+  padding: const EdgeInsets.all(20.0),
+  height: 80,
+  child: Row(
+    children: [
+      Expanded(
+        child: TextField(
+          
+          controller: controller,
+          onSubmitted: (_) {
+            sendMessage();
+          },
+          decoration: InputDecoration(
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
             ),
-            child: IconButton(
-              icon: Icon(Icons.send_rounded),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
+            ),
+            suffixIcon: IconButton(
               onPressed: sendMessage,
-              color: Colors.white,
+              icon: Icon(Icons.send_rounded),
             ),
+            filled: true,
+            fillColor: Colors.white,
+            hintText: 'Message',
+            contentPadding: EdgeInsets.only(left: 16, bottom: 5, top: 5),
           ),
-          Expanded(
-            child: TextField(
-              controller: controller,
-              onSubmitted: (_) {
-                sendMessage();
-              },
-              decoration: const InputDecoration(
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'Message',
-                contentPadding: EdgeInsets.only(left: 16, bottom: 5, top: 5),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.white),
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
-    );
+    ],
+  ),
+);
+
+
   }
 }
 

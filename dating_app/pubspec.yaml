@@ -52,7 +52,8 @@ dependencies:
   rxdart: ^0.27.7
   google_fonts: ^6.1.0
   story_view: ^0.15.0
-  
+  shared_preferences: ^2.2.1
+  emoji_picker_flutter: ^1.6.1
   chips_choice: ^3.0.0
   form_inputs:
     path: packages/form_inputs

@@ -17,6 +17,8 @@ class CustomCheckbox extends StatelessWidget {
     return Row(
       children: [
         Checkbox(
+          
+          shape: const CircleBorder(),
           value: value,
           onChanged: onChanged,
           activeColor: Theme.of(context).primaryColor,

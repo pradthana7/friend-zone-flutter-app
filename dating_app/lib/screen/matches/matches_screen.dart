@@ -95,7 +95,7 @@ class MatchesScreen extends StatelessWidget {
                     textColor: Colors.white,
                     onPressed: () {
                       Navigator.pop(context);
-                    },
+                    }, fontSize: 16,
                   ),
                 ],
               ),

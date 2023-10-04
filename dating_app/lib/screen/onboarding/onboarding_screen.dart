@@ -164,22 +164,18 @@ class OnboardingScreenLayout extends StatelessWidget {
               currentStep: currentStep,
             ),
             if (currentStep > 1)
-              // IconButton(
-              //   onPressed: onPressed,
-              //   icon: Icon(Icons.arrow_right_alt_rounded),
-              //   color: Color.fromARGB(255, 155, 113, 54),
-              //   iconSize: 40,
-              // )
               TextButton(
                 onPressed: onPressed,
                 child: Text(
-                  'Next',
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(fontSize: 25),
+                  'NEXT',
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Colors.red.shade300,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               )
           ],
         ),
-        SizedBox(height: 10),
       ],
     );
   }
