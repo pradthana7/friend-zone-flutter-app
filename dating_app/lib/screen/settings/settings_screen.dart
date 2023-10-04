@@ -51,7 +51,7 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 20),
                     _GenderPreference(),
-                    SizedBox(height: 10),
+                    SizedBox(height: 30),
                     _AgeRangePreference(),
                   ],
                 ),
@@ -81,7 +81,7 @@ class _AgeRangePreference extends StatelessWidget {
           children: [
             Text(
               'Age',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
             ),
             Row(
               children: [
@@ -153,12 +153,13 @@ class _GenderPreference extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Show me: ',
-              style: Theme.of(context).textTheme.titleMedium,
+              'Gender Selections',
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
             ),
             Row(
               children: [
                 Checkbox(
+                  shape: const CircleBorder(),
                   value: state.user.genderPreference!.contains('Male'),
                   activeColor: Theme.of(context).primaryColor,
                   onChanged: (value) {
@@ -201,6 +202,7 @@ class _GenderPreference extends StatelessWidget {
             Row(
               children: [
                 Checkbox(
+                  shape: const CircleBorder(),
                   activeColor: Theme.of(context).primaryColor,
                   value: state.user.genderPreference!.contains('Female'),
                   onChanged: (value) {
@@ -243,6 +245,7 @@ class _GenderPreference extends StatelessWidget {
             Row(
               children: [
                 Checkbox(
+                  shape: const CircleBorder(),
                   value: state.user.genderPreference!.contains('Other'),
                   activeColor: Theme.of(context).primaryColor,
                   onChanged: (value) {

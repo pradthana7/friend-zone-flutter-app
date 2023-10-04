@@ -13,7 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     required this.title,
     this.hasActions = true,
-    this.actioinsIcons = const [Icons.message, Icons.person],
+    this.actioinsIcons = const [Icons.chat_bubble_outline_rounded, Icons.person_pin_outlined],
     this.actionsRoutes = const [
       MatchesScreen.routeName,
       ProfileScreen.routeName,

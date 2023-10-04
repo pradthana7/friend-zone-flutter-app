@@ -97,7 +97,7 @@ class UsersScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${user.name}, ${user.age}',
+                Text('${user.name} ${user.age}',
                     style: Theme.of(context).textTheme.titleLarge),
                 Text(
                   user.jobTitle,
@@ -107,7 +107,7 @@ class UsersScreen extends StatelessWidget {
                       .copyWith(fontWeight: FontWeight.normal),
                 ),
                 SizedBox(height: 15),
-                Text('About', style: Theme.of(context).textTheme.titleLarge),
+                Text('About Me', style: Theme.of(context).textTheme.titleLarge),
                 Text(user.bio,
                     style: Theme.of(context)
                         .textTheme

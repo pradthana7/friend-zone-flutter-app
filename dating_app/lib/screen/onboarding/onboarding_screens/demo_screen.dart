@@ -94,7 +94,7 @@ class _DemoState extends State<Demo> {
         const CustomTextHeader(text: 'How old are you?'),
         const SizedBox(height: 20.0),
         CustomTextField(
-          hintText: 'At least 18 years old',
+          hintText: '18-100',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(

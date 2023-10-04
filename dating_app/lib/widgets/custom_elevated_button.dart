@@ -4,6 +4,7 @@ class CustomElevatedButton extends StatelessWidget {
   final String text;
   final Color color;
   final Color textColor;
+  final double fontSize;
   final Function()? onPressed;
   final double width;
 
@@ -13,7 +14,7 @@ class CustomElevatedButton extends StatelessWidget {
       required this.textColor,
       required this.onPressed,
       this.width = 150,
-      required this.color})
+      required this.color, required this.fontSize})
       : super(key: key);
 
   @override
@@ -47,7 +48,7 @@ class CustomElevatedButton extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .titleMedium!
-                  .copyWith(color: textColor, fontSize: 18),
+                  .copyWith(color: textColor, fontSize: fontSize),
             ),
           ),
         ),

@@ -107,7 +107,7 @@ class _LoginButton extends StatelessWidget {
                     : ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
                             'Check your emai and password: ${state.status}')));
-              });
+              }, fontSize: 18,);
     });
   }
 }

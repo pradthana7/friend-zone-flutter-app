@@ -44,7 +44,7 @@ class UserCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${user.name}, ${user.age}',
+                      '${user.name} ${user.age}',
                       style: Theme.of(context)
                           .textTheme
                           .headlineMedium!
@@ -54,7 +54,7 @@ class UserCard extends StatelessWidget {
                       user.jobTitle,
                       style: Theme.of(context)
                           .textTheme
-                          .headlineSmall!
+                          .titleLarge!
                           .copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.normal),

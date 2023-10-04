@@ -123,7 +123,7 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
                   context.read<SwipeBloc>()
                     ..add(SwipeLeft(user: state.users[0]));
                   print('Swiped Left');
-                } else {
+                } else if(drag.velocity.pixelsPerSecond.dx > 0) {
                   context.read<SwipeBloc>()
                     ..add(SwipeRight(user: state.users[0]));
                   print('Swiped Right');
@@ -143,7 +143,7 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
                   },
                   child: ChoiceButton(
                     color: Colors.red.shade300,
-                    icon: Icons.clear,
+                    icon: Icons.thumb_down_alt_rounded,
                   ),
                 ),
                 InkWell(
@@ -152,9 +152,9 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
                       ..add(SwipeRight(user: state.users[0]));
                   },
                   child: ChoiceButton(
-                    hasGradient: true,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    icon: Icons.favorite_outlined,
+                    hasGradient: false,
+                    color: Colors.blue.shade300,
+                    icon: Icons.thumb_up_off_alt_rounded,
                   ),
                 ),
               ],
@@ -219,7 +219,7 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color.fromARGB(255, 115, 211, 144),
+                      Colors.pink.shade300,
                           Theme.of(context).primaryColor
                         ],
                       ),
@@ -237,24 +237,22 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             CustomElevatedButton(
               text: 'Send a Message',
-              // beginColor: Colors.white,
-              // endColor: Colors.white,
+              
               color: Theme.of(context).primaryColor,
-              textColor: Theme.of(context).primaryColor,
+              textColor: Colors.white,
               onPressed: () {
                 Navigator.pushNamed(context, MatchesScreen.routeName);
-              },
+              }, fontSize: 16,
             ),
             const SizedBox(height: 10),
             CustomElevatedButton(
               text: 'Back To Swiping',
-              // beginColor: Theme.of(context).primaryColor,
-              // endColor: Color.fromARGB(255, 115, 211, 144),
+              
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () {
                 context.read<SwipeBloc>().add(LoadUsers());
-              },
+              }, fontSize: 16,
             ),
           ],
         ),
@@ -262,3 +260,8 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

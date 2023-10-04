@@ -12,6 +12,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
 
+import '../profile/logout.dart';
+import 'interests.dart';
+
 class ProfileScreen extends StatelessWidget {
   static const String routeName = '/profile';
 
@@ -43,8 +46,8 @@ class ProfileScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: 'Profile',
         actioinsIcons: [
-          Icons.message,
-          Icons.filter_alt_rounded,
+          Icons.chat_bubble_outline_rounded,
+          Icons.filter_center_focus,
         ],
         actionsRoutes: [
           MatchesScreen.routeName,
@@ -61,147 +64,208 @@ class ProfileScreen extends StatelessWidget {
           }
 
           if (state is ProfileLoaded) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 10),
-                  UserImage.medium(
-                    url: state.user
-                        .imageUrls[0], //it'll be error when it has no a pic(s)
-                    child: Container(
-                      height: MediaQuery.of(context).size.height / 4,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.grey.shade700.withOpacity(0.3),
-                            Colors.black.withOpacity(0.3),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 40),
-                          child: Text(
-                            state.user.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ),
+            return Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      CustomElevatedButton(
-                        text: 'View',
-                        color: Theme.of(context).primaryColor,
-                        // beginColor: state.isEditingOn
-                        //     ? Colors.white
-                        //     : Colors.lightBlueAccent,
-                        // endColor: state.isEditingOn
-                        //     ? Colors.white
-                        //     : Colors.pinkAccent,
-                        textColor:
-                            state.isEditingOn ? Colors.blue : Colors.white,
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        onPressed: () {
-                          context.read<ProfileBloc>().add(
-                                SaveProfile(
-                                  user: state.user,
-                                ),
-                              );
-                        },
-                      ),
-                      SizedBox(width: 10),
-                      CustomElevatedButton(
-                        text: 'Edit',
-                        color: Theme.of(context).primaryColor,
-                        // beginColor: state.isEditingOn
-                        //     ? Colors.lightBlueAccent
-                        //     : Colors.white,
-                        // endColor: state.isEditingOn
-                        //     ? Colors.pinkAccent
-                        //     : Colors.white,
-                        textColor:
-                            state.isEditingOn ? Colors.white : Colors.blue,
-                        width: MediaQuery.of(context).size.width * 0.45,
-                        onPressed: () {
-                          context.read<ProfileBloc>().add(
-                                EditProfile(
-                                  isEditingOn: true,
-                                ),
-                              );
-                        },
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _TextField(
-                          title: 'Biography',
-                          value: state.user.bio,
-                          onchanged: (value) {
-                            context.read<ProfileBloc>().add(
-                                  UpdateUserProfile(
-                                    user: state.user.copyWith(bio: value),
-                                  ),
-                                );
-                          },
-                        ),
-                        _TextField(
-                          title: 'Age',
-                          value: '${state.user.age}',
-                          onchanged: (value) {
-                            if (value == null) {
-                              return;
-                            }
-                            if (value == '') {
-                              return;
-                            }
-
-                            context.read<ProfileBloc>().add(
-                                  UpdateUserProfile(
-                                    user: state.user.copyWith(
-                                      age: int.parse(value),
+                        Container(
+                          height: MediaQuery.of(context).size.height * .5,
+                          child: Stack(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 40.0),
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.elliptical(
+                                          MediaQuery.of(context).size.width *
+                                              0.5,
+                                          100.0),
+                                      bottomRight: Radius.elliptical(
+                                          MediaQuery.of(context).size.width *
+                                              0.5,
+                                          100.0),
+                                    ),
+                                    image: DecorationImage(
+                                      colorFilter: ColorFilter.mode(
+                                          Colors.black38, BlendMode.darken),
+                                      fit: BoxFit.cover,
+                                      image:
+                                          NetworkImage(state.user.imageUrls[0]),
                                     ),
                                   ),
-                                );
-                          },
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Stack(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, top: 10),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, top: 10),
+                                      child: Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Text(
+                                          state.user.name,
+                                          style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 254, 255, 254),
+                                            fontSize: 25,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 30,
+                                      backgroundColor: Color(0xffD8D8D8),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          context.read<ProfileBloc>().add(
+                                                SaveProfile(
+                                                  user: state.user,
+                                                ),
+                                              );
+                                        },
+                                        icon: Icon(Icons.save_rounded),
+                                        color: Color(0xff6E6E6E),
+                                      ),
+                                    ),
+                                    CircleAvatar(
+                                      radius: 70,
+                                      backgroundImage:
+                                          NetworkImage(state.user.imageUrls[0]),
+                                    ),
+                                    CircleAvatar(
+                                      radius: 30,
+                                      backgroundColor: Color(0xffD8D8D8),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          context.read<ProfileBloc>().add(
+                                                EditProfile(
+                                                  isEditingOn: true,
+                                                ),
+                                              );
+                                        },
+                                        icon: Icon(
+                                            Icons.mode_edit_outline_outlined),
+                                        color: Color(0xff6E6E6E),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        _TextField(
-                          title: 'Job Title',
-                          value: state.user.jobTitle,
-                          onchanged: (value) {
-                            context.read<ProfileBloc>().add(
-                                  UpdateUserProfile(
-                                    user: state.user.copyWith(jobTitle: value),
-                                  ),
-                                );
-                          },
-                        ),
-                        _Pictures(),
-                        _Interests(),
-                        _SignOut(),
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _TextField(
+                        title: 'About Me',
+                        value: state.user.bio,
+                        onchanged: (value) {
+                          context.read<ProfileBloc>().add(
+                                UpdateUserProfile(
+                                  user: state.user.copyWith(bio: value),
+                                ),
+                              );
+                        },
+                        icon: const Icon(Icons.add_reaction_outlined),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Personal Info',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                                color: Colors.brown.shade800,
+                                fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 10),
+                      _TextField(
+                        title: 'Display Name',
+                        value: state.user.name,
+                        onchanged: (value) {
+                          context.read<ProfileBloc>().add(
+                                UpdateUserProfile(
+                                  user: state.user.copyWith(name: value),
+                                ),
+                              );
+                        },
+                        icon: const Icon(Icons.abc_outlined),
+                      ),
+                      _TextField(
+                        title: 'Age',
+                        value: '${state.user.age}',
+                        onchanged: (value) {
+                          if (value == null) {
+                            return;
+                          }
+                          if (value == '') {
+                            return;
+                          }
+
+                          context.read<ProfileBloc>().add(
+                                UpdateUserProfile(
+                                  user: state.user.copyWith(
+                                    age: int.parse(value),
+                                  ),
+                                ),
+                              );
+                        },
+                        icon: const Icon(Icons.emoji_nature_outlined),
+                      ),
+                      _TextField(
+                        title: 'Job',
+                        value: state.user.jobTitle,
+                        onchanged: (value) {
+                          context.read<ProfileBloc>().add(
+                                UpdateUserProfile(
+                                  user: state.user.copyWith(jobTitle: value),
+                                ),
+                              );
+                        },
+                        icon: const Icon(Icons.work_outline_rounded),
+                      ),
+                      _Pictures(),
+                      Interests(),
+                      SignOut(),
+                    ],
+                  ),
+                ),
+              ],
             );
           } else {
-            return Text('Something went wrong');
+            return const Text('Something went wrong');
           }
         }),
       ),
@@ -212,6 +276,7 @@ class ProfileScreen extends StatelessWidget {
 class _TextField extends StatelessWidget {
   final String title;
   final String value;
+  final Icon icon;
   final Function(String?) onchanged;
 
   const _TextField({
@@ -219,6 +284,7 @@ class _TextField extends StatelessWidget {
     required this.title,
     required this.value,
     required this.onchanged,
+    required this.icon,
   }) : super(key: key);
 
   @override
@@ -228,23 +294,41 @@ class _TextField extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.titleLarge,
+          Row(
+            children: [
+              icon, // Icon
+              SizedBox(width: 8), // Add spacing between icon and text
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.brown.shade800),
+              ),
+            ],
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 12),
           state.isEditingOn
               ? CustomTextField(
                   initialValue: value,
                   onChanged: onchanged,
                 )
-              : Text(
-                  value,
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        height: 1,
-                      ),
+              : Padding(
+                  padding: const EdgeInsets.only(
+                    left: 20,
+                    right: 20,
+                    top: 0,
+                    bottom: 0,
+                  ),
+                  child: Text(
+                    value,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        height: 1.2,
+                        fontSize: 16,
+                        color: Colors.brown.shade800),
+                  ),
                 ),
-          SizedBox(height: 10),
+          SizedBox(height: 18),
         ],
       );
     });
@@ -264,20 +348,29 @@ class _Pictures extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Pictures',
-              style: Theme.of(context).textTheme.titleLarge,
+            Row(
+              children: [
+                Icon(Icons.insert_photo_outlined),
+                SizedBox(width: 8),
+                Text(
+                  'Pictures',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.brown.shade800),
+                ),
+              ],
             ),
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              height: state.user.imageUrls.length > 0 ? 125 : 0,
+              margin: const EdgeInsets.symmetric(vertical: 18),
+              height: state.user.imageUrls.isNotEmpty ? 120 : 0,
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
                 itemCount: state.user.imageUrls.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.only(right: 5.0),
+                    padding: const EdgeInsets.only(right: 5),
                     child: UserImage.small(
                       width: 100,
                       url: state.user.imageUrls[index],
@@ -287,133 +380,6 @@ class _Pictures extends StatelessWidget {
                     ),
                   );
                 },
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class _Interests extends StatelessWidget {
-  const _Interests({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProfileBloc, ProfileState>(
-      builder: (context, state) {
-        state as ProfileLoaded;
-
-        List<String> interests = [
-          'Music',
-          'Sports',
-          'Travel',
-          'Food',
-          'Photography',
-          'Art',
-          'Movies',
-          'Reading',
-          'Gaming',
-          'Fashion',
-          'Fitness',
-          'Cooking',
-          'Technology',
-          'Dancing',
-          'Nature',
-          'Writing',
-          'Yoga',
-          'History',
-          'Cars',
-          'Pets',
-          'Computer Engineering'
-        ];
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Interests',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            SizedBox(height: 5),
-            Container(
-              width: double.infinity, // Set a maximum width for ChipsChoice
-              child: Wrap(
-                spacing: 8.0,
-                runSpacing: 8.0,
-                children: [
-                  state.isEditingOn
-                      ? ChipsChoice<dynamic>.multiple(
-                          wrapped: true,
-                          value: state.user.interests,
-                          onChanged: (val) {
-                            context.read<ProfileBloc>().add(
-                                  UpdateUserProfile(
-                                    user: state.user.copyWith(interests: val),
-                                  ),
-                                );
-                          },
-                          choiceItems: C2Choice.listFrom<String, String>(
-                            source: interests,
-                            value: (i, v) => v,
-                            label: (i, v) => v,
-                            tooltip: (i, v) => v,
-                          ),
-                          choiceCheckmark: true,
-                          choiceStyle: C2ChipStyle(
-                            checkmarkColor: Colors.red.shade400,
-                            backgroundColor: Colors.red,
-                            checkmarkWeight: 1.5,
-                          ),
-                        )
-                      : Container(
-                          child: Wrap(
-                            spacing: 2.0,
-                            runSpacing: 2.0,
-                            children: state.user.interests.map((interest) {
-                              return Chip(
-                                label: Text(interest),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class _SignOut extends StatelessWidget {
-  const _SignOut({
-    Key? key,
-  }) : super(key: key);
-
-  static const IconData logout = IconData(0xe3b3, fontFamily: 'MaterialIcons');
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ProfileBloc, ProfileState>(
-      builder: (context, state) {
-        state as ProfileLoaded;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextButton(
-              onPressed: () {
-                RepositoryProvider.of<AuthRepository>(context).signOut();
-              },
-              child: Center(
-                child: Icon(
-                  logout,
-                  size: 24,
-                  color: Colors.red[300],
-                ),
               ),
             ),
           ],
