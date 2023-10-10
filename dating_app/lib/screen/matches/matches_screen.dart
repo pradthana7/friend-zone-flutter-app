@@ -1,6 +1,7 @@
 import 'package:dating_app/blocs/blocs.dart';
 import 'package:dating_app/repositories/repositories.dart';
 import 'package:dating_app/screen/chat/chat_screen.dart';
+import 'package:dating_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +34,7 @@ class MatchesScreen extends StatelessWidget {
           if (state is MatchLoading) {
             print('state is MatchLoading');
             return Center(
-              child: CircularProgressIndicator(),
+              child: LoadingIndicator(),
             );
           }
           if (state is MatchLoaded) {
@@ -58,9 +59,9 @@ class MatchesScreen extends StatelessWidget {
                         ? const Padding(
                             padding: EdgeInsets.all(20.0),
                             child: Text(
-                              'Go back to swiping',
+                              'Back',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
@@ -70,6 +71,7 @@ class MatchesScreen extends StatelessWidget {
                       'Messages',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
+                    SizedBox(height: 10.0),
                     ChatsList(activeMatches: activeMatches)
                   ],
                 ),
@@ -88,14 +90,13 @@ class MatchesScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   CustomElevatedButton(
-                    text: 'Back To Swiping',
-                    // beginColor: Color.fromARGB(255, 115, 211, 144),
-                    // endColor: Theme.of(context).primaryColor,
-                     color: Theme.of(context).primaryColor,
+                    text: 'Back',
+                    color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
                     onPressed: () {
                       Navigator.pop(context);
-                    }, fontSize: 16,
+                    },
+                    fontSize: 16,
                   ),
                 ],
               ),
@@ -135,12 +136,15 @@ class ChatsList extends StatelessWidget {
             },
             child: Row(
               children: [
-                UserImage.small(
-                  margin: const EdgeInsets.only(top: 10, right: 10),
-                  height: 70,
-                  width: 70,
-                  url: activeMatches[index].matchUser.imageUrls[0],
+                CircleAvatar(
+                  radius: 35, // Adjust the size as needed
+                  backgroundImage: NetworkImage(activeMatches[index]
+                      .matchUser
+                      .imageUrls[0]), // Use your image URL here
                 ),
+                const SizedBox(
+                    width:
+                        10), // Add some spacing between the CircleAvatar and other widgets
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -158,6 +162,7 @@ class ChatsList extends StatelessWidget {
                       activeMatches[index].chat.messages[0].timeString,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
+                    const SizedBox(height: 10),
                   ],
                 )
               ],
@@ -196,11 +201,15 @@ class MatchesList extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10, right: 10),
                 child: Column(
                   children: [
-                    UserImage.small(
-                      height: 70,
-                      width: 70,
-                      url: inactiveMatches[index].matchUser.imageUrls[0],
+                    CircleAvatar(
+                      radius: 35, // Adjust the size as needed
+                      backgroundImage: NetworkImage(inactiveMatches[index]
+                          .matchUser
+                          .imageUrls[0]), // Use your image URL here
                     ),
+                    const SizedBox(
+                        height:
+                            5), // Add some spacing between the CircleAvatar and the Text widget
                     Text(
                       inactiveMatches[index].matchUser.name,
                       style: Theme.of(context).textTheme.bodyMedium,

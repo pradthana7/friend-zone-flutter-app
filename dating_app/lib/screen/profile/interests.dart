@@ -88,8 +88,8 @@ class Interests extends StatelessWidget {
                         )
                       : Container(
                           child: Wrap(
-                            spacing: 2.0,
-                            runSpacing: 2.0,
+                            spacing: 5.0,
+                            runSpacing: -5.0,
                             children: state.user.interests.map((interest) {
                               return Chip(
                                 label: Text(interest),

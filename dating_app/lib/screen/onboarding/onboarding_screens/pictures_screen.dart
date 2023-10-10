@@ -40,11 +40,11 @@ class _PicturesState extends State<Pictures> {
         CustomTextHeader(text: 'Add  Picture(s)'),
         SizedBox(height: 20),
         SizedBox(
-          height: 500,
+          height: 550,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              childAspectRatio: 0.66,
+              childAspectRatio: 0.7,
             ),
             itemCount: 9,
             itemBuilder: (BuildContext context, int index) {

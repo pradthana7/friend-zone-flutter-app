@@ -1,3 +1,4 @@
+import 'package:dating_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,16 +37,16 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Filter'),
+      appBar: const CustomAppBar(title: 'Filter'),
       body: SingleChildScrollView(
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {
             if (state is ProfileLoading) {
-              return Center(child: CircularProgressIndicator());
+              return Center(child: LoadingIndicator());
             }
             if (state is ProfileLoaded) {
-              return Padding(
-                padding: const EdgeInsets.all(20.0),
+              return const Padding(
+                padding: EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -81,7 +82,10 @@ class _AgeRangePreference extends StatelessWidget {
           children: [
             Text(
               'Age',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontWeight: FontWeight.w600),
             ),
             Row(
               children: [
@@ -154,7 +158,10 @@ class _GenderPreference extends StatelessWidget {
           children: [
             Text(
               'Gender Selections',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium!
+                  .copyWith(fontWeight: FontWeight.w600),
             ),
             Row(
               children: [

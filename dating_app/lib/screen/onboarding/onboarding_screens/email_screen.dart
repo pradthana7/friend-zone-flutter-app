@@ -27,7 +27,7 @@ class Email extends StatelessWidget {
           buildWhen: (previous, current) => previous.email != current.email,
           builder: (context, state) {
             return CustomTextField(
-              hintText: 'example@me.com',maxLines: 1,
+              hintText: 'b6000000@g.sut.ac.th',maxLines: 1,
               errorText: state.email.invalid ? 'The email is invalid.' : null,
               onChanged: (value) {
                 context.read<SignupCubit>().emailChanged(value);
@@ -43,7 +43,7 @@ class Email extends StatelessWidget {
               previous.password != current.password,
           builder: (context, state) {
             return CustomTextField(
-              hintText: 'p@ssw0rd123',maxLines: 1,
+              hintText: 'only allowed A-Za-z0-9!#%',maxLines: 1,
               errorText: state.password.invalid
                   ? 'The password must contain at least 8 characters.'
                   : null,

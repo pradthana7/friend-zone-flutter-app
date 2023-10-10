@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      centerTitle: false,
+      centerTitle: true,
       automaticallyImplyLeading: false,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +52,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: Theme.of(context)
                   .textTheme
                   .headlineSmall!
-                  .copyWith(color: Theme.of(context).primaryColor),
+                  .copyWith(color: Colors.brown.shade800),
             ),
           )
         ],
@@ -62,7 +62,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               IconButton(
                 icon: Icon(
                   actioinsIcons[0],
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.brown.shade800,
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, actionsRoutes[0]);
@@ -71,7 +71,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               IconButton(
                 icon: Icon(
                   actioinsIcons[1],
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.brown.shade800,
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, actionsRoutes[1]);

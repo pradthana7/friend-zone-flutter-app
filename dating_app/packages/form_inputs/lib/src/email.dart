@@ -8,7 +8,7 @@ class Email extends FormzInput<String, EmailValidationError> {
   const Email.dirty([String value = '']) : super.dirty(value);
 
   static final RegExp _emailRegExp = RegExp(
-    r'^(?:(?!.*?[.]{2})[a-zA-Z0-9](?:[a-zA-Z0-9.+!%-]{1,64}|)|\"[a-zA-Z0-9.+!% -]{1,64}\")@[a-zA-Z0-9][a-zA-Z0-9.-]+(.[a-z]{2,}|.[0-9]{1,})$',
+    r'^[bmd]\d{7}@g\.sut\.ac\.th$',
   );
 
   @override

@@ -2,6 +2,7 @@ import 'package:dating_app/blocs/auth/auth_bloc.dart';
 import 'package:dating_app/cubits/login/login_cubit.dart';
 import 'package:dating_app/screen/home/home_screen.dart';
 import 'package:dating_app/screen/onboarding/onboarding_screen.dart';
+import 'package:dating_app/widgets/loading_indicator.dart';
 import 'package:formz/formz.dart';
 
 import 'package:dating_app/widgets/widgets.dart';
@@ -72,9 +73,9 @@ class LoginScreen extends StatelessWidget {
                       ModalRoute.withName('/onboarding'),
                     ),
                     child: Text(
-                      'Join now',
+                      'Register',
                       style:
-                          TextStyle(color: Colors.pink.shade300, fontSize: 16),
+                          TextStyle(color: Color(0xfffa9200), fontSize: 16),
                     ),
                   ),
                 ],
@@ -96,7 +97,7 @@ class _LoginButton extends StatelessWidget {
       return previous.status != current.status;
     }), builder: (context, state) {
       return state.status == FormzStatus.submissionInProgress
-          ? CircularProgressIndicator()
+          ? LoadingIndicator()
           : CustomElevatedButton(
               text: 'Sign in',
               color: Theme.of(context).primaryColor,

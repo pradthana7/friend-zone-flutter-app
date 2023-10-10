@@ -37,12 +37,12 @@ class CustomTextField extends StatelessWidget {
             errorText: errorText,
             contentPadding: const EdgeInsets.only(bottom: 5.0, top: 12.5),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).primaryColorDark),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor),
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             enabledBorder: UnderlineInputBorder(
               borderSide:
-                  BorderSide(color: Theme.of(context).primaryColorLight),
+                  BorderSide(color: Theme.of(context).primaryColor),
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
           ),

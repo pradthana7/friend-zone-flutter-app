@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
+import 'package:dating_app/widgets/loading_indicator.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,7 +39,7 @@ class ChatScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is ChatLoading) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: LoadingIndicator(),
             );
           }
           if (state is ChatLoaded) {
@@ -100,46 +101,43 @@ class _MessageInput extends StatelessWidget {
       }
     }
 
-     return Container(
-  padding: const EdgeInsets.all(20.0),
-  height: 80,
-  child: Row(
-    children: [
-      Expanded(
-        child: TextField(
-          
-          controller: controller,
-          onSubmitted: (_) {
-            sendMessage();
-          },
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
+    return Container(
+      padding: const EdgeInsets.all(20.0),
+      height: 80,
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: controller,
+              onSubmitted: (_) {
+                sendMessage();
+              },
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(color: Theme.of(context).primaryColor),
+                ),
+                suffixIcon: IconButton(
+                  onPressed: sendMessage,
+                  icon: Icon(Icons.send_rounded),
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Message',
+                contentPadding: EdgeInsets.only(left: 16, bottom: 5, top: 5),
+              ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Theme.of(context).primaryColor),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: Theme.of(context).primaryColor),
-            ),
-            suffixIcon: IconButton(
-              onPressed: sendMessage,
-              icon: Icon(Icons.send_rounded),
-            ),
-            filled: true,
-            fillColor: Colors.white,
-            hintText: 'Message',
-            contentPadding: EdgeInsets.only(left: 16, bottom: 5, top: 5),
           ),
-        ),
+        ],
       ),
-    ],
-  ),
-);
-
-
+    );
   }
 }
 
@@ -200,7 +198,7 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         children: [
           CircleAvatar(
-            radius: 15,
+            radius: 25,
             backgroundImage: NetworkImage(match.matchUser.imageUrls[0]),
           ),
           SizedBox(width: 10),

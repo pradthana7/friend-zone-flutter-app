@@ -91,47 +91,6 @@ class OnboardingScreen extends StatelessWidget {
   }
 }
 
-// class OnboardingScreenLayout extends StatelessWidget {
-//   const OnboardingScreenLayout({
-//     Key? key,
-//     required this.currentStep,
-//     required this.onPressed,
-//     required this.children,
-//   }) : super(key: key);
-
-//   final int currentStep;
-//   final Function()? onPressed;
-//   final List<Widget> children;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: [
-//         Expanded(
-//           child: SingleChildScrollView(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: children,
-//             ),
-//           ),
-//         ),
-//         StepProgressIndicator(
-//           roundedEdges: Radius.circular(20),
-//           totalSteps: 5,
-//           currentStep: currentStep,
-//           selectedColor: Theme.of(context).primaryColorDark,
-//           unselectedColor: Theme.of(context).primaryColorLight,
-//         ),
-//         SizedBox(height: 10),
-//         CustomButton(
-//           text: 'next',
-//           onPressed: onPressed, alignment: Alignment.bottomCenter,
-//         ),
-//       ],
-//     );
-//   }
-// }
-
 class OnboardingScreenLayout extends StatelessWidget {
   const OnboardingScreenLayout({
     Key? key,
@@ -169,7 +128,7 @@ class OnboardingScreenLayout extends StatelessWidget {
                 child: Text(
                   'NEXT',
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.red.shade300,
+                        color: Color(0xfffa9200),
                         fontWeight: FontWeight.bold,
                       ),
                 ),
