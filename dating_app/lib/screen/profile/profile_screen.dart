@@ -5,6 +5,7 @@ import 'package:dating_app/repositories/database/database_repository.dart';
 
 import 'package:dating_app/screen/onboarding/widgets/custom_text_field.dart';
 import 'package:dating_app/screen/screens.dart';
+import 'package:dating_app/widgets/loading_indicator.dart';
 
 import 'package:dating_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
             BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
           if (state is ProfileLoading) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: LoadingIndicator(),
             );
           }
 

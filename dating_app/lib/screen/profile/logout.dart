@@ -18,18 +18,28 @@ class SignOut extends StatelessWidget {
       builder: (context, state) {
         state as ProfileLoaded;
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextButton(
               onPressed: () {
                 _showLogoutDialog(context);
               },
-              child: Center(
-                child: Icon(
-                  logout,
-                  size: 24,
-                  color: Colors.red[300],
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons
+                        .logout, // Assuming you have an "logout" icon available in your icons.
+                    size: 24,
+                    color: Colors.brown.shade800,
+                  ),
+                  const SizedBox(width: 4.0),
+                  const Text(
+                    'Logout',
+                    style: TextStyle(
+                        color: Colors.brown, fontWeight: FontWeight.w600),
+                  ),
+                ],
               ),
             ),
           ],

@@ -8,7 +8,7 @@ class Password extends FormzInput<String, PasswordValidationError> {
   const Password.dirty([String value = '']) : super.dirty(value);
 
   static final RegExp _passwordRegExp = RegExp(
-    r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+    r'^(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=\D*\d)(?=[^!#%]*[!#%])[A-Za-z0-9!#%]{8,32}$',
   );
 
   @override
@@ -18,3 +18,10 @@ class Password extends FormzInput<String, PasswordValidationError> {
         : PasswordValidationError.invalid;
   }
 }
+
+// Must include at least 1 lower-case letter.
+// Must include at least 1 upper-case letter.
+// Must include at least 1 number.
+// Must include at least 1 special character (only the following special characters are allowed: !#%).
+// Must NOT include any other characters then A-Za-z0-9!#% 
+// Must be from 8 to 32 characters long.

@@ -3,6 +3,7 @@ import 'package:dating_app/blocs/swipe/swipe_bloc.dart';
 import 'package:dating_app/models/models.dart';
 import 'package:dating_app/screen/chat/chat_screen.dart';
 import 'package:dating_app/screen/matches/matches_screen.dart';
+import 'package:dating_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../repositories/repositories.dart';
@@ -40,7 +41,7 @@ class HomeScreen extends StatelessWidget {
           return Scaffold(
             appBar: CustomAppBar(title: 'Hey Guys!'),
             body: Center(
-              child: CircularProgressIndicator(),
+              child: LoadingIndicator(),
             ),
           );
         }
@@ -90,9 +91,8 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var userCount = state.users.length;
-    List<dynamic> dynamicImageUrls = state.users[0].imageUrls;
-    List<String> ImageUrls =
-        dynamicImageUrls.map((item) => item.toString()).toList();
+    // List<dynamic> dynamicImageUrls = state.users[0].imageUrls;
+    // List<String> ImageUrls =dynamicImageUrls.map((item) => item.toString()).toList();
     return Scaffold(
       appBar: CustomAppBar(title: 'Hey Guys!'),
       body: Column(
@@ -102,14 +102,14 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
               Navigator.pushNamed(context, '/users', arguments: state.users[0]);
             },
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LargeImage(
-                    imageUrls: ImageUrls,
-                  ),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => LargeImage(
+              //       imageUrls: ImageUrls,
+              //     ),
+              //   ),
+              // );
             },
             child: Draggable<User>(
               data: state.users[0],
@@ -142,7 +142,7 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
                       ..add(SwipeLeft(user: state.users[0]));
                   },
                   child: ChoiceButton(
-                    color: Colors.red.shade300,
+                    color: Color.fromARGB(255, 237, 131, 86),
                     icon: Icons.thumb_down_alt_rounded,
                   ),
                 ),
@@ -153,7 +153,7 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
                   },
                   child: ChoiceButton(
                     hasGradient: false,
-                    color: Colors.blue.shade300,
+                    color: Color.fromARGB(255, 121, 189, 237),
                     icon: Icons.thumb_up_off_alt_rounded,
                   ),
                 ),
@@ -236,23 +236,23 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             CustomElevatedButton(
-              text: 'Send a Message',
+              text: 'send a message',
               
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () {
                 Navigator.pushNamed(context, MatchesScreen.routeName);
-              }, fontSize: 16,
+              }, fontSize: 14,
             ),
             const SizedBox(height: 10),
             CustomElevatedButton(
-              text: 'Back To Swiping',
+              text: 'back',
               
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () {
                 context.read<SwipeBloc>().add(LoadUsers());
-              }, fontSize: 16,
+              }, fontSize: 14,
             ),
           ],
         ),
