@@ -142,7 +142,7 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
                       ..add(SwipeLeft(user: state.users[0]));
                   },
                   child: ChoiceButton(
-                    color: Color.fromARGB(255, 237, 131, 86),
+                    color: Color(0xffff3300),
                     icon: Icons.thumb_down_alt_rounded,
                   ),
                 ),
@@ -153,7 +153,7 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
                   },
                   child: ChoiceButton(
                     hasGradient: false,
-                    color: Color.fromARGB(255, 121, 189, 237),
+                    color: Color(0xff9a6600),
                     icon: Icons.thumb_up_off_alt_rounded,
                   ),
                 ),
@@ -260,7 +260,6 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
     );
   }
 }
-
 
 
 

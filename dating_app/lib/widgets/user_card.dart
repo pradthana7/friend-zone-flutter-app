@@ -17,7 +17,7 @@ class UserCard extends StatelessWidget {
     return Hero(
       tag: 'user_card',
       child: Padding(
-        padding: const EdgeInsets.only(top: 10.0, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 14.0, left: 25, right: 25),
         child: SizedBox(
           height: MediaQuery.of(context).size.height / 1.3,
           width: MediaQuery.of(context).size.width,
@@ -25,7 +25,7 @@ class UserCard extends StatelessWidget {
             children: [
               UserImage.large(url: user.imageUrls[0]),
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                   gradient: LinearGradient(
                     colors: [
