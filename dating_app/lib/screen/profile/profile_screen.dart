@@ -1,6 +1,3 @@
-import 'package:chips_choice/chips_choice.dart';
-
-import 'package:dating_app/repositories/auth/auth_repository.dart';
 import 'package:dating_app/repositories/database/database_repository.dart';
 
 import 'package:dating_app/screen/onboarding/widgets/custom_text_field.dart';
@@ -13,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
 
+import '../../widgets/full_image.dart';
 import '../profile/logout.dart';
 import 'interests.dart';
 
@@ -65,6 +63,7 @@ class ProfileScreen extends StatelessWidget {
           }
 
           if (state is ProfileLoaded) {
+            
             return Column(
               children: [
                 Padding(
@@ -370,13 +369,30 @@ class _Pictures extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: state.user.imageUrls.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: UserImage.small(
-                      width: 100,
-                      url: state.user.imageUrls[index],
-                      border: Border.all(
-                        color: Theme.of(context).primaryColor,
+                  final tag = 'image_$index';
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => OpenFullImage(
+                            context: context,
+                            imageUrl: state.user.imageUrls[index],
+                            tag: tag,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Hero(
+                      tag: tag,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: UserImage.small(
+                          width: 100,
+                          url: state.user.imageUrls[index],
+                          border: Border.all(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
                       ),
                     ),
                   );

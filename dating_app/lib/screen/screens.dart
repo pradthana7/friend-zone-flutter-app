@@ -1,6 +1,6 @@
 export 'home/home_screen.dart';
 export 'user/users_screen.dart';
-export 'user/largeimage.dart';
+
 export 'matches/matches_screen.dart';
 export 'onboarding/onboarding_screen.dart';
 export 'chat/chat_screen.dart';

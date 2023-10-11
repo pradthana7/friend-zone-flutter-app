@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:dating_app/widgets/loading_indicator.dart';
 
 import 'package:flutter/material.dart';
@@ -192,19 +192,19 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Color(0xffa08269),
       elevation: 0,
-      iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+      iconTheme: IconThemeData(color: Colors.white70),
       title: Row(
         children: [
           CircleAvatar(
-            radius: 25,
+            radius: 20,
             backgroundImage: NetworkImage(match.matchUser.imageUrls[0]),
           ),
           SizedBox(width: 10),
           Text(
             match.matchUser.name,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.titleMedium,
           )
         ],
       ),
