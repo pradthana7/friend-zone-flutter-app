@@ -9,7 +9,8 @@ ThemeData theme() {
     focusColor: Color(0xFFC09984),
     scaffoldBackgroundColor: Color(0xFFFFECD9),
     canvasColor: Color(0xffffd394), // color of disable choice chips
-    textTheme: GoogleFonts.playTextTheme().copyWith(),
+    // textTheme: GoogleFonts.playTextTheme().copyWith(),
+    fontFamily: 'sut',
     inputDecorationTheme: const InputDecorationTheme(
       prefixIconColor: Color(0xffa3866e),
       suffixIconColor: Color(0xffa3866e),

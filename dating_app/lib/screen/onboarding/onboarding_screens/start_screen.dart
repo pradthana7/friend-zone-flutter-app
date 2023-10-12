@@ -19,7 +19,7 @@ class Start extends StatelessWidget {
           alignment: Alignment.topCenter,
           height: 250,
           width: 300,
-          child: Image.asset('assets/4friends.png'),
+          child: Image.asset('assets/images/4friends.png'),
         ),
         Padding(
           padding:
