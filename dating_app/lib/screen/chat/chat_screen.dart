@@ -1,4 +1,3 @@
-
 import 'package:dating_app/widgets/loading_indicator.dart';
 
 import 'package:flutter/material.dart';
@@ -35,41 +34,49 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _CustomAppBar(match: match),
-      body: BlocBuilder<ChatBloc, ChatState>(
-        builder: (context, state) {
-          if (state is ChatLoading) {
-            return Center(
-              child: LoadingIndicator(),
-            );
-          }
-          if (state is ChatLoaded) {
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    reverse: true,
-                    shrinkWrap: true,
-                    itemCount: state.chat.messages.length,
-                    itemBuilder: (context, index) {
-                      List<Message> messages = state.chat.messages;
-                      return ListTile(
-                        title: _Message(
-                          message: messages[index].message,
-                          isFromCurrentUser: messages[index].senderId ==
-                              context.read<AuthBloc>().state.authUser!.uid,
-                        ),
-                      );
-                    },
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg_sut.png'),
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+        child: BlocBuilder<ChatBloc, ChatState>(
+          builder: (context, state) {
+            if (state is ChatLoading) {
+              return Center(
+                child: LoadingIndicator(),
+              );
+            }
+            if (state is ChatLoaded) {
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      reverse: true,
+                      shrinkWrap: true,
+                      itemCount: state.chat.messages.length,
+                      itemBuilder: (context, index) {
+                        List<Message> messages = state.chat.messages;
+                        return ListTile(
+                          title: _Message(
+                            message: messages[index].message,
+                            isFromCurrentUser: messages[index].senderId ==
+                                context.read<AuthBloc>().state.authUser!.uid,
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-                // const Spacer(flex: 1),
-                _MessageInput(match: match)
-              ],
-            );
-          } else {
-            return const Text('Something went wrong.');
-          }
-        },
+                  // const Spacer(flex: 1),
+                  _MessageInput(match: match)
+                ],
+              );
+            } else {
+              return const Text('Something went wrong.');
+            }
+          },
+        ),
       ),
     );
   }

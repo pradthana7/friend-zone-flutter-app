@@ -52,7 +52,7 @@ class UserImage extends StatelessWidget {
         image: DecorationImage(
             fit: BoxFit.cover,
             image: (url == null)
-                ? AssetImage('assets/placeholder-image.png') as ImageProvider
+                ? AssetImage('assets/images/placeholder-image.png') as ImageProvider
                 : NetworkImage(url!)),
         borderRadius: BorderRadius.all(Radius.circular(8.0)),
         border: border,
