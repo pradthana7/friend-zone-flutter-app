@@ -17,8 +17,8 @@ class Start extends StatelessWidget {
       children: [
         Container(
           alignment: Alignment.topCenter,
-          height: 250,
-          width: 300,
+          height: 300,
+          width: 500,
           child: Image.asset('assets/images/4friends.png'),
         ),
         Padding(
@@ -30,12 +30,11 @@ class Start extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
-                  .titleMedium!
-                  .copyWith(height: 1.4),
+                  .titleLarge
             ),
           ),
         ),
-        SizedBox(height: 14),
+        const SizedBox(height: 14),
         CustomButton(
           text: 'Get Started',
           onPressed: () {

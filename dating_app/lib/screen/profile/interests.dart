@@ -44,19 +44,19 @@ class Interests extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.interests_rounded),
-                SizedBox(width: 8),
+                const Icon(Icons.interests_rounded),
+                const SizedBox(width: 8),
                 Text(
                   'Interests',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontSize: 18,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      
                       fontWeight: FontWeight.w600,
-                      color: Colors.brown.shade800),
+                      ),
                 ),
               ],
             ),
-            SizedBox(height: 5),
-            Container(
+            const SizedBox(height: 5),
+            SizedBox(
               width: double.infinity, // Set a maximum width for ChipsChoice
               child: Wrap(
                 spacing: 8.0,
@@ -86,17 +86,15 @@ class Interests extends StatelessWidget {
                             checkmarkWeight: 1.5,
                           ),
                         )
-                      : Container(
-                          child: Wrap(
-                            spacing: 5.0,
-                            runSpacing: -5.0,
-                            children: state.user.interests.map((interest) {
-                              return Chip(
-                                label: Text(interest),
-                              );
-                            }).toList(),
-                          ),
-                        ),
+                      : Wrap(
+                        spacing: 5.0,
+                        runSpacing: -5.0,
+                        children: state.user.interests.map((interest) {
+                          return Chip(
+                            label: Text(interest),
+                          );
+                        }).toList(),
+                      ),
                 ],
               ),
             ),

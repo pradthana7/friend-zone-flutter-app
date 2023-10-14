@@ -58,7 +58,7 @@ class SettingsScreen extends StatelessWidget {
                 ),
               );
             } else {
-              return Text('Something went wrong.');
+              return const Text('Something went wrong.');
             }
           },
         ),
@@ -84,8 +84,7 @@ class _AgeRangePreference extends StatelessWidget {
               'Age',
               style: Theme.of(context)
                   .textTheme
-                  .titleMedium!
-                  .copyWith(fontWeight: FontWeight.w600),
+                  .headlineSmall,
             ),
             Row(
               children: [
@@ -135,7 +134,7 @@ class _AgeRangePreference extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
         );
       },
@@ -160,8 +159,8 @@ class _GenderPreference extends StatelessWidget {
               'Gender Selections',
               style: Theme.of(context)
                   .textTheme
-                  .titleMedium!
-                  .copyWith(fontWeight: FontWeight.w600),
+                  .headlineSmall!
+                  .copyWith(),
             ),
             Row(
               children: [
@@ -202,7 +201,7 @@ class _GenderPreference extends StatelessWidget {
                 ),
                 Text(
                   'Man',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),
                 ),
               ],
             ),
@@ -245,7 +244,7 @@ class _GenderPreference extends StatelessWidget {
                 ),
                 Text(
                   'Woman',
-                  style: Theme.of(context).textTheme.titleMedium,
+                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),
                 ),
               ],
             ),
@@ -288,11 +287,11 @@ class _GenderPreference extends StatelessWidget {
                 ),
                 Text(
                   'Rather not say',
-                  style: Theme.of(context).textTheme.titleMedium,
+                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 18),
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
         );
       },

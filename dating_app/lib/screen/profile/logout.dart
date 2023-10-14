@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,20 +23,22 @@ class SignOut extends StatelessWidget {
               onPressed: () {
                 _showLogoutDialog(context);
               },
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     Icons
                         .logout, // Assuming you have an "logout" icon available in your icons.
-                    size: 24,
-                    color: Colors.brown.shade800,
+                    size: 30,
+                    color: Colors.black,
                   ),
-                  const SizedBox(width: 4.0),
-                  const Text(
+                  SizedBox(width: 4.0),
+                  Text(
                     'Logout',
                     style: TextStyle(
-                        color: Colors.brown, fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        color: Colors.black),
                   ),
                 ],
               ),
@@ -83,13 +84,11 @@ class SignOut extends StatelessWidget {
                 // Perform the logout action here
                 RepositoryProvider.of<AuthRepository>(context).signOut();
                 Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pushNamed('/login');
               },
               child: Text(
                 "Logout",
-                style: TextStyle(
-                  color: color,
-                  fontWeight: FontWeight.w300,
-                ),
+                style: TextStyle(color: color, fontWeight: FontWeight.w300),
               ),
             ),
           ],

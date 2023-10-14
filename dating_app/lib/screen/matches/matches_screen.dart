@@ -53,13 +53,13 @@ class MatchesScreen extends StatelessWidget {
                   children: [
                     Text(
                       'New Matches',
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     inactiveMatches.isEmpty
                         ? const Padding(
                             padding: EdgeInsets.all(20.0),
                             child: Text(
-                              'Back',
+                              'No New Matches Now!',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -69,9 +69,9 @@ class MatchesScreen extends StatelessWidget {
                         : MatchesList(inactiveMatches: inactiveMatches),
                     Text(
                       'Messages',
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ),
-                    SizedBox(height: 10.0),
+                    const SizedBox(height: 10.0),
                     ChatsList(activeMatches: activeMatches)
                   ],
                 ),
@@ -102,8 +102,8 @@ class MatchesScreen extends StatelessWidget {
               ),
             );
           } else {
-            return Center(
-              child: Text('Something went wrong'),
+            return const Center(
+              child: Text('Something Went Wrong'),
             );
           }
         },
@@ -144,23 +144,23 @@ class ChatsList extends StatelessWidget {
                 ),
                 const SizedBox(
                     width:
-                        10), // Add some spacing between the CircleAvatar and other widgets
+                        16), // Add some spacing between the CircleAvatar and other widgets
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       activeMatches[index].matchUser.name,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    const SizedBox(height: 5),
+                    // const SizedBox(height: 5),
                     Text(
                       activeMatches[index].chat.messages[0].message,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    const SizedBox(height: 5),
+                    // const SizedBox(height: 2),
                     Text(
                       activeMatches[index].chat.messages[0].timeString,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     const SizedBox(height: 10),
                   ],

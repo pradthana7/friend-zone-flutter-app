@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'Profile',
         actioinsIcons: [
           Icons.chat_bubble_outline_rounded,
@@ -63,12 +63,12 @@ class ProfileScreen extends StatelessWidget {
           }
 
           if (state is ProfileLoaded) {
-            
             return Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(0),
+                  padding: const EdgeInsets.all(0),
                   child: Card(
+                    color: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
@@ -76,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
+                        SizedBox(
                           height: MediaQuery.of(context).size.height * .5,
                           child: Stack(
                             children: [
@@ -96,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
                                           100.0),
                                     ),
                                     image: DecorationImage(
-                                      colorFilter: ColorFilter.mode(
+                                      colorFilter: const ColorFilter.mode(
                                           Colors.black38, BlendMode.darken),
                                       fit: BoxFit.cover,
                                       image:
@@ -109,8 +109,8 @@ class ProfileScreen extends StatelessWidget {
                                 alignment: Alignment.topCenter,
                                 child: Stack(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
+                                    const Padding(
+                                      padding: EdgeInsets.only(
                                           left: 10, top: 10),
                                     ),
                                     Padding(
@@ -120,9 +120,8 @@ class ProfileScreen extends StatelessWidget {
                                         alignment: Alignment.topCenter,
                                         child: Text(
                                           state.user.name,
-                                          style: TextStyle(
-                                            color: Color.fromARGB(
-                                                255, 254, 255, 254),
+                                          style: const TextStyle(
+                                            color: Colors.white,
                                             fontSize: 25,
                                           ),
                                         ),
@@ -139,7 +138,7 @@ class ProfileScreen extends StatelessWidget {
                                   children: [
                                     CircleAvatar(
                                       radius: 30,
-                                      backgroundColor: Color(0xffD8D8D8),
+                                      backgroundColor: const Color(0xffD8D8D8),
                                       child: IconButton(
                                         onPressed: () {
                                           context.read<ProfileBloc>().add(
@@ -148,8 +147,8 @@ class ProfileScreen extends StatelessWidget {
                                                 ),
                                               );
                                         },
-                                        icon: Icon(Icons.save_rounded),
-                                        color: Color(0xff6E6E6E),
+                                        icon: const Icon(Icons.save_rounded),
+                                        color: const Color(0xff6E6E6E),
                                       ),
                                     ),
                                     CircleAvatar(
@@ -159,18 +158,18 @@ class ProfileScreen extends StatelessWidget {
                                     ),
                                     CircleAvatar(
                                       radius: 30,
-                                      backgroundColor: Color(0xffD8D8D8),
+                                      backgroundColor: const Color(0xffD8D8D8),
                                       child: IconButton(
                                         onPressed: () {
                                           context.read<ProfileBloc>().add(
-                                                EditProfile(
+                                                const EditProfile(
                                                   isEditingOn: true,
                                                 ),
                                               );
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                             Icons.mode_edit_outline_outlined),
-                                        color: Color(0xff6E6E6E),
+                                        color: const Color(0xff6E6E6E),
                                       ),
                                     ),
                                   ],
@@ -205,10 +204,8 @@ class ProfileScreen extends StatelessWidget {
                         'Personal Info',
                         style: Theme.of(context)
                             .textTheme
-                            .headlineMedium!
-                            .copyWith(
-                                color: Colors.brown.shade800,
-                                fontWeight: FontWeight.w600),
+                            .headlineLarge!
+                            .copyWith(fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(height: 10),
                       _TextField(
@@ -256,9 +253,9 @@ class ProfileScreen extends StatelessWidget {
                         },
                         icon: const Icon(Icons.work_outline_rounded),
                       ),
-                      _Pictures(),
-                      Interests(),
-                      SignOut(),
+                      const _Pictures(),
+                      const Interests(),
+                      const SignOut(),
                     ],
                   ),
                 ),
@@ -297,17 +294,16 @@ class _TextField extends StatelessWidget {
           Row(
             children: [
               icon, // Icon
-              SizedBox(width: 8), // Add spacing between icon and text
+              const SizedBox(width: 8), // Add spacing between icon and text
               Text(
                 title,
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.brown.shade800),
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
             ],
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 8),
           state.isEditingOn
               ? CustomTextField(
                   initialValue: value,
@@ -323,12 +319,11 @@ class _TextField extends StatelessWidget {
                   child: Text(
                     value,
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        height: 1.2,
-                        fontSize: 16,
-                        color: Colors.brown.shade800),
+                          fontSize: 18,
+                        ),
                   ),
                 ),
-          SizedBox(height: 18),
+          const SizedBox(height: 18),
         ],
       );
     });
@@ -354,10 +349,10 @@ class _Pictures extends StatelessWidget {
                 SizedBox(width: 8),
                 Text(
                   'Pictures',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.brown.shade800),
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ],
             ),

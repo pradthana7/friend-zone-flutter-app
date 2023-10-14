@@ -97,7 +97,7 @@ class _MessageInput extends StatelessWidget {
     void sendMessage() {
       if (controller.text.isNotEmpty) {
         context.read<ChatBloc>()
-          ..add(
+          .add(
             AddMessage(
               userId: match.userId,
               matchUserId: match.matchUser.id!,
@@ -133,12 +133,12 @@ class _MessageInput extends StatelessWidget {
                 ),
                 suffixIcon: IconButton(
                   onPressed: sendMessage,
-                  icon: Icon(Icons.send_rounded),
+                  icon: const Icon(Icons.send_rounded),
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: const Color(0xffffffff),
                 hintText: 'Message',
-                contentPadding: EdgeInsets.only(left: 16, bottom: 5, top: 5),
+                contentPadding: const EdgeInsets.only(left: 16, bottom: 5, top: 5),
               ),
             ),
           ),
@@ -162,21 +162,17 @@ class _Message extends StatelessWidget {
   Widget build(BuildContext context) {
     AlignmentGeometry alignment =
         isFromCurrentUser ? Alignment.topRight : Alignment.topLeft;
-    Color color = isFromCurrentUser
-        ? Theme.of(context).colorScheme.background
-        : Theme.of(context).primaryColor;
+    Color color = isFromCurrentUser ? const Color(0xffdfd6c7) : const Color(0xffffffff);
     TextStyle? textStyle = isFromCurrentUser
-        ? Theme.of(context).textTheme.bodyMedium
-        : Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Colors.white,
-            );
+        ? Theme.of(context).textTheme.bodyLarge
+        : Theme.of(context).textTheme.bodyLarge;
 
     return Align(
       alignment: alignment,
       child: Container(
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
           color: color,
         ),
         child: Text(
@@ -199,19 +195,20 @@ class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Color(0xffa08269),
-      elevation: 0,
-      iconTheme: IconThemeData(color: Colors.white70),
+      backgroundColor: const Color(0xffC4B6A6),
+      shadowColor: const Color(0xff8A8D8F),
+      elevation: 1,
+      iconTheme: const IconThemeData(color: Colors.black87),
       title: Row(
         children: [
           CircleAvatar(
             radius: 20,
             backgroundImage: NetworkImage(match.matchUser.imageUrls[0]),
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Text(
             match.matchUser.name,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleLarge,
           )
         ],
       ),

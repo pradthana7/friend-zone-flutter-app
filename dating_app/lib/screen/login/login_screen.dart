@@ -43,19 +43,17 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  scale: 5,
-                  alignment: Alignment.center,
-                ),
+              Image.asset(
+                'assets/images/logo.png',
+                scale: 2,
+                alignment: Alignment.center,
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 50),
               _EmailInput(),
-              const SizedBox(height: 16),
+              const SizedBox(height: 30),
               _PasswordInput(),
-              const SizedBox(height: 20),
-              _LoginButton(),
+              const SizedBox(height: 30),
+              const _LoginButton(),
               const SizedBox(height: 30),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                   Text(
                     'Not a member? ',
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 16),
+                        color: Theme.of(context).primaryColor, fontSize: 18),
                   ),
                   TextButton(
                     onPressed: () =>
@@ -72,10 +70,10 @@ class LoginScreen extends StatelessWidget {
                       OnboardingScreen.routeName,
                       ModalRoute.withName('/onboarding'),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Register',
                       style:
-                          TextStyle(color: Color(0xfffa9200), fontSize: 16),
+                          TextStyle(color: Color(0xfffa9200), fontSize: 18),
                     ),
                   ),
                 ],
@@ -113,27 +111,7 @@ class _LoginButton extends StatelessWidget {
   }
 }
 
-// class _EmailInput extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<LoginCubit, LoginState>(
-//         buildWhen: ((previous, current) => previous.email != current.email),
-//         builder: (context, state) {
-//           return TextField(
-//             onChanged: (email) {
-//               context.read<LoginCubit>().emailChanged(email);
-//             },
-//             keyboardType: TextInputType.emailAddress,
-//             decoration: InputDecoration(
-//                 prefixIcon: Icon(
-//                   Icons.email,
-//                 ),
-//                 labelText: 'E-MAIL',
-//                 errorText: state.email.invalid ? 'The email is invalid' : null),
-//           );
-//         });
-//   }
-// }
+
 
 
 
@@ -163,7 +141,7 @@ class __EmailInputState extends State<_EmailInput> {
           },
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            prefixIcon: Icon(Icons.email),
+            prefixIcon: const Icon(Icons.email),
             suffixIcon: _emailController.text.isNotEmpty
                 ? IconButton(
                     onPressed: () {
@@ -171,7 +149,7 @@ class __EmailInputState extends State<_EmailInput> {
                         _emailController.clear();
                       });
                     },
-                    icon: Icon(Icons.close_rounded),
+                    icon: const Icon(Icons.close_rounded),
                   )
                 : null, // Show null when no input to hide the icon
             labelText: 'E-MAIL',
@@ -183,30 +161,6 @@ class __EmailInputState extends State<_EmailInput> {
   }
 }
 
-
-// class _PasswordInput extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<LoginCubit, LoginState>(
-//         buildWhen: ((previous, current) =>
-//             previous.password != current.password),
-//         builder: (context, state) {
-//           return TextField(
-//             onChanged: (password) {
-//               context.read<LoginCubit>().passwordChanged(password);
-//             },
-//             decoration: InputDecoration(
-//                 iconColor: Theme.of(context).primaryColor,
-//                 prefixIcon: Icon(Icons.key),
-//                 labelText: 'PASSWORD',
-//                 errorText: state.password.invalid
-//                     ? 'The password must contain at least 8 characters'
-//                     : null),
-//             obscureText: true,
-//           );
-//         });
-//   }
-// }
 
 
 class _PasswordInput extends StatefulWidget {
@@ -236,7 +190,7 @@ class __PasswordInputState extends State<_PasswordInput> {
           },
           decoration: InputDecoration(
             iconColor: Theme.of(context).primaryColor,
-            prefixIcon: Icon(Icons.key),
+            prefixIcon: const Icon(Icons.key),
             labelText: 'PASSWORD',
             errorText: state.password.invalid
                 ? 'The password must contain at least 8 characters'

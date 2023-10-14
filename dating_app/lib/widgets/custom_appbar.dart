@@ -36,12 +36,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: () {
                 Navigator.popAndPushNamed(context, '/');
               },
-              child: Container(
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  alignment: Alignment.topCenter,
-                  height: 30,
-                ),
+              child: Image.asset(
+                'assets/images/logo.png',
+                alignment: Alignment.topCenter,
+                height: 30,
               ),
             ),
           ),
@@ -51,8 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               title,
               style: Theme.of(context)
                   .textTheme
-                  .headlineSmall!
-                  .copyWith(color: Colors.brown.shade800),
+                  .headlineLarge
             ),
           )
         ],
@@ -62,7 +59,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               IconButton(
                 icon: Icon(
                   actioinsIcons[0],
-                  color: Colors.brown.shade800,
+                  
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, actionsRoutes[0]);
@@ -71,7 +68,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               IconButton(
                 icon: Icon(
                   actioinsIcons[1],
-                  color: Colors.brown.shade800,
+                  
                 ),
                 onPressed: () {
                   Navigator.pushNamed(context, actionsRoutes[1]);
@@ -84,5 +81,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
