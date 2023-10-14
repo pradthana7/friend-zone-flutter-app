@@ -28,8 +28,10 @@ class CustomTextField extends StatelessWidget {
       child: Focus(
         onFocusChange: onFocusChanged ?? (hasFocus) {},
         child: TextFormField(
+          
           initialValue: initialValue,
           maxLines: maxLines,
+          style: TextStyle(fontSize: 20),
           decoration: InputDecoration(
             filled: true,
             fillColor: Theme.of(context).scaffoldBackgroundColor,
@@ -38,12 +40,12 @@ class CustomTextField extends StatelessWidget {
             contentPadding: const EdgeInsets.only(bottom: 5.0, top: 12.5),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Theme.of(context).primaryColor),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             ),
             enabledBorder: UnderlineInputBorder(
               borderSide:
                   BorderSide(color: Theme.of(context).primaryColor),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             ),
           ),
           onChanged: onChanged,

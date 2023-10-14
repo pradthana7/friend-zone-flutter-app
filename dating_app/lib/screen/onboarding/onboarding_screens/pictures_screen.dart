@@ -37,8 +37,8 @@ class _PicturesState extends State<Pictures> {
           : null, // Set to null to disable the button
 
       children: [
-        CustomTextHeader(text: 'Add  Picture(s)'),
-        SizedBox(height: 20),
+        const CustomTextHeader(text: 'Add  Picture(s)'),
+        const SizedBox(height: 20),
         SizedBox(
           height: 550,
           child: GridView.builder(
