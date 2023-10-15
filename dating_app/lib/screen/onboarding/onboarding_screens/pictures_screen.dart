@@ -16,10 +16,10 @@ class Pictures extends StatefulWidget {
   final OnboardingLoaded state;
 
   @override
-  _PicturesState createState() => _PicturesState();
+  PicturesState createState() => PicturesState();
 }
 
-class _PicturesState extends State<Pictures> {
+class PicturesState extends State<Pictures> {
   bool isImageSelected = false; // Keep track of image selection
 
   @override
@@ -42,20 +42,23 @@ class _PicturesState extends State<Pictures> {
         SizedBox(
           height: 550,
           child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              childAspectRatio: 0.7,
+              childAspectRatio: 0.7, 
             ),
             itemCount: 9,
             itemBuilder: (BuildContext context, int index) {
               return (imageCount > index)
-                  ? UserImage.medium(
-                      url: images[index],
-                      border: Border.all(
-                        width: 1,
-                        color: Theme.of(context).primaryColor,
+                  ? Container(margin: EdgeInsets.all(8),
+                    child: UserImage.medium(
+                        url: images[index],
+                        border: Border.all(
+                          width: 1,
+                          color: Theme.of(context).primaryColor,
+                        ),
                       ),
-                    )
+                  )
                   : AddUserImage(onPressed: () async {
                       final XFile? image = await ImagePicker().pickImage(
                         source: ImageSource.gallery,
@@ -64,12 +67,11 @@ class _PicturesState extends State<Pictures> {
 
                       if (image == null) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text('No picture was selected'),
                           ),
                         );
                       } else {
-                        print('Uploading ...');
                         BlocProvider.of<OnboardingBloc>(context).add(
                           UpdateUserImages(image: image),
                         );
