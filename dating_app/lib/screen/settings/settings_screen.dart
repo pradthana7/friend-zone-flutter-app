@@ -37,7 +37,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Filter'),
+      appBar: const CustomAppBar(title: 'Filters'),
       body: SingleChildScrollView(
         child: BlocBuilder<ProfileBloc, ProfileState>(
           builder: (context, state) {

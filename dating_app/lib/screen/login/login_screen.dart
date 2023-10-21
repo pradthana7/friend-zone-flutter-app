@@ -12,13 +12,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LoginScreen extends StatelessWidget {
   static const String routeName = '/login';
 
+  const LoginScreen({super.key});
+
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
+      settings: const RouteSettings(name: routeName),
       builder: (context) {
         return BlocProvider.of<AuthBloc>(context).state.status ==
                 AuthStatus.authenticated
-            ? HomeScreen()
+            ? const HomeScreen()
             : LoginScreen();
       },
     );
@@ -44,7 +46,7 @@ class LoginScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/logo.png',
+                'assets/images/newlogo.png',
                 scale: 2,
                 alignment: Alignment.center,
               ),
