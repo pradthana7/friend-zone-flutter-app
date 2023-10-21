@@ -368,7 +368,7 @@ packages:
     source: path
     version: "1.0.0+1"
   formz:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: formz
       sha256: ed92f501f4a44b1da9137a025007df773b3732147b413c464158ecd997612ab6

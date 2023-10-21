@@ -55,6 +55,7 @@ dependencies:
     path: packages/form_inputs
   flutter_chips_input: ^2.0.0
   flutter_spinkit: ^5.2.0
+  formz: ^0.4.1
 
 dev_dependencies:
   flutter_test:

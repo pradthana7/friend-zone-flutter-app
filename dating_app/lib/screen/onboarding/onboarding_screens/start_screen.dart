@@ -23,10 +23,10 @@ class Start extends StatelessWidget {
         ),
         Padding(
           padding:
-              const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 30),
+              const EdgeInsets.only(top: 0, right: 20, left: 20, bottom: 20),
           child: Expanded(
             child: Text(
-              'Hey there, welcome to FZ App! It\'s the perfect platform for students and young professionals like yourself to meet new people. You can easily show your interest by swiping left or right, and once you match with someone, go ahead and start a friendly chat. Feel free to personalize your profile and set your preferences for gender and age to meet like-minded individuals. So, why wait? Join us today!',
+              'Making friends at university can be tough, especially for freshmen. FZ is the new app that connects SUT students for easy friend-making. Simply create a profile, swipe right on potential friends, and chat when you match. With filtering by age, and gender, FZ introduces you to like-minded people. Whether you\'re looking to expand your circle or make meaningful connections, FZ helps break the ice so you can swipe, match and message your way to new friendships!',
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
