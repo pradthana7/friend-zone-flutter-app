@@ -120,6 +120,12 @@ class ChatsList extends StatelessWidget {
 
   final List<Match> activeMatches;
 
+  String _truncateString(String string, int maxLength) {
+    return (string.length <= maxLength)
+        ? string
+        : '${string.substring(0, maxLength)}...';
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -154,7 +160,8 @@ class ChatsList extends StatelessWidget {
                     ),
                     // const SizedBox(height: 5),
                     Text(
-                      activeMatches[index].chat.messages[0].message,
+                      _truncateString(
+                          activeMatches[index].chat.messages[0].message, 30),
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     // const SizedBox(height: 2),

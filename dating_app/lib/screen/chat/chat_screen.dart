@@ -96,14 +96,13 @@ class _MessageInput extends StatelessWidget {
 
     void sendMessage() {
       if (controller.text.isNotEmpty) {
-        context.read<ChatBloc>()
-          .add(
-            AddMessage(
-              userId: match.userId,
-              matchUserId: match.matchUser.id!,
-              message: controller.text,
-            ),
-          );
+        context.read<ChatBloc>().add(
+              AddMessage(
+                userId: match.userId,
+                matchUserId: match.matchUser.id!,
+                message: controller.text,
+              ),
+            );
         controller.clear();
       }
     }
@@ -138,7 +137,8 @@ class _MessageInput extends StatelessWidget {
                 filled: true,
                 fillColor: const Color(0xffffffff),
                 hintText: 'Message',
-                contentPadding: const EdgeInsets.only(left: 16, bottom: 5, top: 5),
+                contentPadding:
+                    const EdgeInsets.only(left: 16, bottom: 5, top: 5),
               ),
             ),
           ),
@@ -162,17 +162,24 @@ class _Message extends StatelessWidget {
   Widget build(BuildContext context) {
     AlignmentGeometry alignment =
         isFromCurrentUser ? Alignment.topRight : Alignment.topLeft;
-    Color color = isFromCurrentUser ? const Color(0xffdfd6c7) : const Color(0xffffffff);
+    Color color =
+        isFromCurrentUser ? const Color(0xffdfd6c7) : const Color(0xffffffff);
     TextStyle? textStyle = isFromCurrentUser
         ? Theme.of(context).textTheme.bodyLarge
         : Theme.of(context).textTheme.bodyLarge;
+    
 
     return Align(
       alignment: alignment,
       child: Container(
-        padding: const EdgeInsets.all(8.0),
+        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+          borderRadius: BorderRadius.only(
+              topLeft: isFromCurrentUser ? const Radius.circular(8.0) : Radius.zero,
+              topRight: isFromCurrentUser ? Radius.zero : const Radius.circular(8.0),
+              bottomLeft: const Radius.circular(8.0),
+              bottomRight: const Radius.circular(8.0)),
           color: color,
         ),
         child: Text(
