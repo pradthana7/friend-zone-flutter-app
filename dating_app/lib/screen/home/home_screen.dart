@@ -19,10 +19,10 @@ class HomeScreen extends StatelessWidget {
     return MaterialPageRoute(
       settings: const RouteSettings(name: routeName),
       builder: (context) {
-        print(BlocProvider.of<AuthBloc>(context).state.status);
+        // print(BlocProvider.of<AuthBloc>(context).state.status);
         return BlocProvider.of<AuthBloc>(context).state.status ==
                 AuthStatus.unauthenticated
-            ? LoginScreen()
+            ? const LoginScreen()
             : BlocProvider<SwipeBloc>(
                 create: (context) => SwipeBloc(
                   authBloc: context.read<AuthBloc>(),
@@ -39,20 +39,20 @@ class HomeScreen extends StatelessWidget {
     return BlocBuilder<SwipeBloc, SwipeState>(
       builder: (context, state) {
         if (state is SwipeLoading) {
-          print('state is SwipeLoading');
-          return Scaffold(
-            appBar: const CustomAppBar(title: 'Hey Guys!'),
+          // print('state is SwipeLoading');
+          return const Scaffold(
+            appBar: CustomAppBar(title: 'Hey Guys!'),
             body: Center(
               child: LoadingIndicator(),
             ),
           );
         }
         if (state is SwipeLoaded) {
-          print('state is SwipeLoaded');
+          // print('state is SwipeLoaded');
           return SwipeLoadedHomeScreen(state: state);
         }
         if (state is SwipeMatched) {
-          print('state is SwipeMatched');
+          // print('state is SwipeMatched');
           return SwipeMatchedHomeScreen(state: state);
         }
         if (state is SwipeError) {
@@ -112,12 +112,12 @@ class SwipeLoadedHomeScreen extends StatelessWidget {
                   context
                       .read<SwipeBloc>()
                       .add(SwipeLeft(user: state.users[0]));
-                  print('Swiped Left');
+                  // print('Swiped Left');
                 } else if (drag.velocity.pixelsPerSecond.dx > 0) {
                   context
                       .read<SwipeBloc>()
                       .add(SwipeRight(user: state.users[0]));
-                  print('Swiped Right');
+                  // print('Swiped Right');
                 }
               },
               child: UserCard(user: state.users[0]),
@@ -230,7 +230,7 @@ class SwipeMatchedHomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             CustomElevatedButton(
-              text: 'Send a Aessage',
+              text: 'Send a Messsage',
               color: Theme.of(context).primaryColor,
               textColor: Colors.white,
               onPressed: () {

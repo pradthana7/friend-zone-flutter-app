@@ -14,10 +14,10 @@ class Demo extends StatefulWidget {
   final OnboardingLoaded state;
 
   @override
-  _DemoState createState() => _DemoState();
+  DemoState createState() => DemoState();
 }
 
-class _DemoState extends State<Demo> {
+class DemoState extends State<Demo> {
   bool isCheckboxSelected = false; // Keep track of checkbox selection
   bool isAgeValid = false; // Keep track of age validation
 
@@ -25,18 +25,18 @@ class _DemoState extends State<Demo> {
   Widget build(BuildContext context) {
     return OnboardingScreenLayout(
       currentStep: 3,
-      onPressed: isCheckboxSelected && isAgeValid // Disable button if checkbox or age is not valid
+      onPressed: isCheckboxSelected &&
+              isAgeValid // Disable button if checkbox or age is not valid
           ? () {
               context
                   .read<OnboardingBloc>()
                   .add(ContinueOnboarding(user: widget.state.user));
             }
           : null, // Set to null to disable the button
-      
-      
+
       children: [
         const CustomTextHeader(text: 'What\'s Your Name?'),
-         const SizedBox(height: 20),
+        const SizedBox(height: 20),
         CustomTextField(
           hintText: 'enter your name',
           onChanged: (value) {
@@ -102,7 +102,9 @@ class _DemoState extends State<Demo> {
                   ),
                 );
             setState(() {
-              isAgeValid = int.tryParse(value) != null && int.parse(value) >= 18; // Update the age validation status with a null check
+              isAgeValid = int.tryParse(value) != null &&
+                  int.parse(value) >=
+                      18; // Update the age validation status with a null check
             });
           },
         ),

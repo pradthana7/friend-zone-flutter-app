@@ -43,14 +43,14 @@ class PicturesState extends State<Pictures> {
           height: 550,
           child: GridView.builder(
             
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
               childAspectRatio: 0.7, 
             ),
             itemCount: 9,
             itemBuilder: (BuildContext context, int index) {
               return (imageCount > index)
-                  ? Container(margin: EdgeInsets.all(8),
+                  ? Container(margin: const EdgeInsets.all(8),
                     child: UserImage.medium(
                         url: images[index],
                         border: Border.all(

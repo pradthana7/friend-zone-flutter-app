@@ -4,7 +4,8 @@ class DotStepIndicator extends StatelessWidget {
   final int currentStep;
   final int totalSteps;
 
-  DotStepIndicator({
+  const DotStepIndicator({
+    super.key,
     required this.currentStep,
     required this.totalSteps,
   });

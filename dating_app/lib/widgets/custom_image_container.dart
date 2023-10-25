@@ -37,11 +37,11 @@ class CustomImageContainer extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   onPressed: () async {
-                    ImagePicker _picker = ImagePicker();
-                    final XFile? _image =
-                        await _picker.pickImage(source: ImageSource.gallery);
+                    ImagePicker picker = ImagePicker();
+                    final XFile? image =
+                        await picker.pickImage(source: ImageSource.gallery);
 
-                    if (_image == null) {
+                    if (image == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('No image was selected'),
@@ -49,11 +49,11 @@ class CustomImageContainer extends StatelessWidget {
                       );
                     }
 
-                    if (_image != null) {
-                      print('Uploading...');
+                    if (image != null) {
+                      // print('Uploading...');
                       context
                           .read<OnboardingBloc>()
-                          .add(UpdateUserImages(image: _image));
+                          .add(UpdateUserImages(image: image));
                     }
                   },
                 ),

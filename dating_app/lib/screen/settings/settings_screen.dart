@@ -11,15 +11,17 @@ import '/widgets/widgets.dart';
 class SettingsScreen extends StatelessWidget {
   static const String routeName = '/settings';
 
+  const SettingsScreen({super.key});
+
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
+      settings: const RouteSettings(name: routeName),
       builder: (context) {
-        print(BlocProvider.of<AuthBloc>(context).state);
+        // print(BlocProvider.of<AuthBloc>(context).state);
 
         return BlocProvider.of<AuthBloc>(context).state.status ==
                 AuthStatus.unauthenticated
-            ? LoginScreen()
+            ? const LoginScreen()
             : BlocProvider<ProfileBloc>(
                 create: (context) => ProfileBloc(
                   authBloc: BlocProvider.of<AuthBloc>(context),
@@ -28,7 +30,7 @@ class SettingsScreen extends StatelessWidget {
                     LoadProfile(
                         userId: context.read<AuthBloc>().state.authUser!.uid),
                   ),
-                child: SettingsScreen(),
+                child: const SettingsScreen(),
               );
       },
     );
@@ -111,7 +113,7 @@ class _AgeRangePreference extends StatelessWidget {
                           );
                     },
                     onChangeEnd: (RangeValues newRangeValues) {
-                      print('Ended change on $newRangeValues');
+                      // print('Ended change on $newRangeValues');
                       context.read<ProfileBloc>().add(
                             SaveProfile(
                               user: state.user.copyWith(
