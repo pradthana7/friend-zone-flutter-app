@@ -31,7 +31,7 @@ class CustomTextField extends StatelessWidget {
           
           initialValue: initialValue,
           maxLines: maxLines,
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
           decoration: InputDecoration(
             filled: true,
             fillColor: Theme.of(context).scaffoldBackgroundColor,

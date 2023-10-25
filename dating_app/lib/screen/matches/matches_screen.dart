@@ -5,40 +5,41 @@ import 'package:dating_app/widgets/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../blocs/match/match_bloc.dart';
 import '../../models/models.dart';
 import '../../widgets/widgets.dart';
 
 class MatchesScreen extends StatelessWidget {
   static const String routeName = '/matches';
 
+  const MatchesScreen({super.key});
+
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
+      settings: const RouteSettings(name: routeName),
       builder: (context) => BlocProvider<MatchBloc>(
           create: (context) => MatchBloc(
                 databaseRepository: context.read<DatabaseRepository>(),
               )..add(
                   LoadMatches(user: context.read<AuthBloc>().state.user!),
                 ),
-          child: MatchesScreen()),
+          child: const MatchesScreen()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Matches'),
+      appBar: const CustomAppBar(title: 'Matches'),
       body: BlocBuilder<MatchBloc, MatchState>(
         builder: (context, state) {
           if (state is MatchLoading) {
-            print('state is MatchLoading');
+            // print('state is MatchLoading');
             return Center(
               child: LoadingIndicator(),
             );
           }
           if (state is MatchLoaded) {
-            print('state is MatchLoaded');
+            // print('state is MatchLoaded');
             final inactiveMatches = state.matches
                 .where((match) => match.chat.messages.isEmpty)
                 .toList();

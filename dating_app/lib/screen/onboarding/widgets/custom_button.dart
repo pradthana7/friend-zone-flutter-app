@@ -5,7 +5,7 @@ class CustomButton extends StatelessWidget {
   final void Function()? onPressed;
   
 
-  CustomButton({
+  const CustomButton({
     Key? key,
     required this.text, this.onPressed,
     
@@ -24,7 +24,7 @@ class CustomButton extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        child: Container(
+        child: SizedBox(
           width: 150,
           child: Center(
             child: Text(

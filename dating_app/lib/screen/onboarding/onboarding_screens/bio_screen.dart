@@ -2,13 +2,12 @@ import 'package:chips_choice/chips_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../widgets/widgets.dart';
 import '../../screens.dart';
 import '/blocs/blocs.dart';
 import '/screen/onboarding/widgets/widgets.dart';
 
 class Bio extends StatefulWidget {
-  Bio({
+  const Bio({
     Key? key,
     required this.state,
   }) : super(key: key);
@@ -16,10 +15,10 @@ class Bio extends StatefulWidget {
   final OnboardingLoaded state;
 
   @override
-  _BioState createState() => _BioState();
+  BioState createState() => BioState();
 }
 
-class _BioState extends State<Bio> {
+class BioState extends State<Bio> {
   List<String> selectedInterests = []; // Store selected interests here
 
   final List<String> interests = [
@@ -57,7 +56,7 @@ class _BioState extends State<Bio> {
         const CustomTextHeader(text: 'About Me'),
         const SizedBox(height: 20.0),
         CustomTextField(
-          hintText: 'I am beatiful...',
+          hintText: 'I am beautiful muy bien...',
           onChanged: (value) {
             context.read<OnboardingBloc>().add(
                   UpdateUser(
@@ -66,8 +65,8 @@ class _BioState extends State<Bio> {
                 );
           },
         ),
-        SizedBox(height: 50),
-        CustomTextHeader(text: 'What do you do?'),
+        const SizedBox(height: 50),
+        const CustomTextHeader(text: 'What do you do?'),
         const SizedBox(height: 20.0),
         CustomTextField(
           hintText: 'Software Engineer',

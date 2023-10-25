@@ -17,10 +17,10 @@ class ChatScreen extends StatelessWidget {
   }) : super(key: key);
 
   static Route route({required Match match}) {
-    print('route');
-    print(match.chat);
+    // print('route');
+    // print(match.chat);
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
+      settings: const RouteSettings(name: routeName),
       builder: (context) => BlocProvider<ChatBloc>(
         create: (context) => ChatBloc(
           databaseRepository: context.read<DatabaseRepository>(),

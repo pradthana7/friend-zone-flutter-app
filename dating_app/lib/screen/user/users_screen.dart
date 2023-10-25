@@ -15,9 +15,9 @@ class UsersScreen extends StatelessWidget {
 
   static Route route({required User user}) {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
+      settings: const RouteSettings(name: routeName),
       builder: (context) {
-        print(BlocProvider.of<AuthBloc>(context).state.status);
+        // print(BlocProvider.of<AuthBloc>(context).state.status);
         return BlocProvider<SwipeBloc>(
           create: (context) => SwipeBloc(
             authBloc: context.read<AuthBloc>(),
@@ -121,16 +121,14 @@ class UsersScreen extends StatelessWidget {
                   Text('Interests',
                       style: Theme.of(context).textTheme.headlineSmall),
                   const SizedBox(height: 10),
-                  Container(
-                    child: Wrap(
-                      spacing: 5.0,
-                      runSpacing: -5.0,
-                      children: user.interests.map((interest) {
-                        return Chip(
-                          label: Text(interest),
-                        );
-                      }).toList(),
-                    ),
+                  Wrap(
+                    spacing: 5.0,
+                    runSpacing: -5.0,
+                    children: user.interests.map((interest) {
+                      return Chip(
+                        label: Text(interest),
+                      );
+                    }).toList(),
                   ),
                   const SizedBox(height: 10.0),
                   UserPictures(user: user),

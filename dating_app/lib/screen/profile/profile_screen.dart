@@ -17,14 +17,16 @@ import 'interests.dart';
 class ProfileScreen extends StatelessWidget {
   static const String routeName = '/profile';
 
+  const ProfileScreen({super.key});
+
   static Route route() {
     return MaterialPageRoute(
-      settings: RouteSettings(name: routeName),
+      settings: const RouteSettings(name: routeName),
       builder: (context) {
-        print(BlocProvider.of<AuthBloc>(context).state.status);
+        // print(BlocProvider.of<AuthBloc>(context).state.status);
         return BlocProvider.of<AuthBloc>(context).state.status ==
                 AuthStatus.unauthenticated
-            ? LoginScreen()
+            ? const LoginScreen()
             : BlocProvider<ProfileBloc>(
                 create: (context) => ProfileBloc(
                   authBloc: BlocProvider.of<AuthBloc>(context),
@@ -33,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
                     LoadProfile(
                         userId: context.read<AuthBloc>().state.authUser!.uid),
                   ),
-                child: ProfileScreen(),
+                child: const ProfileScreen(),
               );
       },
     );
@@ -110,8 +112,8 @@ class ProfileScreen extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     const Padding(
-                                      padding: EdgeInsets.only(
-                                          left: 10, top: 10),
+                                      padding:
+                                          EdgeInsets.only(left: 10, top: 10),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
@@ -303,7 +305,7 @@ class _TextField extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           state.isEditingOn
               ? CustomTextField(
                   initialValue: value,
@@ -345,12 +347,11 @@ class _Pictures extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.insert_photo_outlined),
-                SizedBox(width: 8),
+                const Icon(Icons.insert_photo_outlined),
+                const SizedBox(width: 8),
                 Text(
                   'Pictures',
                   style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        
                         fontWeight: FontWeight.w600,
                       ),
                 ),

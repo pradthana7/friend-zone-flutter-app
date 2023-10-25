@@ -27,7 +27,7 @@ class CustomElevatedButton extends StatelessWidget {
               color: Theme.of(context).primaryColor.withAlpha(50),
               spreadRadius: 2,
               blurRadius: 2,
-              offset: Offset(2, 2),
+              offset: const Offset(2, 2),
             ),
           ],
           color: color),
@@ -40,7 +40,7 @@ class CustomElevatedButton extends StatelessWidget {
             backgroundColor: Theme.of(context).primaryColor.withAlpha(50),
             elevation: 0,
             fixedSize: Size(width, 40)),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           child: Center(
             child: Text(

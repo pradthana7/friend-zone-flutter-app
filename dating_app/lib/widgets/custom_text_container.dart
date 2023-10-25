@@ -4,7 +4,8 @@ class CustomTextContainer extends StatelessWidget {
   final String text;
   final double width;
 
-  CustomTextContainer({required this.text, required this.width});
+  const CustomTextContainer(
+      {super.key, required this.text, required this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class CustomTextContainer extends StatelessWidget {
           child: Text(
             text,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14),
+            style: const TextStyle(fontSize: 14),
           ),
         ),
       ),
